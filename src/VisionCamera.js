@@ -4,7 +4,10 @@ import {Camera, useCameraDevices} from 'react-native-vision-camera';
 
 export default function VisionCamera(props) {
   let {camera} = props;
-  let device = useCameraDevices();
+  let devices = useCameraDevices();
+
+  console.log('DEVICES: ', camera.current);
+  // https://mrousavy.com/react-native-vision-camera/docs/guides/devices
 
   let getCameraPermissions = () => {
     Camera.getCameraPermissionStatus().then(async res => {
@@ -23,7 +26,7 @@ export default function VisionCamera(props) {
   return (
     <Camera
       ref={camera}
-      device={device}
+      device={devices}
       isActive={true}
       style={StyleSheet.absoluteFill}
       fps={240}

@@ -1,6 +1,6 @@
 /*/
  * COMPONENT LIFECYCLE
- * DEVICE PERMISSIONS
+ * CAMERA ACTIONS
  * COMPONENT RENDERS
 /*/
 
@@ -14,20 +14,35 @@ export default class App extends Component {
     this.camera = React.createRef();
   }
 
+  componentDidMount() {
+    console.log('CAMERA: ', this.camera);
+
+    /* this.startVideo();
+    setTimeout(() => {
+      this.endVideo();
+    }, 1000); */
+  }
+
   /******************** COMPONENT LIFECYCLE ********************/
 
   /******************** CAMERA ACTIONS ********************/
 
   startVideo = async () => {
     this.camera.current.startRecording({
-      flash: 'on',
-      onRecordingFinished: video => console.log(video),
-      onRecordingError: error => console.error(error),
+      flash: 'on', // ['on', 'off', 'auto']
+      fileType: 'mp4',
+      onRecordingFinished: video => {
+        console.log('REC FINISHED', video);
+      },
+      onRecordingError: error => {
+        console.error('REC ERROR', error);
+      },
     });
   };
 
   endVideo = async () => {
-    await this.camera.current.stopRecording();
+    let res = await this.camera.current.stopRecording();
+    console.log('VIDEO STOPPED', res);
   };
 
   /******************** COMPONENT RENDERS ********************/

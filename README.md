@@ -1,1 +1,1 @@
-**React Native Vision Camera requires Reanimated install:**
+**NOTE:::** React Native Vision Camera requires Reanimated
