@@ -8,7 +8,14 @@
 /*/
 
 import React, {Component, Fragment} from 'react';
-import {SafeAreaView, StyleSheet, Linking, View, Text} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Linking,
+  View,
+  Text,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {Camera} from 'react-native-vision-camera';
 import RenderCamera from './RenderCamera';
 
@@ -60,6 +67,14 @@ export default class VisionCamera extends Component {
 
   /******************** CAMERA ACTIONS ********************/
 
+  tapToFocus = async e => {
+    console.log('e', e);
+    /* await this.camera.current.focus({
+      x: e.nativeEvent.locationX,
+      y: e.nativeEvent.locationY,
+    }); */
+  };
+
   startVideo = async () => {
     this.camera.current.startRecording({
       flash: 'on', // ['on', 'off', 'auto']
@@ -72,7 +87,6 @@ export default class VisionCamera extends Component {
       },
     });
   };
-
   endVideo = async () => {
     let res = await this.camera.current.stopRecording();
     console.log('VIDEO STOPPED', res);
@@ -91,6 +105,12 @@ export default class VisionCamera extends Component {
     return (
       <Fragment>
         <RenderCamera state={this.state} camera={this.camera} />
+
+        <View style={styles.content_container}>
+          <TouchableWithoutFeedback onPress={this.tapToFocus}>
+            <Text style={styles.txt_white}>TOO</Text>
+          </TouchableWithoutFeedback>
+        </View>
       </Fragment>
     );
   };
