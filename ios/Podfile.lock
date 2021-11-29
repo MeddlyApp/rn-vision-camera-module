@@ -366,7 +366,7 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - VisionCamera (2.9.3):
+  - VisionCamera (2.9.4):
     - React
     - React-callinvoker
     - React-Core
@@ -558,10 +558,10 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: bbbdb3d8fcf327c6e2249ee71b6ef1764b7dc266
   ReactCommon: 9bac022ab71596f2b0fde1268272543184c63971
   RNReanimated: 65583befd5706cc9c86ae9a081786181ced37b93
-  VisionCamera: 930b15dcc52c10d31e88f3fa07a774da225373ea
+  VisionCamera: dcbcdf02e8a6ea3c03bf741a962701fe81f0950e
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 7cde759235d2dec21e23e0ffa58f9139afca7a0c
+PODFILE CHECKSUM: 19d3fabb8be58d17fe627dfc3776c701f566d190
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.2
