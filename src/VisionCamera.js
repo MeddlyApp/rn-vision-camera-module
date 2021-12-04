@@ -33,6 +33,7 @@ export default class VisionCamera extends Component {
       camera_active: false,
       front_camera: false,
       flash: 'off',
+      is_video: true,
       is_recording: false,
 
       // Permission Denied
@@ -208,7 +209,7 @@ export default class VisionCamera extends Component {
   };
 
   renderCameraComponents = () => {
-    let {camera_active, front_camera, flash} = this.state;
+    let {camera_active, front_camera, is_video, flash} = this.state;
     let cameraView = front_camera ? 'Front' : 'Back';
 
     return (
@@ -217,6 +218,7 @@ export default class VisionCamera extends Component {
           camera={this.camera}
           camera_active={camera_active}
           front_camera={front_camera}
+          is_video={is_video}
         />
 
         <View style={styles.vert_content_container}>
