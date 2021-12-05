@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   },
 
   // Vertical Layout Formatting
+
   vert_content_container: {
     flex: 1,
     alignItems: 'center',
@@ -34,13 +35,15 @@ const styles = StyleSheet.create({
   vert_row_top: {
     flex: 6,
     width: '100%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 60,
   },
   vert_row_middle_top: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    backgroundColor: 'red',
   },
   vert_row_middle_bottom: {
     flex: 1.5,
@@ -62,6 +65,24 @@ const styles = StyleSheet.create({
 
   /******************** RENDER CAMERA ********************/
 
+  rec_btn: {
+    height: 90,
+    width: 90,
+    borderColor: '#FFFFFF',
+    borderWidth: 3,
+    borderRadius: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stop_btn: {
+    height: 90,
+    width: 90,
+    borderColor: '#FF0000',
+    borderWidth: 3,
+    borderRadius: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   no_device_container: {
     flex: 1,
     alignItems: 'center',
