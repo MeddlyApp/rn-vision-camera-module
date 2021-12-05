@@ -17,17 +17,22 @@ import {
   Linking,
   View,
   Text,
+  Alert,
+  Dimensions,
   TouchableOpacity,
 } from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
 import RenderCamera from './RenderCamera';
 import styles from './styles';
+import GestureHandler from './GestureHandler';
 
 export default class VisionCamera extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      screen_size: Dimensions.get('window'),
+
       // Camera Settings
       camera_active: false,
       front_camera: false,
@@ -45,6 +50,7 @@ export default class VisionCamera extends Component {
     };
 
     this.camera = React.createRef();
+    this.doubleTapRef = React.createRef();
   }
 
   /******************** COMPONENT LIFECYCLE ********************/
@@ -119,8 +125,24 @@ export default class VisionCamera extends Component {
     });
   };
 
-  onSingleTap = e => alert("I'm touched");
-  onDoubleTap = e => alert('Double tap, good job!');
+  onSingleTap = e => {
+    Alert.alert("I'm touched");
+    console.log('Single Tap');
+    console.log('X: ', e.nativeEvent.absoluteX);
+    console.log('Y: ', e.nativeEvent.absoluteY);
+  };
+  onDoubleTap = e => {
+    Alert.alert('Double tap, good job!');
+    console.log('Double Tap');
+    console.log('X: ', e.nativeEvent.absoluteX);
+    console.log('Y: ', e.nativeEvent.absoluteY);
+  };
+
+  deviceRotated = () => {
+    let size = Dimensions.get('window');
+    this.setState({screen_size: size});
+    console.log('Updated Size: ', size);
+  };
 
   /******************** CAMERA ACTIONS ********************/
 
@@ -149,17 +171,27 @@ export default class VisionCamera extends Component {
     let timestamp1 = new Date().getTime();
     console.log('Starting Video', timestamp1);
     let {flash} = this.state;
-    this.camera.current.startRecording({
+    await this.camera.current.startRecording({
       flash: flash,
       fileType: 'mp4',
       onRecordingFinished: async video => {
         console.log('Recording Finished', video);
         console.log('Video Start Timestamp => To Record', timestamp2);
 
-        let no_permissions =
-          Platform.OS === 'android' && !(await this.getCameraRollPermissions());
+        // Send payload to API call
+        let payload = {
+          timestamp_start: timestamp2,
+          data: video.path,
+        };
+        // - this.props.saveVideo(payload)
 
-        if (no_permissions) return alert('Camera Roll not permitted');
+        // Check Android permissions then save to Camera Roll
+        if (
+          Platform.OS === 'android' &&
+          !(await this.getCameraRollPermissions())
+        ) {
+          return alert('Camera Roll not permitted');
+        }
 
         CameraRoll.save(video.path);
       },
@@ -223,24 +255,128 @@ export default class VisionCamera extends Component {
   };
 
   renderCameraControls = () => {
-    let {front_camera, flash} = this.state;
+    let {screen_size, front_camera, flash} = this.state;
     let cameraView = front_camera ? 'Front' : 'Back';
+    let is_vertical = screen_size.height > screen_size.width;
+
+    let vertical_styles = {
+      height: 80,
+      width: screen_size.width / 2,
+      alignItems: 'center',
+      justifyContent: 'center',
+    };
+    let horizontal_styles = {
+      width: 80,
+      height: screen_size.height / 2,
+      alignItems: 'center',
+      justifyContent: 'center',
+    };
+
+    let toggle_btn_style = is_vertical ? vertical_styles : horizontal_styles;
 
     return (
       <Fragment>
-        <TouchableOpacity onPress={this.toggleCamera} style={styles.toggle_btn}>
-          <Text style={styles.txt_white}>Camera: {cameraView}</Text>
-        </TouchableOpacity>
+        <View style={toggle_btn_style}>
+          <TouchableOpacity
+            onPress={this.toggleCamera}
+            style={styles.camera_btn}>
+            <Text style={styles.txt_white}>{cameraView}</Text>
+          </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity onPress={this.toggleFlash} style={styles.toggle_btn}>
-          <Text style={styles.txt_white}>Flash: {flash}</Text>
-        </TouchableOpacity>
+        <View style={toggle_btn_style}>
+          <TouchableOpacity
+            onPress={this.toggleFlash}
+            style={styles.camera_btn}>
+            <Text style={styles.txt_white}>{flash}</Text>
+          </TouchableOpacity>
+        </View>
       </Fragment>
     );
   };
 
-  renderCameraComponents = () => {
-    let {camera_active, front_camera, is_video, is_recording} = this.state;
+  renderHorizontalCameraControls = () => {
+    let {is_recording, screen_size} = this.state;
+    let is_vertical = screen_size.height > screen_size.width;
+
+    let camera_controls_container_styles = {
+      width: 80,
+      height: window.height,
+      flexDirection: 'column',
+      // backgroundColor: 'purple',
+    };
+
+    return (
+      <View style={styles.horizontal_content_container}>
+        <View style={styles.horizontal_row_select_event}>
+          <Text style={styles.txt_white}>Event_Ctl</Text>
+        </View>
+
+        <View style={styles.horizontal_gesture_controls}>
+          <GestureHandler
+            is_vertical={is_vertical}
+            doubleTapRef={this.doubleTapRef}
+            onSingleTap={this.onSingleTap}
+            onDoubleTap={this.onDoubleTap}>
+            <Text style={styles.txt_white}>Gesture Section</Text>
+          </GestureHandler>
+        </View>
+
+        <View style={camera_controls_container_styles}>
+          {!is_recording ? this.renderCameraControls() : null}
+        </View>
+
+        <View style={styles.horizontal_row_recording_controls}>
+          {this.renderRecordingControls()}
+        </View>
+
+        <View style={styles.horizontal_bottom_void} />
+      </View>
+    );
+  };
+
+  renderVerticalCameraControls = () => {
+    let {is_recording, screen_size} = this.state;
+    let is_vertical = screen_size.height > screen_size.width;
+
+    let camera_controls_container_styles = {
+      height: 80,
+      width: window.width,
+      flexDirection: 'row',
+      // backgroundColor: 'purple',
+    };
+
+    return (
+      <View style={styles.vertical_content_container}>
+        <View style={styles.vertical_row_select_event}>
+          <Text style={styles.txt_white}>Event_Ctl</Text>
+        </View>
+
+        <View style={styles.vertical_gesture_controls}>
+          <GestureHandler
+            is_vertical={is_vertical}
+            doubleTapRef={this.doubleTapRef}
+            onSingleTap={this.onSingleTap}
+            onDoubleTap={this.onDoubleTap}>
+            <Text style={styles.txt_white}>Gesture Section</Text>
+          </GestureHandler>
+        </View>
+
+        <View style={camera_controls_container_styles}>
+          {!is_recording ? this.renderCameraControls() : null}
+        </View>
+
+        <View style={styles.vertical_row_recording_controls}>
+          {this.renderRecordingControls()}
+        </View>
+
+        <View style={styles.vertical_bottom_void} />
+      </View>
+    );
+  };
+
+  renderCameraLayout = () => {
+    let {screen_size, camera_active, front_camera, is_video} = this.state;
 
     return (
       <Fragment>
@@ -251,21 +387,9 @@ export default class VisionCamera extends Component {
           is_video={is_video}
         />
 
-        <View style={styles.vert_content_container}>
-          <View style={styles.vert_row_top}>
-            <Text style={styles.txt_white}>Select Event Goes Here</Text>
-          </View>
-
-          <View style={styles.vert_row_middle_top}>
-            {!is_recording ? this.renderCameraControls() : null}
-          </View>
-
-          <View style={styles.vert_row_middle_bottom}>
-            {this.renderRecordingControls()}
-          </View>
-
-          <View style={styles.vert_row_bottom} />
-        </View>
+        {screen_size.height > screen_size.width
+          ? this.renderVerticalCameraControls()
+          : this.renderHorizontalCameraControls()}
       </Fragment>
     );
   };
@@ -275,9 +399,9 @@ export default class VisionCamera extends Component {
     let has_permission = has_camera_permission && has_microphone_permission;
 
     return (
-      <SafeAreaView style={styles.base_container}>
+      <SafeAreaView style={styles.base_container} onLayout={this.deviceRotated}>
         {has_permission
-          ? this.renderCameraComponents()
+          ? this.renderCameraLayout()
           : this.renderMissingPermissions()}
       </SafeAreaView>
     );
