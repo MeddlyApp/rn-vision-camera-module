@@ -7,7 +7,14 @@ import {
 import styles from './styles';
 
 export default function GestureHandler(props) {
-  let {is_vertical, doubleTapRef, onSingleTap, onDoubleTap, children} = props;
+  let {
+    is_vertical,
+    pinchRef,
+    doubleTapRef,
+    onSingleTap,
+    onDoubleTap,
+    children,
+  } = props;
 
   return (
     <GestureHandlerRootView>
@@ -15,6 +22,7 @@ export default function GestureHandler(props) {
         <TapGestureHandler
           ref={doubleTapRef}
           onActivated={onDoubleTap}
+          waitFor={pinchRef}
           numberOfTaps={2}
           maxDelayMs={175}>
           <View

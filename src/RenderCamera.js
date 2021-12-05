@@ -16,6 +16,8 @@ export default function RenderCamera(props) {
       </View>
     );
   } else {
+    console.log('DEVICE: ', device.minZoom);
+    console.log();
     return (
       <Camera
         ref={camera}
@@ -24,8 +26,46 @@ export default function RenderCamera(props) {
         video={is_video}
         audio={is_video}
         fps={240}
+        autoFocusSystem={'contrast-detection'}
+        videoStabilizationMode={'cinematic-extended'}
+        enableZoomGesture={true}
+        minZoom={device.minZoom}
+        maxZoom={device.maxZoom}
         style={StyleSheet.absoluteFill}
       />
     );
   }
 }
+
+/*/
+ * Camera Props
+ * - photo: boolean
+ * - video: boolean
+ * - audio: boolean
+ * - photoHeight: number
+ * - photoWidth: number
+ * - enableHighQualityPhotos: boolean
+ * - enableZoomGesture: boolean
+ * - videoHeight: number
+ * - videoWidth: number
+ * - fps: number
+ * - hdr: boolean
+ * - lowLightBoost: boolean
+ * - isHighestPhotoQualitySupported: boolean
+ * - maxISO: number
+ * - minISO: number
+ * - fieldOfView: number
+ * - minZoom: number
+ * - maxZoom: number
+ * - colorSpace: 
+       ios: ['hlg-bt2020', 'p3-d65', 'srgb'
+       android: ['yuv', 'jpeg', 'jpeg-depth', 'raw', 'heic', 'private', 'depth-16', 'unknown']
+ * - supportsVideoHDR: boolean
+ * - supportsPhotoHDR: boolean
+ * - frameRateRanges: {
+       minFrameRate: number;        
+       maxFrameRate: number;
+     }
+ * - autoFocusSystem: ['contrast-detection', 'phase-detection', 'none']
+ * - videoStabilizationMode: ['off', 'standard', 'cinematic', 'cinematic-extended', 'auto']
+/*/

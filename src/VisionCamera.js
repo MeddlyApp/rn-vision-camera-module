@@ -17,7 +17,6 @@ import {
   Linking,
   View,
   Text,
-  Alert,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
@@ -119,23 +118,12 @@ export default class VisionCamera extends Component {
   /******************** GESTURE CONTROLS ********************/
 
   tapToFocus = async e => {
-    await this.camera.current.focus({
-      x: e.nativeEvent.locationX,
-      y: e.nativeEvent.locationY,
-    });
-  };
-
-  onSingleTap = e => {
-    Alert.alert("I'm touched");
-    console.log('Single Tap');
-    console.log('X: ', e.nativeEvent.absoluteX);
-    console.log('Y: ', e.nativeEvent.absoluteY);
-  };
-  onDoubleTap = e => {
-    Alert.alert('Double tap, good job!');
-    console.log('Double Tap');
-    console.log('X: ', e.nativeEvent.absoluteX);
-    console.log('Y: ', e.nativeEvent.absoluteY);
+    await this.camera.current
+      .focus({
+        x: e.nativeEvent.absoluteX,
+        y: e.nativeEvent.absoluteY,
+      })
+      .catch(e => console.log('Focus Error: ', e));
   };
 
   deviceRotated = () => {
@@ -316,8 +304,8 @@ export default class VisionCamera extends Component {
           <GestureHandler
             is_vertical={is_vertical}
             doubleTapRef={this.doubleTapRef}
-            onSingleTap={this.onSingleTap}
-            onDoubleTap={this.onDoubleTap}>
+            onSingleTap={this.tapToFocus}
+            onDoubleTap={this.toggleCamera}>
             <Text style={styles.txt_white}>Gesture Section</Text>
           </GestureHandler>
         </View>
@@ -356,8 +344,8 @@ export default class VisionCamera extends Component {
           <GestureHandler
             is_vertical={is_vertical}
             doubleTapRef={this.doubleTapRef}
-            onSingleTap={this.onSingleTap}
-            onDoubleTap={this.onDoubleTap}>
+            onSingleTap={this.tapToFocus}
+            onDoubleTap={this.toggleCamera}>
             <Text style={styles.txt_white}>Gesture Section</Text>
           </GestureHandler>
         </View>
