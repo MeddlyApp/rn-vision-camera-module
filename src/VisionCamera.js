@@ -163,9 +163,6 @@ export default class VisionCamera extends Component {
 
         CameraRoll.save(video.path);
       },
-      onRecordCallback: res => {
-        console.log('CALLBACK: ', res);
-      },
       onRecordingError: error => {
         console.error('REC ERROR', error);
       },
