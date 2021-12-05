@@ -146,13 +146,16 @@ export default class VisionCamera extends Component {
   /******************** CAMERA LIFECYCLE ********************/
 
   startVideo = async () => {
-    console.log('Started Video');
+    let timestamp1 = new Date().getTime();
+    console.log('Starting Video', timestamp1);
     let {flash} = this.state;
     this.camera.current.startRecording({
       flash: flash,
       fileType: 'mp4',
       onRecordingFinished: async video => {
         console.log('Recording Finished', video);
+        console.log('Video Start Timestamp => To Record', timestamp2);
+
         let no_permissions =
           Platform.OS === 'android' && !(await this.getCameraRollPermissions());
 
@@ -160,18 +163,27 @@ export default class VisionCamera extends Component {
 
         CameraRoll.save(video.path);
       },
+      onRecordCallback: res => {
+        console.log('CALLBACK: ', res);
+      },
       onRecordingError: error => {
         console.error('REC ERROR', error);
       },
     });
+
+    let timestamp2 = new Date().getTime();
+    console.log('Video Started', timestamp2);
+
     this.setState({is_recording: true});
   };
 
   endVideo = async () => {
-    console.log('Ending Video');
-    let res = await this.camera.current.stopRecording();
-    this.setState({is_recording: false});
-    console.log('VIDEO STOPPED', res);
+    let timestamp1 = new Date().getTime();
+    console.log('Ending Video', timestamp1);
+    await this.camera.current.stopRecording();
+    let timestamp2 = new Date().getTime();
+    console.log('Video Stopped', timestamp2);
+    return this.setState({is_recording: false});
   };
 
   /******************** COMPONENT RENDERS ********************/
