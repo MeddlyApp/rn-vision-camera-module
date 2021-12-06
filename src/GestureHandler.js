@@ -1,40 +1,30 @@
 import React from 'react';
-import {View} from 'react-native';
 import {
   GestureHandlerRootView,
+  PinchGestureHandler,
   TapGestureHandler,
 } from 'react-native-gesture-handler';
-import styles from './styles';
 
 export default function GestureHandler(props) {
-  let {
-    is_vertical,
-    pinchRef,
-    doubleTapRef,
-    onSingleTap,
-    onDoubleTap,
-    children,
-  } = props;
+  let {pinchRef, doubleTapRef, onSingleTap, onDoubleTap, children} = props;
 
   return (
     <GestureHandlerRootView>
-      <TapGestureHandler waitFor={doubleTapRef} onActivated={onSingleTap}>
-        <TapGestureHandler
-          ref={doubleTapRef}
-          onActivated={onDoubleTap}
-          waitFor={pinchRef}
-          numberOfTaps={2}
-          maxDelayMs={175}>
-          <View
-            style={
-              is_vertical
-                ? styles.vertical_camera_container
-                : styles.horizontal_camera_container
-            }>
+      <PinchGestureHandler
+        ref={pinchRef}
+        onActivated={() => console.log('DRAGGGG')}
+        maxDelayMs={175}>
+        <TapGestureHandler waitFor={doubleTapRef} onActivated={onSingleTap}>
+          <TapGestureHandler
+            ref={doubleTapRef}
+            onActivated={onDoubleTap}
+            waitFor={pinchRef}
+            numberOfTaps={2}
+            maxDelayMs={175}>
             {children}
-          </View>
+          </TapGestureHandler>
         </TapGestureHandler>
-      </TapGestureHandler>
+      </PinchGestureHandler>
     </GestureHandlerRootView>
   );
 }

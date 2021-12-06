@@ -49,6 +49,7 @@ export default class VisionCamera extends Component {
     };
 
     this.camera = React.createRef();
+    this.pinchRef = React.createRef();
     this.doubleTapRef = React.createRef();
   }
 
@@ -289,18 +290,24 @@ export default class VisionCamera extends Component {
 
     let camera_controls_container_styles = {
       width: 80,
-      height: window.height,
+      height: screen_size.height,
       flexDirection: 'column',
-      // backgroundColor: 'purple',
+    };
+    let horizontal_content_container = {
+      width: screen_size.width,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
     };
 
     return (
-      <View style={styles.horizontal_content_container}>
+      <View style={horizontal_content_container}>
         <View style={styles.horizontal_row_select_event}>
           <Text style={styles.txt_white}>Event_Ctl</Text>
         </View>
 
         <View style={styles.horizontal_gesture_controls}>
+          {/*
           <GestureHandler
             is_vertical={is_vertical}
             doubleTapRef={this.doubleTapRef}
@@ -308,6 +315,7 @@ export default class VisionCamera extends Component {
             onDoubleTap={this.toggleCamera}>
             <Text style={styles.txt_white}>Gesture Section</Text>
           </GestureHandler>
+          */}
         </View>
 
         <View style={camera_controls_container_styles}>
@@ -331,16 +339,21 @@ export default class VisionCamera extends Component {
       height: 80,
       width: window.width,
       flexDirection: 'row',
-      // backgroundColor: 'purple',
+    };
+    let vertical_content_container = {
+      height: screen_size.height,
+      alignItems: 'center',
+      justifyContent: 'center',
     };
 
     return (
-      <View style={styles.vertical_content_container}>
+      <View style={vertical_content_container}>
         <View style={styles.vertical_row_select_event}>
           <Text style={styles.txt_white}>Event_Ctl</Text>
         </View>
 
         <View style={styles.vertical_gesture_controls}>
+          {/*
           <GestureHandler
             is_vertical={is_vertical}
             doubleTapRef={this.doubleTapRef}
@@ -348,6 +361,7 @@ export default class VisionCamera extends Component {
             onDoubleTap={this.toggleCamera}>
             <Text style={styles.txt_white}>Gesture Section</Text>
           </GestureHandler>
+          */}
         </View>
 
         <View style={camera_controls_container_styles}>
@@ -365,6 +379,7 @@ export default class VisionCamera extends Component {
 
   renderCameraLayout = () => {
     let {screen_size, camera_active, front_camera, is_video} = this.state;
+    let is_vertical = screen_size.height > screen_size.width;
 
     return (
       <Fragment>
@@ -375,7 +390,14 @@ export default class VisionCamera extends Component {
           is_video={is_video}
         />
 
-        {screen_size.height > screen_size.width
+        {/*
+        <GestureHandler
+          pinchRef={this.pinchRef}
+          doubleTapRef={this.doubleTapRef}
+          onSingleTap={this.tapToFocus}
+          onDoubleTap={this.toggleCamera}>
+*/}
+        {is_vertical
           ? this.renderVerticalCameraControls()
           : this.renderHorizontalCameraControls()}
       </Fragment>
@@ -384,11 +406,11 @@ export default class VisionCamera extends Component {
 
   render() {
     let {has_camera_permission, has_microphone_permission} = this.state;
-    let has_permission = has_camera_permission && has_microphone_permission;
+    let has_permissions = has_camera_permission && has_microphone_permission;
 
     return (
       <SafeAreaView style={styles.base_container} onLayout={this.deviceRotated}>
-        {has_permission
+        {has_permissions
           ? this.renderCameraLayout()
           : this.renderMissingPermissions()}
       </SafeAreaView>

@@ -30,15 +30,9 @@ const styles = StyleSheet.create({
   },
 
   // Vertical Layout Formatting
-  vertical_camera_container: {
-    flex: 1,
-    width: window.width,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: 'red',
-  },
   vertical_content_container: {
-    flex: 1,
+    // flex: 1,
+    height: window.height,
     alignItems: 'center',
     justifyContent: 'center',
     // backgroundColor: '#000FF0',
@@ -71,20 +65,6 @@ const styles = StyleSheet.create({
   },
 
   // Horizontal Layout Formatting
-  horizontal_camera_container: {
-    flex: 1,
-    height: window.height,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: 'red',
-  },
-  horizontal_content_container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    // backgroundColor: '#000FF0',
-  },
   horizontal_row_select_event: {
     width: 115,
     height: window.height,
