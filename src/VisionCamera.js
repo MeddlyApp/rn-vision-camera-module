@@ -21,9 +21,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
+import Orientation from 'react-native-orientation-locker';
+import GestureHandler from './GestureHandler';
 import RenderCamera from './RenderCamera';
 import styles from './styles';
-import GestureHandler from './GestureHandler';
 
 export default class VisionCamera extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class VisionCamera extends Component {
 
     this.state = {
       screen_size: Dimensions.get('window'),
-
+      orientation: 'PORTRAIT',
       // Camera Settings
       camera_active: false,
       front_camera: false,
@@ -50,7 +51,6 @@ export default class VisionCamera extends Component {
     };
 
     this.camera = React.createRef();
-
     this.pinchRef = React.createRef();
     this.doubleTapRef = React.createRef();
   }
@@ -58,6 +58,7 @@ export default class VisionCamera extends Component {
   /******************** COMPONENT LIFECYCLE ********************/
 
   componentDidMount = async () => {
+    Orientation.addOrientationListener(this.onOrientationDidChange);
     await this.checkPermissions();
 
     let {has_camera_permission, has_microphone_permission} = this.state;
@@ -66,15 +67,24 @@ export default class VisionCamera extends Component {
   };
 
   componentWillUnmount() {
+    Orientation.removeOrientationListener(this.onOrientationDidChange);
     this.setState({camera_active: false});
   }
 
   /******************** PERMISSIONS ********************/
 
   checkPermissions = async () => {
-    await this.getCameraPermissions();
-    await this.getMicrophonePermissions();
-    await this.getCameraRollPermissions();
+    if (Platform.OS === 'android') {
+      await this.getCameraPermissions();
+      await this.getMicrophonePermissions();
+      await this.getCameraRollPermissions();
+    }
+    if (Platform.OS === 'ios') {
+      this.setState({
+        has_camera_permission: true,
+        has_microphone_permission: true,
+      });
+    }
   };
 
   getCameraPermissions = async () => {
@@ -120,20 +130,17 @@ export default class VisionCamera extends Component {
 
   /******************** GESTURE CONTROLS ********************/
 
+  onOrientationDidChange = orientation => this.setState({orientation});
+  deviceRotated = () => this.setState({screen_size: Dimensions.get('window')});
+
   tapToFocus = async e => {
-    console.log('TAP TO FOCUS');
+    // console.log('TAP TO FOCUS');
     await this.camera.current
       .focus({
         x: e.nativeEvent.absoluteX,
         y: e.nativeEvent.absoluteY,
       })
       .catch(e => console.log('Focus Error: ', e));
-  };
-
-  deviceRotated = () => {
-    let size = Dimensions.get('window');
-    this.setState({screen_size: size});
-    console.log('Updated Size: ', size);
   };
 
   onPinchStart = () => (this._prevPinch = 1);
@@ -148,19 +155,13 @@ export default class VisionCamera extends Component {
       this.setState({zoom: Math.min(zoom + zoom_value, 1)}, () => {});
     } else if (p2 < 0 && p2 < -zoom_value) {
       this._prevPinch = p;
-      this.setState({zoom: Math.max(zoom - zoom_value, 0)}, () => {});
+      this.setState({zoom: Math.max(zoom - zoom_value * 1.5, 0)}, () => {});
     }
   };
 
   /******************** CAMERA ACTIONS ********************/
 
-  toggleCamera = () => {
-    console.log('TOGGLE CAMERA');
-
-    let {front_camera} = this.state;
-    this.setState({front_camera: !front_camera});
-  };
-
+  toggleCamera = () => this.setState({front_camera: !this.state.front_camera});
   toggleFlash = () => {
     let {flash} = this.state;
     switch (flash) {
@@ -306,20 +307,32 @@ export default class VisionCamera extends Component {
   };
 
   renderHorizontalCameraControls = () => {
-    let {is_recording, screen_size} = this.state;
-    let is_vertical = screen_size.height > screen_size.width;
-
+    let {is_recording, screen_size, orientation} = this.state;
+    let landscape_right = orientation === 'LANDSCAPE-RIGHT';
     let camera_controls_container_styles = {
       width: 80,
       height: screen_size.height,
       flexDirection: 'column',
     };
-    let horizontal_content_container = {
-      width: screen_size.width,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'row',
-    };
+
+    let horizontal_content_container;
+    if (landscape_right) {
+      horizontal_content_container = {
+        height: screen_size.height,
+        width: screen_size.width,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row-reverse',
+      };
+    } else {
+      horizontal_content_container = {
+        height: screen_size.height,
+        width: screen_size.width,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+      };
+    }
 
     return (
       <View style={horizontal_content_container}>
@@ -344,7 +357,6 @@ export default class VisionCamera extends Component {
 
   renderVerticalCameraControls = () => {
     let {is_recording, screen_size} = this.state;
-    let is_vertical = screen_size.height > screen_size.width;
 
     let camera_controls_container_styles = {
       height: 80,
@@ -353,6 +365,7 @@ export default class VisionCamera extends Component {
     };
     let vertical_content_container = {
       height: screen_size.height,
+      width: screen_size.width,
       alignItems: 'center',
       justifyContent: 'center',
     };

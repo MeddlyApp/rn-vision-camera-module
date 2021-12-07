@@ -15,6 +15,9 @@ import java.util.List;
 import com.facebook.react.bridge.JSIModulePackage; // <- add
 import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
 
+// Orientation Locker
+import org.wonday.orientation.OrientationActivityLifecycle;
+
 // Camera Roll
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
 
@@ -58,6 +61,9 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+
+    // Orientation Locker
+    registerActivityLifecycleCallbacks(OrientationActivityLifecycle.getInstance());
   }
 
   /**
