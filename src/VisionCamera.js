@@ -157,7 +157,13 @@ export default class VisionCamera extends Component {
 
   /******************** CAMERA ACTIONS ********************/
 
-  toggleCamera = () => this.setState({front_camera: !this.state.front_camera});
+  toggleCamera = () => {
+    let {front_camera} = this.state;
+    this.setState({
+      front_camera: !front_camera,
+      zoom: 0,
+    });
+  };
   toggleFlash = () => {
     let {flash} = this.state;
     switch (flash) {
