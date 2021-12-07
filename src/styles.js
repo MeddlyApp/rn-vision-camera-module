@@ -31,11 +31,10 @@ const styles = StyleSheet.create({
 
   // Vertical Layout Formatting
   vertical_row_select_event: {
-    height: 115,
+    height: 145,
     width: window.width,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 15,
   },
   vertical_gesture_controls: {
     flex: 5,
@@ -55,11 +54,10 @@ const styles = StyleSheet.create({
 
   // Horizontal Layout Formatting
   horizontal_row_select_event: {
-    width: 115,
+    width: 145,
     height: window.height,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 15,
   },
   horizontal_gesture_controls: {
     flex: 5,
