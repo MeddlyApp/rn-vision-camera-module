@@ -130,19 +130,12 @@ export default class VisionCamera extends Component {
 
   /******************** GESTURE CONTROLS ********************/
 
-  onOrientationDidChange = orientation => {
-    // console.log('New Orientation: ', orientation);
-    this.setState({orientation});
-  };
+  onOrientationDidChange = orientation => this.setState({orientation});
   deviceRotated = () => this.setState({screen_size: Dimensions.get('window')});
 
   tapToFocus = async e => {
-    // console.log('TAP TO FOCUS');
     await this.camera.current
-      .focus({
-        x: e.nativeEvent.absoluteX,
-        y: e.nativeEvent.absoluteY,
-      })
+      .focus({x: e.nativeEvent.absoluteX, y: e.nativeEvent.absoluteY})
       .catch(e => console.log('Focus Error: ', e));
   };
 
@@ -181,10 +174,27 @@ export default class VisionCamera extends Component {
 
   /******************** CAMERA LIFECYCLE ********************/
 
+  lockOrientation = async () => {
+    new Promise(resolve => {
+      let {orientation} = this.state;
+      switch (orientation) {
+        case 'PORTRAIT':
+          return resolve(Orientation.lockToPortrait());
+        case 'LANDSCAPE-LEFT':
+          return resolve(Orientation.lockToLandscapeLeft());
+        case 'LANDSCAPE-RIGHT':
+          return resolve(Orientation.lockToLandscapeRight());
+        default:
+          return resolve(console.log('Lock Orientation Error'));
+      }
+    });
+  };
   startVideo = async () => {
     let timestamp1 = new Date().getTime();
     console.log('Starting Video', timestamp1);
     let {flash} = this.state;
+
+    await this.lockOrientation();
     await this.camera.current.startRecording({
       flash: flash,
       fileType: 'mp4',
@@ -208,6 +218,9 @@ export default class VisionCamera extends Component {
         }
 
         CameraRoll.save(video.path);
+
+        // Unlock Orientations
+        Orientation.unlockAllOrientations();
       },
       onRecordingError: error => {
         console.error('REC ERROR', error);
