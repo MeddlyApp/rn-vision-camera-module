@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     width: window.width,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 15,
+    marginVertical: 15,
   },
   vertical_gesture_controls: {
     flex: 5,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     height: window.height,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 15,
+    marginHorizontal: 15,
   },
   horizontal_gesture_controls: {
     flex: 5,
