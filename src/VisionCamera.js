@@ -130,7 +130,10 @@ export default class VisionCamera extends Component {
 
   /******************** GESTURE CONTROLS ********************/
 
-  onOrientationDidChange = orientation => this.setState({orientation});
+  onOrientationDidChange = orientation => {
+    // console.log('New Orientation: ', orientation);
+    this.setState({orientation});
+  };
   deviceRotated = () => this.setState({screen_size: Dimensions.get('window')});
 
   tapToFocus = async e => {
@@ -270,17 +273,19 @@ export default class VisionCamera extends Component {
     let cameraView = front_camera ? 'Front' : 'Back';
     let is_vertical = screen_size.height > screen_size.width;
 
-    let vertical_styles = {
-      height: 80,
-      width: screen_size.width / 2,
+    let base_styles = {
       alignItems: 'center',
       justifyContent: 'center',
     };
+    let vertical_styles = {
+      ...base_styles,
+      height: 80,
+      width: screen_size.width / 2,
+    };
     let horizontal_styles = {
+      ...base_styles,
       width: 80,
       height: screen_size.height / 2,
-      alignItems: 'center',
-      justifyContent: 'center',
     };
 
     let toggle_btn_style = is_vertical ? vertical_styles : horizontal_styles;
@@ -315,21 +320,20 @@ export default class VisionCamera extends Component {
       flexDirection: 'column',
     };
 
-    let horizontal_content_container;
+    let horizontal_content_container = {
+      height: screen_size.height,
+      width: screen_size.width,
+      alignItems: 'center',
+      justifyContent: 'center',
+    };
     if (landscape_right) {
       horizontal_content_container = {
-        height: screen_size.height,
-        width: screen_size.width,
-        alignItems: 'center',
-        justifyContent: 'center',
+        ...horizontal_content_container,
         flexDirection: 'row-reverse',
       };
     } else {
       horizontal_content_container = {
-        height: screen_size.height,
-        width: screen_size.width,
-        alignItems: 'center',
-        justifyContent: 'center',
+        ...horizontal_content_container,
         flexDirection: 'row',
       };
     }

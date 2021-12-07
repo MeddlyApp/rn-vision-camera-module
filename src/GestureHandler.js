@@ -28,8 +28,6 @@ export default function GestureHandler(props) {
     <GestureHandlerRootView>
       <PinchGestureHandler
         ref={pinchRef}
-        // onActivated={() => console.log('DRAGGGG')}
-        // onActivated={onGesturePinch}
         onGestureEvent={onGesturePinch}
         onHandlerStateChange={onPinchHandlerStateChange}
         maxDelayMs={175}>

@@ -30,34 +30,23 @@ const styles = StyleSheet.create({
   },
 
   // Vertical Layout Formatting
-  vertical_content_container: {
-    // flex: 1,
-    height: window.height,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: '#000FF0',
-  },
   vertical_row_select_event: {
     height: 115,
     width: window.width,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'red',
     marginTop: 15,
   },
   vertical_gesture_controls: {
     flex: 5,
-    // width: window.width,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: '#000FF0',
   },
   vertical_row_recording_controls: {
     height: 120,
     width: window.width,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: '#000FF0',
   },
   vertical_bottom_void: {
     flex: 1,
@@ -70,22 +59,18 @@ const styles = StyleSheet.create({
     height: window.height,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'red',
     marginLeft: 15,
   },
   horizontal_gesture_controls: {
     flex: 5,
-    // height: window.width,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: '#000FF0',
   },
   horizontal_row_recording_controls: {
     width: 120,
     height: window.height,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: '#000FF0',
   },
   horizontal_bottom_void: {
     flex: 1,
