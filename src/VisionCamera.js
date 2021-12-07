@@ -38,6 +38,7 @@ export default class VisionCamera extends Component {
       flash: 'off',
       is_video: true,
       is_recording: false,
+      zoom: 0,
 
       // Permission Denied
       camera_permission_denied: false,
@@ -49,6 +50,7 @@ export default class VisionCamera extends Component {
     };
 
     this.camera = React.createRef();
+
     this.pinchRef = React.createRef();
     this.doubleTapRef = React.createRef();
   }
@@ -119,6 +121,7 @@ export default class VisionCamera extends Component {
   /******************** GESTURE CONTROLS ********************/
 
   tapToFocus = async e => {
+    console.log('TAP TO FOCUS');
     await this.camera.current
       .focus({
         x: e.nativeEvent.absoluteX,
@@ -133,9 +136,27 @@ export default class VisionCamera extends Component {
     console.log('Updated Size: ', size);
   };
 
+  onPinchStart = () => (this._prevPinch = 1);
+  onPinchEnd = () => (this._prevPinch = 1);
+  onPinchProgress = p => {
+    let {zoom} = this.state;
+    let zoom_value = 0.01;
+    let p2 = p - this._prevPinch;
+
+    if (p2 > 0 && p2 > zoom_value) {
+      this._prevPinch = p;
+      this.setState({zoom: Math.min(zoom + zoom_value, 1)}, () => {});
+    } else if (p2 < 0 && p2 < -zoom_value) {
+      this._prevPinch = p;
+      this.setState({zoom: Math.max(zoom - zoom_value, 0)}, () => {});
+    }
+  };
+
   /******************** CAMERA ACTIONS ********************/
 
   toggleCamera = () => {
+    console.log('TOGGLE CAMERA');
+
     let {front_camera} = this.state;
     this.setState({front_camera: !front_camera});
   };
@@ -306,17 +327,7 @@ export default class VisionCamera extends Component {
           <Text style={styles.txt_white}>Event_Ctl</Text>
         </View>
 
-        <View style={styles.horizontal_gesture_controls}>
-          {/*
-          <GestureHandler
-            is_vertical={is_vertical}
-            doubleTapRef={this.doubleTapRef}
-            onSingleTap={this.tapToFocus}
-            onDoubleTap={this.toggleCamera}>
-            <Text style={styles.txt_white}>Gesture Section</Text>
-          </GestureHandler>
-          */}
-        </View>
+        <View style={styles.horizontal_gesture_controls}></View>
 
         <View style={camera_controls_container_styles}>
           {!is_recording ? this.renderCameraControls() : null}
@@ -352,17 +363,7 @@ export default class VisionCamera extends Component {
           <Text style={styles.txt_white}>Event_Ctl</Text>
         </View>
 
-        <View style={styles.vertical_gesture_controls}>
-          {/*
-          <GestureHandler
-            is_vertical={is_vertical}
-            doubleTapRef={this.doubleTapRef}
-            onSingleTap={this.tapToFocus}
-            onDoubleTap={this.toggleCamera}>
-            <Text style={styles.txt_white}>Gesture Section</Text>
-          </GestureHandler>
-          */}
-        </View>
+        <View style={styles.vertical_gesture_controls}></View>
 
         <View style={camera_controls_container_styles}>
           {!is_recording ? this.renderCameraControls() : null}
@@ -378,7 +379,7 @@ export default class VisionCamera extends Component {
   };
 
   renderCameraLayout = () => {
-    let {screen_size, camera_active, front_camera, is_video} = this.state;
+    let {screen_size, camera_active, front_camera, is_video, zoom} = this.state;
     let is_vertical = screen_size.height > screen_size.width;
 
     return (
@@ -388,18 +389,21 @@ export default class VisionCamera extends Component {
           camera_active={camera_active}
           front_camera={front_camera}
           is_video={is_video}
+          zoom={zoom}
         />
 
-        {/*
         <GestureHandler
           pinchRef={this.pinchRef}
           doubleTapRef={this.doubleTapRef}
           onSingleTap={this.tapToFocus}
-          onDoubleTap={this.toggleCamera}>
-*/}
-        {is_vertical
-          ? this.renderVerticalCameraControls()
-          : this.renderHorizontalCameraControls()}
+          onDoubleTap={this.toggleCamera}
+          onPinchProgress={this.onPinchProgress}
+          onPinchStart={this.onPinchStart}
+          onPinchEnd={this.onPinchEnd}>
+          {is_vertical
+            ? this.renderVerticalCameraControls()
+            : this.renderHorizontalCameraControls()}
+        </GestureHandler>
       </Fragment>
     );
   };

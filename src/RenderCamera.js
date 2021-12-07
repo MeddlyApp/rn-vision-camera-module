@@ -4,10 +4,12 @@ import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import styles from './styles';
 
 export default function RenderCamera(props) {
-  let {camera, camera_active, front_camera, is_video} = props;
+  let {camera, camera_active, front_camera, is_video, zoom} = props;
 
   let devices = useCameraDevices();
   let device = front_camera ? devices.front : devices.back;
+
+  // NOTE: zoom state is multiplied by 10 because 1 is minimum
 
   if (device == null) {
     return (
@@ -16,8 +18,6 @@ export default function RenderCamera(props) {
       </View>
     );
   } else {
-    console.log('DEVICE: ', device.minZoom);
-    console.log();
     return (
       <Camera
         ref={camera}
@@ -26,9 +26,10 @@ export default function RenderCamera(props) {
         video={is_video}
         audio={is_video}
         fps={240}
+        zoom={zoom * 10}
         autoFocusSystem={'contrast-detection'}
         videoStabilizationMode={'cinematic-extended'}
-        enableZoomGesture={true}
+        // enableZoomGesture={true}
         minZoom={device.minZoom}
         maxZoom={device.maxZoom}
         style={StyleSheet.absoluteFill}
