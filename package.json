@@ -12,7 +12,7 @@
   "dependencies": {
     "@react-native-community/cameraroll": "^4.1.2",
     "react": "17.0.2",
-    "react-native": "0.66.3",
+    "react-native": "0.67.3",
     "react-native-gesture-handler": "^2.0.0",
     "react-native-orientation-locker": "^1.4.0",
     "react-native-reanimated": "^2.2.4",
@@ -25,7 +25,7 @@
     "babel-jest": "^27.3.1",
     "eslint": "^8.3.0",
     "jest": "^27.3.1",
-    "metro-react-native-babel-preset": "^0.66.2",
+    "metro-react-native-babel-preset": "^0.69.0",
     "react-test-renderer": "17.0.2"
   },
   "jest": {
