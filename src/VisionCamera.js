@@ -5,26 +5,31 @@
  * EVENT ACTIONS
  * GESTURE CONTROLS
  * CAMERA ACTIONS
- * CAMERA LIFECYCLE
- * COMPONENT RENDERS
+ * VIDEO CAMERA LIFECYCLE
+ * PICTURE LIFECYCLE
+ * RENDERS
 /*/
 
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {
   PermissionsAndroid,
   Platform,
   SafeAreaView,
   Linking,
   View,
-  Text,
   Dimensions,
-  TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
 import Orientation from 'react-native-orientation-locker';
-import GestureHandler from './GestureHandler';
-import RenderCamera from './RenderCamera';
 import styles from './styles';
+import GestureHandler from './Components/GestureHandler';
+import RenderCamera from './Components/RenderCamera';
+import MissingPermissions from './Components/MissingPermissions';
+import CameraControlsHorizontal from './Components/CameraControlsHorizontal';
+import CameraControlsVertical from './Components/CameraControlsVertical';
+import VideoControls from './Components/VideoControls';
+import PictureControls from './Components/PictureControls';
 
 export default class VisionCamera extends Component {
   constructor(props) {
@@ -75,9 +80,11 @@ export default class VisionCamera extends Component {
 
   checkPermissions = async () => {
     if (Platform.OS === 'android') {
-      await this.getCameraPermissions();
-      await this.getMicrophonePermissions();
-      await this.getCameraRollPermissions();
+      await Promise.all([
+        this.getCameraPermissions(),
+        this.getMicrophonePermissions(),
+        this.getCameraRollPermissions(),
+      ]);
     }
     if (Platform.OS === 'ios') {
       this.setState({
@@ -177,8 +184,9 @@ export default class VisionCamera extends Component {
         return this.setState({flash: 'off'});
     }
   };
+  toggleVideoOrPicture = () => this.setState({is_video: !this.state.is_video});
 
-  /******************** CAMERA LIFECYCLE ********************/
+  /******************** VIDEO CAMERA LIFECYCLE ********************/
 
   lockOrientation = async () => {
     new Promise(resolve => {
@@ -248,211 +256,90 @@ export default class VisionCamera extends Component {
     return this.setState({is_recording: false});
   };
 
-  /******************** COMPONENT RENDERS ********************/
-
-  renderMissingPermissions = () => {
-    let {has_camera_permission, has_microphone_permission} = this.state;
-    return (
-      <TouchableOpacity
-        onPress={this.openSettings}
-        style={styles.permissions_content_container}>
-        {!has_camera_permission ? (
-          <Text style={styles.txt_white}>Camera Permission Denied</Text>
-        ) : null}
-
-        {!has_microphone_permission ? (
-          <Text style={styles.txt_white}>Microphone Permission Denied</Text>
-        ) : null}
-
-        <Text style={styles.txt_white_margin_top}>Open Settings</Text>
-      </TouchableOpacity>
-    );
+  /******************** PICTURE LIFECYCLE ********************/
+  takePicture = () => {
+    alert();
   };
 
-  renderRecordingControls = () => {
-    let {is_recording} = this.state;
-
-    if (!is_recording) {
-      return (
-        <TouchableOpacity onPress={this.startVideo} style={styles.rec_btn}>
-          <Text style={styles.txt_white}>Record</Text>
-        </TouchableOpacity>
-      );
-    } else {
-      return (
-        <TouchableOpacity onPress={this.endVideo} style={styles.stop_btn}>
-          <Text style={styles.txt_white}>Stop</Text>
-        </TouchableOpacity>
-      );
-    }
-  };
-
-  renderCameraControls = () => {
-    let {screen_size, front_camera, flash} = this.state;
-    let cameraView = front_camera ? 'Front' : 'Back';
-    let is_vertical = screen_size.height > screen_size.width;
-
-    let base_styles = {
-      alignItems: 'center',
-      justifyContent: 'center',
-    };
-    let vertical_styles = {
-      ...base_styles,
-      height: 80,
-      width: screen_size.width / 2,
-    };
-    let horizontal_styles = {
-      ...base_styles,
-      width: 80,
-      height: screen_size.height / 2,
-    };
-
-    let toggle_btn_style = is_vertical ? vertical_styles : horizontal_styles;
-
-    return (
-      <Fragment>
-        <View style={toggle_btn_style}>
-          <TouchableOpacity
-            onPress={this.toggleCamera}
-            style={styles.camera_btn}>
-            <Text style={styles.txt_white}>{cameraView}</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={toggle_btn_style}>
-          <TouchableOpacity
-            onPress={this.toggleFlash}
-            style={styles.camera_btn}>
-            <Text style={styles.txt_white}>{flash}</Text>
-          </TouchableOpacity>
-        </View>
-      </Fragment>
-    );
-  };
-
-  renderHorizontalCameraControls = () => {
-    let {is_recording, screen_size, orientation} = this.state;
-    let landscape_right = orientation === 'LANDSCAPE-RIGHT';
-    let camera_controls_container_styles = {
-      width: 80,
-      height: screen_size.height,
-      flexDirection: 'column',
-    };
-
-    let horizontal_content_container = {
-      height: screen_size.height,
-      width: screen_size.width,
-      alignItems: 'center',
-      justifyContent: 'center',
-    };
-    if (landscape_right) {
-      horizontal_content_container = {
-        ...horizontal_content_container,
-        flexDirection: 'row-reverse',
-      };
-    } else {
-      horizontal_content_container = {
-        ...horizontal_content_container,
-        flexDirection: 'row',
-      };
-    }
-
-    return (
-      <View style={horizontal_content_container}>
-        <View style={styles.horizontal_row_select_event}>
-          <Text style={styles.txt_white}>Event_Ctl</Text>
-        </View>
-
-        <View style={styles.horizontal_gesture_controls}></View>
-
-        <View style={camera_controls_container_styles}>
-          {!is_recording ? this.renderCameraControls() : null}
-        </View>
-
-        <View style={styles.horizontal_row_recording_controls}>
-          {this.renderRecordingControls()}
-        </View>
-
-        <View style={styles.horizontal_bottom_void} />
-      </View>
-    );
-  };
-
-  renderVerticalCameraControls = () => {
-    let {is_recording, screen_size} = this.state;
-
-    let camera_controls_container_styles = {
-      height: 80,
-      width: window.width,
-      flexDirection: 'row',
-    };
-    let vertical_content_container = {
-      height: screen_size.height,
-      width: screen_size.width,
-      alignItems: 'center',
-      justifyContent: 'center',
-    };
-
-    return (
-      <View style={vertical_content_container}>
-        <View style={styles.vertical_row_select_event}>
-          <Text style={styles.txt_white}>Event_Ctl</Text>
-        </View>
-
-        <View style={styles.vertical_gesture_controls}></View>
-
-        <View style={camera_controls_container_styles}>
-          {!is_recording ? this.renderCameraControls() : null}
-        </View>
-
-        <View style={styles.vertical_row_recording_controls}>
-          {this.renderRecordingControls()}
-        </View>
-
-        <View style={styles.vertical_bottom_void} />
-      </View>
-    );
-  };
-
-  renderCameraLayout = () => {
-    let {screen_size, camera_active, front_camera, is_video, zoom} = this.state;
-    let is_vertical = screen_size.height > screen_size.width;
-
-    return (
-      <Fragment>
-        <RenderCamera
-          camera={this.camera}
-          camera_active={camera_active}
-          front_camera={front_camera}
-          is_video={is_video}
-          zoom={zoom}
-        />
-
-        <GestureHandler
-          pinchRef={this.pinchRef}
-          doubleTapRef={this.doubleTapRef}
-          onSingleTap={this.tapToFocus}
-          onDoubleTap={this.toggleCamera}
-          onPinchProgress={this.onPinchProgress}
-          onPinchStart={this.onPinchStart}
-          onPinchEnd={this.onPinchEnd}>
-          {is_vertical
-            ? this.renderVerticalCameraControls()
-            : this.renderHorizontalCameraControls()}
-        </GestureHandler>
-      </Fragment>
-    );
-  };
+  /******************** RENDERS ********************/
 
   render() {
-    let {has_camera_permission, has_microphone_permission} = this.state;
+    let {
+      has_camera_permission,
+      has_microphone_permission,
+      screen_size,
+      camera_active,
+      front_camera,
+      zoom,
+      is_recording,
+      is_video,
+    } = this.state;
     let has_permissions = has_camera_permission && has_microphone_permission;
+    let is_vertical = screen_size.height > screen_size.width;
 
     return (
       <SafeAreaView style={styles.base_container} onLayout={this.deviceRotated}>
-        {has_permissions
-          ? this.renderCameraLayout()
-          : this.renderMissingPermissions()}
+        <StatusBar hidden={true} />
+
+        {has_permissions ? (
+          <>
+            <RenderCamera
+              camera={this.camera}
+              camera_active={camera_active}
+              front_camera={front_camera}
+              zoom={zoom}
+            />
+
+            <GestureHandler
+              pinchRef={this.pinchRef}
+              doubleTapRef={this.doubleTapRef}
+              onSingleTap={this.tapToFocus}
+              onDoubleTap={this.toggleCamera}
+              onPinchProgress={this.onPinchProgress}
+              onPinchStart={this.onPinchStart}
+              onPinchEnd={this.onPinchEnd}>
+              <View>
+                {is_vertical ? (
+                  <CameraControlsVertical
+                    state={this.state}
+                    toggleCamera={this.toggleCamera}
+                    toggleFlash={this.toggleFlash}>
+                    {is_video ? (
+                      <VideoControls
+                        is_recording={is_recording}
+                        startVideo={this.startVideo}
+                        endVideo={this.endVideo}
+                      />
+                    ) : (
+                      <PictureControls takePicture={this.takePicture} />
+                    )}
+                  </CameraControlsVertical>
+                ) : (
+                  <CameraControlsHorizontal
+                    state={this.state}
+                    toggleCamera={this.toggleCamera}
+                    toggleFlash={this.toggleFlash}>
+                    {is_video ? (
+                      <VideoControls
+                        is_recording={is_recording}
+                        startVideo={this.startVideo}
+                        endVideo={this.endVideo}
+                      />
+                    ) : (
+                      <PictureControls takePicture={this.takePicture} />
+                    )}
+                  </CameraControlsHorizontal>
+                )}
+              </View>
+            </GestureHandler>
+          </>
+        ) : (
+          <MissingPermissions
+            has_camera_permission={this.state.has_camera_permission}
+            has_microphone_permission={this.state.has_microphone_permission}
+            openSettings={this.openSettings}
+          />
+        )}
       </SafeAreaView>
     );
   }
