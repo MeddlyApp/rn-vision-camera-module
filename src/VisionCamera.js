@@ -47,11 +47,6 @@ export default class VisionCamera extends Component {
       is_recording: false,
       video_start_time: null,
 
-      // Permission Denied
-      camera_permission_denied: false,
-      microphone_permission_denied: false,
-      camera_roll_permission_denied: false,
-
       // Permission Granted
       has_camera_permission: false,
       has_microphone_permission: false,
@@ -146,6 +141,21 @@ export default class VisionCamera extends Component {
 
   onOrientationDidChange = orientation => this.setState({orientation});
   deviceRotated = () => this.setState({screen_size: Dimensions.get('window')});
+  lockOrientation = async () => {
+    new Promise(resolve => {
+      const {orientation} = this.state;
+      switch (orientation) {
+        case 'PORTRAIT':
+          return resolve(Orientation.lockToPortrait());
+        case 'LANDSCAPE-LEFT':
+          return resolve(Orientation.lockToLandscapeLeft());
+        case 'LANDSCAPE-RIGHT':
+          return resolve(Orientation.lockToLandscapeRight());
+        default:
+          return resolve(console.log('Lock Orientation Error'));
+      }
+    });
+  };
 
   tapToFocus = async e => {
     await this.camera.current
@@ -201,21 +211,6 @@ export default class VisionCamera extends Component {
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
-  lockOrientation = async () => {
-    new Promise(resolve => {
-      const {orientation} = this.state;
-      switch (orientation) {
-        case 'PORTRAIT':
-          return resolve(Orientation.lockToPortrait());
-        case 'LANDSCAPE-LEFT':
-          return resolve(Orientation.lockToLandscapeLeft());
-        case 'LANDSCAPE-RIGHT':
-          return resolve(Orientation.lockToLandscapeRight());
-        default:
-          return resolve(console.log('Lock Orientation Error'));
-      }
-    });
-  };
   startVideo = async () => {
     const {flash} = this.state;
     await this.lockOrientation();
@@ -245,6 +240,7 @@ export default class VisionCamera extends Component {
           return alert('Camera Roll not permitted');
         }
 
+        // Write additional metadata here...
         CameraRoll.save(video.path);
 
         // Unlock Orientations
@@ -274,13 +270,13 @@ export default class VisionCamera extends Component {
 
   takePicture = async () => {
     const {flash} = this.state;
-
     const photo = await this.camera.current.takePhoto({
       flash,
       enableAutoRedEyeReduction: true,
       enableAutoStabilization: true,
     });
 
+    // Write additional metadata here...
     CameraRoll.save(photo.path);
   };
 
