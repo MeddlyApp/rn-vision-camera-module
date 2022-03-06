@@ -18,6 +18,7 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
+import {Camera} from 'react-native-vision-camera';
 import CameraRoll from '@react-native-community/cameraroll';
 import Orientation from 'react-native-orientation-locker';
 import styles from './styles';
@@ -36,21 +37,25 @@ export default class VisionCamera extends Component {
     this.state = {
       screen_size: Dimensions.get('window'),
       orientation: 'PORTRAIT',
+
       // Camera Settings
       camera_active: false,
       front_camera: false,
+      zoom: 0,
       flash: 'off',
       is_video: true,
       is_recording: false,
-      zoom: 0,
+      video_start_time: null,
 
       // Permission Denied
       camera_permission_denied: false,
       microphone_permission_denied: false,
+      camera_roll_permission_denied: false,
 
       // Permission Granted
       has_camera_permission: false,
       has_microphone_permission: false,
+      has_camera_roll_permission: false,
     };
 
     this.camera = React.createRef();
@@ -61,12 +66,23 @@ export default class VisionCamera extends Component {
   /******************** COMPONENT LIFECYCLE ********************/
 
   componentDidMount = async () => {
-    Orientation.addOrientationListener(this.onOrientationDidChange);
     await this.checkPermissions();
 
-    const {has_camera_permission, has_microphone_permission} = this.state;
-    const has_permission = has_camera_permission && has_microphone_permission;
+    const {
+      has_camera_permission,
+      has_microphone_permission,
+      has_camera_roll_permission,
+    } = this.state;
+
+    const has_permission =
+      has_camera_permission &&
+      has_microphone_permission &&
+      has_camera_roll_permission;
+
     if (has_permission) this.setState({camera_active: true});
+
+    Orientation.unlockAllOrientations();
+    Orientation.addOrientationListener(this.onOrientationDidChange);
   };
 
   componentWillUnmount() {
@@ -77,56 +93,53 @@ export default class VisionCamera extends Component {
   /******************** PERMISSIONS ********************/
 
   checkPermissions = async () => {
-    if (Platform.OS === 'android') {
-      await Promise.all([
-        this.getCameraPermissions(),
-        this.getMicrophonePermissions(),
-        this.getCameraRollPermissions(),
-      ]);
-    }
-    if (Platform.OS === 'ios') {
-      this.setState({
-        has_camera_permission: true,
-        has_microphone_permission: true,
-      });
-    }
+    let has_camera = await this.getCameraPermissions();
+    let has_mic = await this.getMicrophonePermissions();
+    let has_cam_roll = await this.getCameraRollPermissions();
+
+    this.setState({
+      has_camera_permission: has_camera,
+      has_microphone_permission: has_mic,
+      has_camera_roll_permission: has_cam_roll,
+    });
   };
 
   getCameraPermissions = async () => {
-    const permission = PermissionsAndroid.PERMISSIONS.CAMERA;
-    const hasPermission = await PermissionsAndroid.check(permission);
-    if (hasPermission) return this.setState({has_camera_permission: true});
-    const status = await PermissionsAndroid.request(permission);
-    if (status === 'granted') {
-      this.setState({has_camera_permission: true});
-    }
-    if (status === 'never_ask_again') {
-      this.setState({camera_permission_denied: true});
-    }
+    const cameraPermission = await Camera.getCameraPermissionStatus();
+    if (cameraPermission === 'authorized') return true;
+    if (
+      cameraPermission === 'not-determined' ||
+      cameraPermission === 'denied'
+    ) {
+      const newCameraPermission = await Camera.requestCameraPermission();
+      if (newCameraPermission === 'authorized') return true;
+      return false;
+    } else return false;
   };
 
   getMicrophonePermissions = async () => {
-    const permission = PermissionsAndroid.PERMISSIONS.RECORD_AUDIO;
-    const hasPermission = await PermissionsAndroid.check(permission);
-    if (hasPermission) return this.setState({has_microphone_permission: true});
-    const status = await PermissionsAndroid.request(permission);
-    if (status === 'granted') {
-      this.setState({has_microphone_permission: true});
-    }
-    if (status === 'never_ask_again') {
-      this.setState({microphone_permission_denied: true});
-    }
-    return status;
+    const microphonePermission = await Camera.getMicrophonePermissionStatus();
+    if (microphonePermission === 'authorized') return true;
+    if (
+      microphonePermission === 'not-determined' ||
+      microphonePermission === 'denied'
+    ) {
+      const newMicrophonePermission =
+        await Camera.requestMicrophonePermission();
+      if (newMicrophonePermission === 'authorized') return true;
+      return false;
+    } else return false;
   };
 
   getCameraRollPermissions = async () => {
-    const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
-    const hasPermission = await PermissionsAndroid.check(permission);
-    if (hasPermission) return true;
-    const status = await PermissionsAndroid.request(permission);
-    return status === 'authorized';
+    if (Platform.OS === 'android') {
+      let permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+      let hasPermission = await PermissionsAndroid.check(permission);
+      if (hasPermission) return true;
+      let status = await PermissionsAndroid.request(permission);
+      return status === 'authorized';
+    }
   };
-
   openSettings = async () => await Linking.openSettings();
 
   /******************** GESTURE CONTROLS ********************/
@@ -168,6 +181,10 @@ export default class VisionCamera extends Component {
       zoom: 0,
     });
   };
+  toggleVideoOrPicture = () => {
+    const {is_video} = this.state;
+    this.setState({is_video: !is_video});
+  };
   toggleFlash = () => {
     const {flash} = this.state;
     switch (flash) {
@@ -181,7 +198,6 @@ export default class VisionCamera extends Component {
         return this.setState({flash: 'off'});
     }
   };
-  toggleVideoOrPicture = () => this.setState({is_video: !this.state.is_video});
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
@@ -201,11 +217,12 @@ export default class VisionCamera extends Component {
     });
   };
   startVideo = async () => {
+    const {flash} = this.state;
+    await this.lockOrientation();
+
     const timestamp1 = new Date().getTime();
     console.log('Starting Video', timestamp1);
-    const {flash} = this.state;
 
-    await this.lockOrientation();
     await this.camera.current.startRecording({
       flash: flash,
       fileType: 'mp4',
@@ -256,9 +273,14 @@ export default class VisionCamera extends Component {
   /******************** PICTURE LIFECYCLE ********************/
 
   takePicture = async () => {
+    const {flash} = this.state;
+
     const photo = await this.camera.current.takePhoto({
+      flash,
       enableAutoRedEyeReduction: true,
+      enableAutoStabilization: true,
     });
+
     CameraRoll.save(photo.path);
   };
 
@@ -286,6 +308,7 @@ export default class VisionCamera extends Component {
           <MissingPermissions
             has_camera_permission={this.state.has_camera_permission}
             has_microphone_permission={this.state.has_microphone_permission}
+            has_camera_roll_permission={this.state.has_camera_roll_permission}
             openSettings={this.openSettings}
           />
         </SafeAreaView>
