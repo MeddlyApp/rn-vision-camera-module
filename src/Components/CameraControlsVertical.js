@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
 export default function CameraControlsVertical(props) {
   const {children, state} = props;
-  const {is_recording, screen_size, front_camera, flash} = state;
+  const {is_recording, screen_size, front_camera, flash, is_video} = state;
 
   const camera_controls_container_styles = {
     height: 80,
@@ -22,7 +22,9 @@ export default function CameraControlsVertical(props) {
   return (
     <View style={vertical_content_container}>
       <View style={styles.vertical_row_select_event}>
-        <Text style={styles.txt_white}>Event_Ctl</Text>
+        <TouchableOpacity onPress={props.toggleVideoOrPicture}>
+          <Text style={styles.txt_white}>{is_video ? 'Video' : 'Picture'}</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.vertical_gesture_controls}></View>

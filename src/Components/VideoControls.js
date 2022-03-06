@@ -3,7 +3,7 @@ import {Text, TouchableOpacity} from 'react-native';
 import styles from '../styles';
 
 export default function VideoControls(props) {
-  let {is_recording} = props;
+  const {is_recording} = props;
 
   if (!is_recording) {
     return (

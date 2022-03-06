@@ -7,7 +7,7 @@ import {
 } from 'react-native-gesture-handler';
 
 export default function GestureHandler(props) {
-  let {onSingleTap, onDoubleTap, children} = props;
+  const {onSingleTap, onDoubleTap, children} = props;
 
   const onGesturePinch = ({nativeEvent}) => {
     props.onPinchProgress(nativeEvent.scale);

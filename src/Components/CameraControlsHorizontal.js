@@ -1,17 +1,18 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
 export default function CameraControlsHorizontal(props) {
+  const {children, state} = props;
   const {
     is_recording,
     screen_size,
     orientation,
     front_camera,
     flash,
-    children,
-  } = props.state;
+    is_video,
+  } = state;
 
   const landscape_right = orientation === 'LANDSCAPE-RIGHT';
   const camera_controls_container_styles = {
@@ -20,7 +21,7 @@ export default function CameraControlsHorizontal(props) {
     flexDirection: 'column',
   };
 
-  const horizontal_content_container = {
+  let horizontal_content_container = {
     height: screen_size.height,
     width: screen_size.width,
     alignItems: 'center',
@@ -41,7 +42,9 @@ export default function CameraControlsHorizontal(props) {
   return (
     <View style={horizontal_content_container}>
       <View style={styles.horizontal_row_select_event}>
-        <Text style={styles.txt_white}>Event_Ctl</Text>
+        <TouchableOpacity onPress={props.toggleVideoOrPicture}>
+          <Text style={styles.txt_white}>{is_video ? 'Video' : 'Picture'}</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.horizontal_gesture_controls}></View>

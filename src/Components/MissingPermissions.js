@@ -3,7 +3,7 @@ import {Text, TouchableOpacity} from 'react-native';
 import styles from '../styles';
 
 export default function MissingPermissions(props) {
-  let {has_camera_permission, has_microphone_permission} = props;
+  const {has_camera_permission, has_microphone_permission} = props;
 
   return (
     <TouchableOpacity

@@ -1,8 +1,6 @@
 /*/
  * COMPONENT LIFECYCLE
  * PERMISSIONS
- * HTTP REQUESTS
- * EVENT ACTIONS
  * GESTURE CONTROLS
  * CAMERA ACTIONS
  * VIDEO CAMERA LIFECYCLE
@@ -66,8 +64,8 @@ export default class VisionCamera extends Component {
     Orientation.addOrientationListener(this.onOrientationDidChange);
     await this.checkPermissions();
 
-    let {has_camera_permission, has_microphone_permission} = this.state;
-    let has_permission = has_camera_permission && has_microphone_permission;
+    const {has_camera_permission, has_microphone_permission} = this.state;
+    const has_permission = has_camera_permission && has_microphone_permission;
     if (has_permission) this.setState({camera_active: true});
   };
 
@@ -95,10 +93,10 @@ export default class VisionCamera extends Component {
   };
 
   getCameraPermissions = async () => {
-    let permission = PermissionsAndroid.PERMISSIONS.CAMERA;
-    let hasPermission = await PermissionsAndroid.check(permission);
+    const permission = PermissionsAndroid.PERMISSIONS.CAMERA;
+    const hasPermission = await PermissionsAndroid.check(permission);
     if (hasPermission) return this.setState({has_camera_permission: true});
-    let status = await PermissionsAndroid.request(permission);
+    const status = await PermissionsAndroid.request(permission);
     if (status === 'granted') {
       this.setState({has_camera_permission: true});
     }
@@ -108,10 +106,10 @@ export default class VisionCamera extends Component {
   };
 
   getMicrophonePermissions = async () => {
-    let permission = PermissionsAndroid.PERMISSIONS.RECORD_AUDIO;
-    let hasPermission = await PermissionsAndroid.check(permission);
+    const permission = PermissionsAndroid.PERMISSIONS.RECORD_AUDIO;
+    const hasPermission = await PermissionsAndroid.check(permission);
     if (hasPermission) return this.setState({has_microphone_permission: true});
-    let status = await PermissionsAndroid.request(permission);
+    const status = await PermissionsAndroid.request(permission);
     if (status === 'granted') {
       this.setState({has_microphone_permission: true});
     }
@@ -122,18 +120,14 @@ export default class VisionCamera extends Component {
   };
 
   getCameraRollPermissions = async () => {
-    let permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
-    let hasPermission = await PermissionsAndroid.check(permission);
+    const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+    const hasPermission = await PermissionsAndroid.check(permission);
     if (hasPermission) return true;
-    let status = await PermissionsAndroid.request(permission);
+    const status = await PermissionsAndroid.request(permission);
     return status === 'authorized';
   };
 
   openSettings = async () => await Linking.openSettings();
-
-  /******************** HTTP REQUESTS ********************/
-
-  /******************** EVENT ACTIONS ********************/
 
   /******************** GESTURE CONTROLS ********************/
 
@@ -142,16 +136,19 @@ export default class VisionCamera extends Component {
 
   tapToFocus = async e => {
     await this.camera.current
-      .focus({x: e.nativeEvent.absoluteX, y: e.nativeEvent.absoluteY})
+      .focus({
+        x: e.nativeEvent.absoluteX,
+        y: e.nativeEvent.absoluteY,
+      })
       .catch(e => console.log('Focus Error: ', e));
   };
 
   onPinchStart = () => (this._prevPinch = 1);
   onPinchEnd = () => (this._prevPinch = 1);
   onPinchProgress = p => {
-    let {zoom} = this.state;
-    let zoom_value = 0.01;
-    let p2 = p - this._prevPinch;
+    const {zoom} = this.state;
+    const zoom_value = 0.01;
+    const p2 = p - this._prevPinch;
 
     if (p2 > 0 && p2 > zoom_value) {
       this._prevPinch = p;
@@ -165,14 +162,14 @@ export default class VisionCamera extends Component {
   /******************** CAMERA ACTIONS ********************/
 
   toggleCamera = () => {
-    let {front_camera} = this.state;
+    const {front_camera} = this.state;
     this.setState({
       front_camera: !front_camera,
       zoom: 0,
     });
   };
   toggleFlash = () => {
-    let {flash} = this.state;
+    const {flash} = this.state;
     switch (flash) {
       case 'off':
         return this.setState({flash: 'on'});
@@ -190,7 +187,7 @@ export default class VisionCamera extends Component {
 
   lockOrientation = async () => {
     new Promise(resolve => {
-      let {orientation} = this.state;
+      const {orientation} = this.state;
       switch (orientation) {
         case 'PORTRAIT':
           return resolve(Orientation.lockToPortrait());
@@ -204,9 +201,9 @@ export default class VisionCamera extends Component {
     });
   };
   startVideo = async () => {
-    let timestamp1 = new Date().getTime();
+    const timestamp1 = new Date().getTime();
     console.log('Starting Video', timestamp1);
-    let {flash} = this.state;
+    const {flash} = this.state;
 
     await this.lockOrientation();
     await this.camera.current.startRecording({
@@ -217,7 +214,7 @@ export default class VisionCamera extends Component {
         console.log('Video Start Timestamp => To Record', timestamp2);
 
         // Send payload to API call
-        let payload = {
+        const payload = {
           timestamp_start: timestamp2,
           data: video.path,
         };
@@ -241,30 +238,34 @@ export default class VisionCamera extends Component {
       },
     });
 
-    let timestamp2 = new Date().getTime();
+    const timestamp2 = new Date().getTime();
     console.log('Video Started', timestamp2);
 
     this.setState({is_recording: true});
   };
 
   endVideo = async () => {
-    let timestamp1 = new Date().getTime();
+    const timestamp1 = new Date().getTime();
     console.log('Ending Video', timestamp1);
     await this.camera.current.stopRecording();
-    let timestamp2 = new Date().getTime();
+    const timestamp2 = new Date().getTime();
     console.log('Video Stopped', timestamp2);
     return this.setState({is_recording: false});
   };
 
   /******************** PICTURE LIFECYCLE ********************/
-  takePicture = () => {
-    alert();
+
+  takePicture = async () => {
+    const photo = await this.camera.current.takePhoto({
+      enableAutoRedEyeReduction: true,
+    });
+    CameraRoll.save(photo.path);
   };
 
   /******************** RENDERS ********************/
 
   render() {
-    let {
+    const {
       has_camera_permission,
       has_microphone_permission,
       screen_size,
@@ -274,72 +275,78 @@ export default class VisionCamera extends Component {
       is_recording,
       is_video,
     } = this.state;
-    let has_permissions = has_camera_permission && has_microphone_permission;
-    let is_vertical = screen_size.height > screen_size.width;
+    const has_permissions = has_camera_permission && has_microphone_permission;
+    const is_vertical = screen_size.height > screen_size.width;
 
-    return (
-      <SafeAreaView style={styles.base_container} onLayout={this.deviceRotated}>
-        <StatusBar hidden={true} />
-
-        {has_permissions ? (
-          <>
-            <RenderCamera
-              camera={this.camera}
-              camera_active={camera_active}
-              front_camera={front_camera}
-              zoom={zoom}
-            />
-
-            <GestureHandler
-              pinchRef={this.pinchRef}
-              doubleTapRef={this.doubleTapRef}
-              onSingleTap={this.tapToFocus}
-              onDoubleTap={this.toggleCamera}
-              onPinchProgress={this.onPinchProgress}
-              onPinchStart={this.onPinchStart}
-              onPinchEnd={this.onPinchEnd}>
-              <View>
-                {is_vertical ? (
-                  <CameraControlsVertical
-                    state={this.state}
-                    toggleCamera={this.toggleCamera}
-                    toggleFlash={this.toggleFlash}>
-                    {is_video ? (
-                      <VideoControls
-                        is_recording={is_recording}
-                        startVideo={this.startVideo}
-                        endVideo={this.endVideo}
-                      />
-                    ) : (
-                      <PictureControls takePicture={this.takePicture} />
-                    )}
-                  </CameraControlsVertical>
-                ) : (
-                  <CameraControlsHorizontal
-                    state={this.state}
-                    toggleCamera={this.toggleCamera}
-                    toggleFlash={this.toggleFlash}>
-                    {is_video ? (
-                      <VideoControls
-                        is_recording={is_recording}
-                        startVideo={this.startVideo}
-                        endVideo={this.endVideo}
-                      />
-                    ) : (
-                      <PictureControls takePicture={this.takePicture} />
-                    )}
-                  </CameraControlsHorizontal>
-                )}
-              </View>
-            </GestureHandler>
-          </>
-        ) : (
+    if (!has_permissions) {
+      return (
+        <SafeAreaView
+          style={styles.base_container}
+          onLayout={this.deviceRotated}>
           <MissingPermissions
             has_camera_permission={this.state.has_camera_permission}
             has_microphone_permission={this.state.has_microphone_permission}
             openSettings={this.openSettings}
           />
-        )}
+        </SafeAreaView>
+      );
+    }
+
+    return (
+      <SafeAreaView style={styles.base_container} onLayout={this.deviceRotated}>
+        <StatusBar hidden={true} />
+
+        <RenderCamera
+          camera={this.camera}
+          camera_active={camera_active}
+          front_camera={front_camera}
+          zoom={zoom}
+        />
+
+        <GestureHandler
+          pinchRef={this.pinchRef}
+          doubleTapRef={this.doubleTapRef}
+          onSingleTap={this.tapToFocus}
+          onDoubleTap={this.toggleCamera}
+          onPinchProgress={this.onPinchProgress}
+          onPinchStart={this.onPinchStart}
+          onPinchEnd={this.onPinchEnd}>
+          <View>
+            {is_vertical ? (
+              <CameraControlsVertical
+                state={this.state}
+                toggleVideoOrPicture={this.toggleVideoOrPicture}
+                toggleCamera={this.toggleCamera}
+                toggleFlash={this.toggleFlash}>
+                {is_video ? (
+                  <VideoControls
+                    is_recording={is_recording}
+                    startVideo={this.startVideo}
+                    endVideo={this.endVideo}
+                  />
+                ) : (
+                  <PictureControls takePicture={this.takePicture} />
+                )}
+              </CameraControlsVertical>
+            ) : (
+              <CameraControlsHorizontal
+                state={this.state}
+                toggleVideoOrPicture={this.toggleVideoOrPicture}
+                toggleCamera={this.toggleCamera}
+                toggleFlash={this.toggleFlash}>
+                {is_video ? (
+                  <VideoControls
+                    is_recording={is_recording}
+                    startVideo={this.startVideo}
+                    endVideo={this.endVideo}
+                  />
+                ) : (
+                  <PictureControls takePicture={this.takePicture} />
+                )}
+              </CameraControlsHorizontal>
+            )}
+          </View>
+        </GestureHandler>
       </SafeAreaView>
     );
   }
