@@ -277,7 +277,6 @@ export default class PlethoraCamera extends Component {
 
     const timestamp2 = new Date().getTime();
     console.log('Video Started', timestamp2);
-
     this.setState({is_recording: true});
   };
 
@@ -309,7 +308,7 @@ export default class PlethoraCamera extends Component {
     photo.path = finalFile;
 
     // Write additional metadata here...
-    // console.log('FINAL', finalFile);
+    console.log('FINAL', finalFile);
 
     if (saveToCameraRoll) CameraRoll.save(finalFile);
     if (this.props.onTakePicture) this.props.onTakePicture(photo);
