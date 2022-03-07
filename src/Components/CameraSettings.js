@@ -27,16 +27,20 @@ export default function CameraSettings(props) {
   return (
     <>
       <View style={toggle_btn_style}>
+        {cameraView === 'Front' ? null : (
+          <TouchableOpacity
+            onPress={props.toggleFlash}
+            style={styles.camera_btn}>
+            <Text style={styles.txt_white}>{flash}</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+
+      <View style={toggle_btn_style}>
         <TouchableOpacity
           onPress={props.toggleCamera}
           style={styles.camera_btn}>
           <Text style={styles.txt_white}>{cameraView}</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={toggle_btn_style}>
-        <TouchableOpacity onPress={props.toggleFlash} style={styles.camera_btn}>
-          <Text style={styles.txt_white}>{flash}</Text>
         </TouchableOpacity>
       </View>
     </>

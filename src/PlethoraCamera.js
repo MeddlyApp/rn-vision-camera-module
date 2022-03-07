@@ -43,6 +43,7 @@ export default class PlethoraCamera extends Component {
     super(props);
 
     this.state = {
+      is_video: true,
       screen_size: Dimensions.get('window'),
       orientation: 'PORTRAIT',
 
@@ -51,7 +52,6 @@ export default class PlethoraCamera extends Component {
       front_camera: false,
       zoom: 0,
       flash: 'off',
-      is_video: !true,
       is_recording: false,
       video_start_time: null,
 
@@ -192,16 +192,16 @@ export default class PlethoraCamera extends Component {
 
   /******************** CAMERA ACTIONS ********************/
 
+  toggleVideoOrPicture = () => {
+    const {is_video} = this.state;
+    this.setState({is_video: !is_video});
+  };
   toggleCamera = () => {
     const {front_camera} = this.state;
     this.setState({
       front_camera: !front_camera,
       zoom: 0,
     });
-  };
-  toggleVideoOrPicture = () => {
-    const {is_video} = this.state;
-    this.setState({is_video: !is_video});
   };
   toggleFlash = () => {
     const {flash} = this.state;
@@ -220,6 +220,7 @@ export default class PlethoraCamera extends Component {
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
   startVideo = async () => {
+    const {saveToCameraRoll} = this.props;
     const {flash} = this.state;
     await this.lockOrientation();
 
@@ -233,36 +234,44 @@ export default class PlethoraCamera extends Component {
         console.log('Recording Finished', video);
         console.log('Video Start Timestamp => To Record', timestamp2);
 
-        // Send payload to API call
-        const payload = {
-          timestamp_start: timestamp2,
-          data: video.path,
-        };
-        // - this.props.saveVideo(payload)
-
-        // Check Android permissions then save to Camera Roll
-        if (
-          Platform.OS === 'android' &&
-          !(await this.getCameraRollPermissions())
-        ) {
-          return alert('Camera Roll not permitted');
-        }
-
         // Rename File
         const title = 'video';
         const timestamp = new Date().getTime();
         const newName = `${title}-${timestamp}`;
         const finalFile = await renameFile(video, newName);
+        video.path = finalFile;
 
         // Write additional metadata here...
         console.log('FINAL', finalFile);
-        CameraRoll.save(finalFile);
+
+        if (saveToCameraRoll) {
+          if (
+            Platform.OS === 'android' &&
+            !(await this.getCameraRollPermissions())
+          ) {
+            return alert('Camera Roll not permitted');
+          }
+          CameraRoll.save(finalFile);
+        }
+
+        const payload = {
+          data: video.path,
+          timestamp_start: timestamp2,
+        };
 
         // Unlock Orientations
         Orientation.unlockAllOrientations();
+
+        if (this.props.onRecordingFinished) {
+          this.props.onRecordingFinished(payload);
+        }
       },
       onRecordingError: error => {
-        console.error('REC ERROR', error);
+        if (this.props.onRecordingError) {
+          this.props.onRecordingError(error);
+        } else {
+          console.error('Recording Error', error);
+        }
       },
     });
 
@@ -284,6 +293,7 @@ export default class PlethoraCamera extends Component {
   /******************** PICTURE LIFECYCLE ********************/
 
   takePicture = async () => {
+    const {saveToCameraRoll} = this.props;
     const {flash} = this.state;
     const photo = await this.camera.current.takePhoto({
       flash,
@@ -296,10 +306,13 @@ export default class PlethoraCamera extends Component {
     const timestamp = new Date().getTime();
     const newName = `${title}-${timestamp}`;
     const finalFile = await renameFile(photo, newName);
+    photo.path = finalFile;
 
     // Write additional metadata here...
-    console.log('FINAL', finalFile);
-    CameraRoll.save(finalFile);
+    // console.log('FINAL', finalFile);
+
+    if (saveToCameraRoll) CameraRoll.save(finalFile);
+    if (this.props.onTakePicture) this.props.onTakePicture(photo);
   };
 
   /******************** RENDERS ********************/
