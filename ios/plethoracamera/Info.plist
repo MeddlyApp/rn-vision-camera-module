@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>viscam</string>
+	<string>Plethora Camera</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -41,9 +41,9 @@
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Meddly needs access to your Microphone.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Meddly will save video to your camera roll.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Meddly will save video to your camera roll.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Meddly will save video to your camera roll.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

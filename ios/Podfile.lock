@@ -341,9 +341,11 @@ PODS:
     - React-jsi (= 0.67.3)
     - React-logger (= 0.67.3)
     - React-perflogger (= 0.67.3)
-  - RNGestureHandler (2.0.0):
+  - RNFS (2.19.0):
     - React-Core
-  - RNReanimated (2.2.4):
+  - RNGestureHandler (2.3.0):
+    - React-Core
+  - RNReanimated (2.4.1):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -369,10 +371,9 @@ PODS:
     - React-RCTNetwork
     - React-RCTSettings
     - React-RCTText
-    - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - VisionCamera (2.9.4):
+  - VisionCamera (2.12.1):
     - React
     - React-callinvoker
     - React-Core
@@ -436,6 +437,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
@@ -521,6 +523,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -575,12 +579,13 @@ SPEC CHECKSUMS:
   React-RCTVibration: d0361f15ea978958fab7ffb6960f475b5063d83f
   React-runtimeexecutor: af1946623656f9c5fd64ca6f36f3863516193446
   ReactCommon: 650e33cde4fb7d36781cd3143f5276da0abb2f96
-  RNGestureHandler: 51c9f32f43720c3a1c7660690a843f33acbcf01f
-  RNReanimated: e28dfaa950064b674fde0a9b736e62b9dff500a7
-  VisionCamera: 0f899218b7e359d35e673c7a8571f08f48a1c7cc
+  RNFS: fc610f78fdf8bfc89a9e5cc2f898519f4dba1002
+  RNGestureHandler: 77d59828d40838c9fabb76a12d2d0a80c006906f
+  RNReanimated: 32c91e28f5780937b8efc07ddde1bab8d373fe0b
+  VisionCamera: b8d94722045dac32e70d54b5ea1d4062bfbdef10
   Yoga: 90dcd029e45d8a7c1ff059e8b3c6612ff409061a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 19d3fabb8be58d17fe627dfc3776c701f566d190
+PODFILE CHECKSUM: 92629599ada9ec47fa4010540470df5933c8f448
 
 COCOAPODS: 1.11.2

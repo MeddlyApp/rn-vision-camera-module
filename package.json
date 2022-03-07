@@ -1,5 +1,5 @@
 {
-  "name": "visionCameraRN",
+  "name": "plethoracamera",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@react-native-community/cameraroll": "^4.1.2",
+    "fbjs": "^3.0.4",
     "react": "17.0.2",
     "react-native": "0.67.3",
+    "react-native-fs": "^2.19.0",
     "react-native-gesture-handler": "^2.0.0",
     "react-native-orientation-locker": "^1.4.0",
     "react-native-reanimated": "^2.2.4",

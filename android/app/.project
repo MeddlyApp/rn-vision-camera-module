@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>visionCameraRN-app</name>
-	<comment>Project visionCameraRN-app created by Buildship.</comment>
+	<name>app</name>
+	<comment>Project plethoracamera-app created by Eli Richey.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -22,7 +22,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1637628804787</id>
+			<id>0</id>
 			<name></name>
 			<type>30</type>
 			<matcher>

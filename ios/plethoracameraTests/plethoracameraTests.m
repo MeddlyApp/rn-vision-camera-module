@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface visionCameraRNTests : XCTestCase
+@interface plethoracameraTests : XCTestCase
 
 @end
 
-@implementation visionCameraRNTests
+@implementation plethoracameraTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

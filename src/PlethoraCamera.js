@@ -10,6 +10,7 @@
 
 import React, {Component} from 'react';
 import {
+  LogBox,
   PermissionsAndroid,
   Platform,
   SafeAreaView,
@@ -29,8 +30,15 @@ import CameraControlsHorizontal from './Components/CameraControlsHorizontal';
 import CameraControlsVertical from './Components/CameraControlsVertical';
 import VideoControls from './Components/VideoControls';
 import PictureControls from './Components/PictureControls';
+import renameFile from '../utilities/RenameFile';
 
-export default class VisionCamera extends Component {
+LogBox.ignoreLogs(['new NativeEventEmitter']);
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+]);
+// LogBox.ignoreAllLogs(); //Ignore all log notifications
+
+export default class PlethoraCamera extends Component {
   constructor(props) {
     super(props);
 
@@ -43,7 +51,7 @@ export default class VisionCamera extends Component {
       front_camera: false,
       zoom: 0,
       flash: 'off',
-      is_video: true,
+      is_video: !true,
       is_recording: false,
       video_start_time: null,
 
@@ -158,7 +166,7 @@ export default class VisionCamera extends Component {
   };
 
   tapToFocus = async e => {
-    await this.camera.current
+    return await this.camera.current
       .focus({
         x: e.nativeEvent.absoluteX,
         y: e.nativeEvent.absoluteY,
@@ -240,8 +248,15 @@ export default class VisionCamera extends Component {
           return alert('Camera Roll not permitted');
         }
 
+        // Rename File
+        const title = 'video';
+        const timestamp = new Date().getTime();
+        const newName = `${title}-${timestamp}`;
+        const finalFile = await renameFile(video, newName);
+
         // Write additional metadata here...
-        CameraRoll.save(video.path);
+        console.log('FINAL', finalFile);
+        CameraRoll.save(finalFile);
 
         // Unlock Orientations
         Orientation.unlockAllOrientations();
@@ -276,8 +291,15 @@ export default class VisionCamera extends Component {
       enableAutoStabilization: true,
     });
 
+    // Rename File
+    const title = 'image';
+    const timestamp = new Date().getTime();
+    const newName = `${title}-${timestamp}`;
+    const finalFile = await renameFile(photo, newName);
+
     // Write additional metadata here...
-    CameraRoll.save(photo.path);
+    console.log('FINAL', finalFile);
+    CameraRoll.save(finalFile);
   };
 
   /******************** RENDERS ********************/
