@@ -31,12 +31,13 @@ import CameraControlsVertical from './Components/CameraControlsVertical';
 import VideoControls from './Components/VideoControls';
 import PictureControls from './Components/PictureControls';
 import renameFile from '../utilities/RenameFile';
+import Config from '../config/devConfig';
+import UploadHTTP from '../utilities/http/UploadHTTP';
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
 ]);
-// LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default class PlethoraCamera extends Component {
   constructor(props) {
@@ -46,7 +47,6 @@ export default class PlethoraCamera extends Component {
       is_video: true,
       screen_size: Dimensions.get('window'),
       orientation: 'PORTRAIT',
-
       // Camera Settings
       camera_active: false,
       front_camera: false,
@@ -54,8 +54,7 @@ export default class PlethoraCamera extends Component {
       flash: 'off',
       is_recording: false,
       video_start_time: null,
-
-      // Permission Granted
+      // Permissions
       has_camera_permission: false,
       has_microphone_permission: false,
       has_camera_roll_permission: false,
@@ -220,7 +219,7 @@ export default class PlethoraCamera extends Component {
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
   startVideo = async () => {
-    const {saveToCameraRoll} = this.props;
+    const {saveToCameraRoll, upload} = this.props;
     const {flash} = this.state;
     await this.lockOrientation();
 
@@ -265,6 +264,27 @@ export default class PlethoraCamera extends Component {
         if (this.props.onRecordingFinished) {
           this.props.onRecordingFinished(payload);
         }
+
+        // Upload Video to API
+        if (upload) {
+          if (!upload.uploadUrl) return alert('Missing Upload URL');
+
+          const config = {
+            url: Config.API_URL,
+            authToken: upload.authToken ? upload.authToken : null,
+            nameConvention: upload.nameConvention
+              ? upload.nameConvention
+              : null,
+          };
+
+          const response = await UploadHTTP.uploadVideo(config, payload);
+          console.log('FINAL_UPLOAD_RESPONSE: ', response);
+
+          // If 201 or 200, whatever..
+          // onUploadComplete
+          // Else
+          // onUploadError
+        }
       },
       onRecordingError: error => {
         if (this.props.onRecordingError) {
@@ -292,7 +312,7 @@ export default class PlethoraCamera extends Component {
   /******************** PICTURE LIFECYCLE ********************/
 
   takePicture = async () => {
-    const {saveToCameraRoll} = this.props;
+    const {saveToCameraRoll, upload} = this.props;
     const {flash} = this.state;
     const photo = await this.camera.current.takePhoto({
       flash,
@@ -312,6 +332,15 @@ export default class PlethoraCamera extends Component {
 
     if (saveToCameraRoll) CameraRoll.save(finalFile);
     if (this.props.onTakePicture) this.props.onTakePicture(photo);
+
+    // If Upload...
+    if (upload) {
+      if (!upload.uploadUrl) return alert('Missing Upload URL');
+      console.log('UPLOAD_IMAGE');
+
+      // onUploadComplete
+      // onUploadError
+    }
   };
 
   /******************** RENDERS ********************/
