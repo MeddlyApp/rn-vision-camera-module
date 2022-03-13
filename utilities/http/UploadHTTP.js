@@ -34,7 +34,7 @@ const uploadImage = async (payload, profile) => {
 */
 
 // Tested
-const uploadVideo = async (config, payload) => {
+const uploadVideo = async (config, payload, onUploadProgress) => {
   const {url, authToken, nameConvention} = config;
   const {data, timestamp_start} = payload;
 
@@ -47,10 +47,10 @@ const uploadVideo = async (config, payload) => {
   formData.append('file', file);
 
   console.log('Video Upload: Starting...');
-  return await uploadFile(formData, url, authToken);
+  return await uploadFile(formData, url, authToken, onUploadProgress);
 };
 
-const uploadFile = async (formData, url, authToken) => {
+const uploadFile = async (formData, url, authToken, onUpload) => {
   const authorization = authToken
     ? {Authorization: `Bearer ${authToken}`, Accept: 'application/json'}
     : null;
@@ -64,7 +64,10 @@ const uploadFile = async (formData, url, authToken) => {
       onUploadProgress: ({total, loaded}) => {
         const progress = (loaded / total) * 100;
         const percentage = Math.round(progress);
-        console.log('Uploading_File...: ', percentage, '%');
+        if (onUpload) {
+          return () => onUpload(percentage);
+        }
+        return console.log('Uploading_File...: ', percentage, '%');
       },
     })
       .then(res => {

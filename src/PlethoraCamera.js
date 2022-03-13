@@ -31,7 +31,6 @@ import CameraControlsVertical from './Components/CameraControlsVertical';
 import VideoControls from './Components/VideoControls';
 import PictureControls from './Components/PictureControls';
 import renameFile from '../utilities/RenameFile';
-import Config from '../config/devConfig';
 import UploadHTTP from '../utilities/http/UploadHTTP';
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
@@ -270,14 +269,18 @@ export default class PlethoraCamera extends Component {
           if (!upload.uploadUrl) return alert('Missing Upload URL');
 
           const config = {
-            url: Config.API_URL,
+            url: upload.uploadUrl,
             authToken: upload.authToken ? upload.authToken : null,
             nameConvention: upload.nameConvention
               ? upload.nameConvention
               : null,
           };
 
-          const response = await UploadHTTP.uploadVideo(config, payload);
+          const response = await UploadHTTP.uploadVideo(
+            config,
+            payload,
+            this.props.onUploadProgress,
+          );
           console.log('FINAL_UPLOAD_RESPONSE: ', response);
 
           // If 201 or 200, whatever..
@@ -337,6 +340,22 @@ export default class PlethoraCamera extends Component {
     if (upload) {
       if (!upload.uploadUrl) return alert('Missing Upload URL');
       console.log('UPLOAD_IMAGE');
+
+      /*
+      const config = {
+        url: upload.uploadUrl,
+        authToken: upload.authToken ? upload.authToken : null,
+        nameConvention: upload.nameConvention
+          ? upload.nameConvention
+          : null,
+      };
+
+      await UploadHTTP.uploadVideo(
+        config,
+        payload,
+        this.props.onUploadProgress,
+      );
+      */
 
       // onUploadComplete
       // onUploadError
