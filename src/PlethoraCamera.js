@@ -94,9 +94,9 @@ export default class PlethoraCamera extends Component {
   /******************** PERMISSIONS ********************/
 
   checkPermissions = async () => {
-    let has_camera = await this.getCameraPermissions();
-    let has_mic = await this.getMicrophonePermissions();
-    let has_cam_roll = await this.getCameraRollPermissions();
+    const has_cam_roll = await this.getCameraRollPermissions();
+    const has_camera = await this.getCameraPermissions();
+    const has_mic = await this.getMicrophonePermissions();
 
     this.setState({
       has_camera_permission: has_camera,
@@ -134,11 +134,14 @@ export default class PlethoraCamera extends Component {
 
   getCameraRollPermissions = async () => {
     if (Platform.OS === 'android') {
-      let permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
-      let hasPermission = await PermissionsAndroid.check(permission);
+      const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+      const hasPermission = await PermissionsAndroid.check(permission);
       if (hasPermission) return true;
-      let status = await PermissionsAndroid.request(permission);
-      return status === 'authorized';
+      else {
+        const status = await PermissionsAndroid.request(permission);
+        console.log('CAMERA_STORAGE: ', status);
+        return status === 'authorized' || status === 'granted';
+      }
     }
   };
   openSettings = async () => await Linking.openSettings();
@@ -233,14 +236,17 @@ export default class PlethoraCamera extends Component {
         console.log('Video Start Timestamp => To Record', timestamp2);
 
         // Rename File
-        const title = 'video';
-        const timestamp = new Date().getTime();
-        const newName = `${title}-${timestamp}`;
+
+        const nameConvention =
+          upload && upload.nameConvention ? upload.nameConvention : null;
+        const file_name = nameConvention ? `${nameConvention}_TS-` : null;
+
+        const newName = `${file_name}${timestamp2}`;
         const finalFile = await renameFile(video, newName);
         video.path = finalFile;
 
         // Write additional metadata here...
-        console.log('FINAL', finalFile);
+        // console.log('FINAL', finalFile);
 
         if (saveToCameraRoll) {
           if (
@@ -281,12 +287,16 @@ export default class PlethoraCamera extends Component {
             payload,
             this.props.onUploadProgress,
           );
-          console.log('FINAL_UPLOAD_RESPONSE: ', response);
 
-          // If 201 or 200, whatever..
-          // onUploadComplete
-          // Else
-          // onUploadError
+          if (response.status === 201) {
+            if (this.props.onUploadComplete) {
+              return this.props.onUploadComplete(response);
+            }
+          } else {
+            if (this.props.onUploadError) {
+              return this.props.onUploadError(response);
+            }
+          }
         }
       },
       onRecordingError: error => {

@@ -18,7 +18,7 @@ export default function App(props) {
       // onRecordingError={e => console.log('RECORDING_ERROR', e)}
       // onTakePicture={p => console.log('PICTURE', p)}
       // onUploadComplete={u => console.log('UPLOADED', u)}
-      // onUploadProgress={p => console.log('UPLOADING...', p)}
+      // onUploadProgress={p => console.log(`UPLOADING... ${p}%`)}
       // onUploadError={e => console.log('UPLOAD_ERROR', e)}
     />
   );

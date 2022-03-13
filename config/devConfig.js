@@ -1,3 +1,3 @@
 export default Config = {
-  API_URL: 'https://0f49735ed83e.ngrok.io/upload/s3',
+  API_URL: 'https://e3dfdd6e4c5f.ngrok.io/upload/s3',
 };
