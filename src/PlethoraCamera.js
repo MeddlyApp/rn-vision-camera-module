@@ -332,43 +332,55 @@ export default class PlethoraCamera extends Component {
       enableAutoRedEyeReduction: true,
       enableAutoStabilization: true,
     });
+    const timestamp = new Date().getTime();
 
     // Rename File
-    const title = 'image';
-    const timestamp = new Date().getTime();
-    const newName = `${title}-${timestamp}`;
+
+    const nameConvention =
+      upload && upload.nameConvention ? upload.nameConvention : null;
+    const file_name = nameConvention ? `${nameConvention}_TS-` : null;
+
+    const newName = `${file_name}${timestamp}`;
     const finalFile = await renameFile(photo, newName);
     photo.path = finalFile;
 
     // Write additional metadata here...
-    console.log('FINAL', finalFile);
+    // console.log('FINAL', finalFile);
 
     if (saveToCameraRoll) CameraRoll.save(finalFile);
     if (this.props.onTakePicture) this.props.onTakePicture(photo);
 
     // If Upload...
     if (upload) {
-      if (!upload.uploadUrl) return alert('Missing Upload URL');
-      console.log('UPLOAD_IMAGE');
+      if (Platform.OS === 'android') photo.path = `file://${photo.path}`;
+      const payload = {
+        data: photo.path,
+        timestamp_start: timestamp,
+      };
 
-      /*
+      if (!upload.uploadUrl) return alert('Missing Upload URL');
+
       const config = {
         url: upload.uploadUrl,
         authToken: upload.authToken ? upload.authToken : null,
-        nameConvention: upload.nameConvention
-          ? upload.nameConvention
-          : null,
+        nameConvention: upload.nameConvention ? upload.nameConvention : null,
       };
 
-      await UploadHTTP.uploadVideo(
+      const response = await UploadHTTP.uploadImage(
         config,
         payload,
         this.props.onUploadProgress,
       );
-      */
 
-      // onUploadComplete
-      // onUploadError
+      if (response.status === 201) {
+        if (this.props.onUploadComplete) {
+          return this.props.onUploadComplete(response);
+        }
+      } else {
+        if (this.props.onUploadError) {
+          return this.props.onUploadError(response);
+        }
+      }
     }
   };
 
