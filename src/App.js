@@ -7,7 +7,7 @@ export default function App(props) {
   return (
     <PlethoraCamera
       upload={{
-        uploadUrl: Config.API_URL,
+        uploadUrl: `${Config.API_URL}/upload/s3`,
         authToken: null,
         nameConvention: 'Plethora',
       }}
