@@ -148,7 +148,10 @@ export default class PlethoraCamera extends Component {
 
   /******************** GESTURE CONTROLS ********************/
 
-  onOrientationDidChange = orientation => this.setState({orientation});
+  onOrientationDidChange = orientation => {
+    console.log('ORIENTATION_UPDATED', orientation);
+    this.setState({orientation});
+  };
   deviceRotated = () => this.setState({screen_size: Dimensions.get('window')});
   lockOrientation = async () => {
     new Promise(resolve => {
@@ -271,9 +274,7 @@ export default class PlethoraCamera extends Component {
         }
 
         // Upload Video to API
-        if (upload) {
-          if (!upload.uploadUrl) return alert('Missing Upload URL');
-
+        if (upload && upload.uploadUrl) {
           const config = {
             url: upload.uploadUrl,
             authToken: upload.authToken ? upload.authToken : null,
@@ -397,6 +398,7 @@ export default class PlethoraCamera extends Component {
       zoom,
       is_recording,
       is_video,
+      orientation,
     } = this.state;
     const has_permissions = has_camera_permission && has_microphone_permission;
     const is_vertical = screen_size.height > screen_size.width;

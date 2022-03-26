@@ -39,8 +39,17 @@ export default function CameraControlsHorizontal(props) {
     };
   }
 
+  const topVoid = landscape_right
+    ? styles.horizontal_top_void_right
+    : styles.horizontal_top_void_left;
+  const bottomVoid = landscape_right
+    ? styles.horizontal_bottom_void_right
+    : styles.horizontal_bottom_void_left;
+
   return (
     <View style={horizontal_content_container}>
+      <View style={topVoid} />
+
       <View style={styles.horizontal_row_select_event}>
         {children.children}
       </View>
@@ -66,7 +75,7 @@ export default function CameraControlsHorizontal(props) {
         {is_video ? children.videoControls : children.pictureControls}
       </View>
 
-      <View style={styles.horizontal_bottom_void} />
+      <View style={bottomVoid} />
     </View>
   );
 }
