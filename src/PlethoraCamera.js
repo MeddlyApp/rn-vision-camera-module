@@ -148,10 +148,7 @@ export default class PlethoraCamera extends Component {
 
   /******************** GESTURE CONTROLS ********************/
 
-  onOrientationDidChange = orientation => {
-    console.log('ORIENTATION_UPDATED', orientation);
-    this.setState({orientation});
-  };
+  onOrientationDidChange = orientation => this.setState({orientation});
   deviceRotated = () => this.setState({screen_size: Dimensions.get('window')});
   lockOrientation = async () => {
     new Promise(resolve => {
