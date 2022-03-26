@@ -70,8 +70,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  horizontal_bottom_void: {
+  horizontal_top_void_right: {
     flex: 1,
+    height: window.height,
+  },
+  horizontal_top_void_left: {
+    flex: 0,
+    height: window.height,
+  },
+  horizontal_bottom_void_left: {
+    flex: 1,
+    height: window.height,
+  },
+  horizontal_bottom_void_right: {
+    flex: 0,
     height: window.height,
   },
 

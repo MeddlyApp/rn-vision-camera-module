@@ -271,9 +271,7 @@ export default class PlethoraCamera extends Component {
         }
 
         // Upload Video to API
-        if (upload) {
-          if (!upload.uploadUrl) return alert('Missing Upload URL');
-
+        if (upload && upload.uploadUrl) {
           const config = {
             url: upload.uploadUrl,
             authToken: upload.authToken ? upload.authToken : null,
@@ -387,6 +385,7 @@ export default class PlethoraCamera extends Component {
   /******************** RENDERS ********************/
 
   render() {
+    const {icons, children} = this.props;
     const {
       has_camera_permission,
       has_microphone_permission,
@@ -396,6 +395,7 @@ export default class PlethoraCamera extends Component {
       zoom,
       is_recording,
       is_video,
+      orientation,
     } = this.state;
     const has_permissions = has_camera_permission && has_microphone_permission;
     const is_vertical = screen_size.height > screen_size.width;
@@ -437,35 +437,63 @@ export default class PlethoraCamera extends Component {
           <View>
             {is_vertical ? (
               <CameraControlsVertical
+                icons={icons}
                 state={this.state}
+                children={children}
                 toggleVideoOrPicture={this.toggleVideoOrPicture}
                 toggleCamera={this.toggleCamera}
                 toggleFlash={this.toggleFlash}>
-                {is_video ? (
-                  <VideoControls
-                    is_recording={is_recording}
-                    startVideo={this.startVideo}
-                    endVideo={this.endVideo}
-                  />
-                ) : (
-                  <PictureControls takePicture={this.takePicture} />
-                )}
+                {is_video
+                  ? {
+                      children,
+                      videoControls: (
+                        <VideoControls
+                          is_recording={is_recording}
+                          startVideo={this.startVideo}
+                          endVideo={this.endVideo}
+                          icons={icons}
+                        />
+                      ),
+                    }
+                  : {
+                      children,
+                      pictureControls: (
+                        <PictureControls
+                          takePicture={this.takePicture}
+                          icons={icons}
+                        />
+                      ),
+                    }}
               </CameraControlsVertical>
             ) : (
               <CameraControlsHorizontal
+                icons={icons}
                 state={this.state}
+                children={children}
                 toggleVideoOrPicture={this.toggleVideoOrPicture}
                 toggleCamera={this.toggleCamera}
                 toggleFlash={this.toggleFlash}>
-                {is_video ? (
-                  <VideoControls
-                    is_recording={is_recording}
-                    startVideo={this.startVideo}
-                    endVideo={this.endVideo}
-                  />
-                ) : (
-                  <PictureControls takePicture={this.takePicture} />
-                )}
+                {is_video
+                  ? {
+                      children,
+                      videoControls: (
+                        <VideoControls
+                          is_recording={is_recording}
+                          startVideo={this.startVideo}
+                          endVideo={this.endVideo}
+                          icons={icons}
+                        />
+                      ),
+                    }
+                  : {
+                      children,
+                      pictureControls: (
+                        <PictureControls
+                          takePicture={this.takePicture}
+                          icons={icons}
+                        />
+                      ),
+                    }}
               </CameraControlsHorizontal>
             )}
           </View>

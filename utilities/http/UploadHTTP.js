@@ -4,7 +4,7 @@ const uploadImage = async (config, payload, onUploadProgress) => {
   const {url, authToken, nameConvention} = config;
   const {data, timestamp_start} = payload;
   const name = `${
-    nameConvention ? `${nameConvention}_TS-` : null
+    nameConvention ? `${nameConvention}_TS` : null
   }${timestamp_start}.jpg`;
 
   const file = {
@@ -25,7 +25,7 @@ const uploadVideo = async (config, payload, onUploadProgress) => {
   const {url, authToken, nameConvention} = config;
   const {data, timestamp_start} = payload;
   const name = `${
-    nameConvention ? `${nameConvention}_TS-` : null
+    nameConvention ? `${nameConvention}_TS` : null
   }${timestamp_start}.mp4`;
 
   const file = {

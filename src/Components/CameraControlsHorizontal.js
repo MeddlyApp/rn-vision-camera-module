@@ -4,7 +4,7 @@ import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
 export default function CameraControlsHorizontal(props) {
-  const {children, state} = props;
+  const {children, state, icons} = props;
   const {
     is_recording,
     screen_size,
@@ -39,15 +39,22 @@ export default function CameraControlsHorizontal(props) {
     };
   }
 
+  const topVoid = landscape_right
+    ? styles.horizontal_top_void_right
+    : styles.horizontal_top_void_left;
+  const bottomVoid = landscape_right
+    ? styles.horizontal_bottom_void_right
+    : styles.horizontal_bottom_void_left;
+
   return (
     <View style={horizontal_content_container}>
+      <View style={topVoid} />
+
       <View style={styles.horizontal_row_select_event}>
-        <TouchableOpacity onPress={props.toggleVideoOrPicture}>
-          <Text style={styles.txt_white}>{is_video ? 'Video' : 'Picture'}</Text>
-        </TouchableOpacity>
+        {children.children}
       </View>
 
-      <View style={styles.horizontal_gesture_controls}></View>
+      <View style={styles.horizontal_gesture_controls} />
 
       <View style={camera_controls_container_styles}>
         {!is_recording ? (
@@ -55,15 +62,20 @@ export default function CameraControlsHorizontal(props) {
             screen_size={screen_size}
             front_camera={front_camera}
             flash={flash}
+            is_video={is_video}
+            toggleVideoOrPicture={props.toggleVideoOrPicture}
             toggleCamera={props.toggleCamera}
             toggleFlash={props.toggleFlash}
+            icons={icons}
           />
         ) : null}
       </View>
 
-      <View style={styles.horizontal_row_recording_controls}>{children}</View>
+      <View style={styles.horizontal_row_recording_controls}>
+        {is_video ? children.videoControls : children.pictureControls}
+      </View>
 
-      <View style={styles.horizontal_bottom_void} />
+      <View style={bottomVoid} />
     </View>
   );
 }
