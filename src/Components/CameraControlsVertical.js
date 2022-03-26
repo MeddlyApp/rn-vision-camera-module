@@ -4,7 +4,7 @@ import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
 export default function CameraControlsVertical(props) {
-  const {children, state} = props;
+  const {children, state, icons} = props;
   const {is_recording, screen_size, front_camera, flash, is_video} = state;
 
   const camera_controls_container_styles = {
@@ -21,13 +21,8 @@ export default function CameraControlsVertical(props) {
 
   return (
     <View style={vertical_content_container}>
-      <View style={styles.vertical_row_select_event}>
-        <TouchableOpacity onPress={props.toggleVideoOrPicture}>
-          <Text style={styles.txt_white}>{is_video ? 'Video' : 'Picture'}</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.vertical_gesture_controls}></View>
+      <View style={styles.vertical_row_select_event}>{children.children}</View>
+      <View style={styles.vertical_gesture_controls} />
 
       <View style={camera_controls_container_styles}>
         {!is_recording ? (
@@ -35,13 +30,18 @@ export default function CameraControlsVertical(props) {
             screen_size={screen_size}
             front_camera={front_camera}
             flash={flash}
+            is_video={is_video}
+            toggleVideoOrPicture={props.toggleVideoOrPicture}
             toggleCamera={props.toggleCamera}
             toggleFlash={props.toggleFlash}
+            icons={icons}
           />
         ) : null}
       </View>
 
-      <View style={styles.vertical_row_recording_controls}>{children}</View>
+      <View style={styles.vertical_row_recording_controls}>
+        {is_video ? children.videoControls : children.pictureControls}
+      </View>
 
       <View style={styles.vertical_bottom_void} />
     </View>

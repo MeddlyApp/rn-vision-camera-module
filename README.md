@@ -21,7 +21,8 @@
 - Save to camera roll
 - Upload media to API
 - Flash
-- Component Props
+- Component Example (includes all props)
+
   ```javascript
   <PlethoraCamera
     upload={{
@@ -37,5 +38,26 @@
     onUploadComplete={u => console.log('UPLOADED', u)}
     onUploadProgress={p => console.log('UPLOADING...', p)}
     onUploadError={e => console.log('UPLOAD_ERROR', e)}
-  />
+    // Custom Icons
+    icons={{
+      takePictureIcon: <Component /> || null, // max-height & max-width is 90
+      startRecordingIcon: <Component /> || null, // max-height & max-width is 90
+      stopRecordingIcon: <Component /> || null, // max-height & max-width is 90
+      togglePictureIcon: <Component /> || null, // max-height & max-width is 50
+      toggleVideoIcon: <Component /> || null, // max-height & max-width is 50
+      viewPortIcon: {
+        frontCamera: <Component /> || null, // max-height & max-width is 50
+        backCamera: <Component /> || null, // max-height & max-width is 50
+      },
+      flashIcons: {
+        flashOn: <Component /> || null, // max-height & max-width is 50
+        flashAuto: <Component /> || null, // max-height & max-width is 50
+        flashOff: <Component /> || null, // max-height & max-width is 50
+      },
+    }}>
+    {/*   child components   */}
+    {/*     live in the      */}
+    {/*    top part of the   */}
+    {/*     camera view      */}
+  </PlethoraCamera>
   ```
