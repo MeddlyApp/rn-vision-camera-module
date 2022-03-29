@@ -61,3 +61,8 @@
     {/*     camera view      */}
   </PlethoraCamera>
   ```
+
+  # Roadmap
+
+  - Add ability to get device camera info
+  - Add ability for users to set their camera props for quality, fps, etc
