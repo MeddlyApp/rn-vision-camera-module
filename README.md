@@ -24,7 +24,9 @@
 - Component Example (includes all props)
 
   ```javascript
-  <PlethoraCamera
+  // import Camera from '@plethora_co/rn-vision-camera';
+
+  <Camera
     upload={{
       uploadUrl: '',
       authToken: null, // Can be: `${token} || null
