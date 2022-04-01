@@ -1,9 +1,7 @@
 import 'react-native-gesture-handler';
 import PlethoraCamera from './src/PlethoraCamera';
 
-export default function Camera(props) {
-  return <PlethoraCamera {...props} />;
-}
+export default PlethoraCamera;
 
 /*
 import 'react-native-gesture-handler';

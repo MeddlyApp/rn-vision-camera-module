@@ -1,6 +1,6 @@
 {
   "name": "@plethora_co/rn-vision-camera",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": false,
   "scripts": {
     "android": "react-native run-android",
@@ -36,6 +36,7 @@
   },
   "description": "- **Follow setup instructions for the following libraries**   - [react-native-vision-camera](https://github.com/mrousavy/react-native-vision-camera)   - [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)   - [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler)   - [react-native-orientation-locker](https://github.com/wonday/react-native-orientation-locker)   - [@react-native-community/cameraroll](https://github.com/react-native-cameraroll/react-native-cameraroll)   - [react-native-fs](https://github.com/itinance/react-native-fs)",
   "main": "index.js",
+  "module": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MeddlyApp/visioncamera.git"
