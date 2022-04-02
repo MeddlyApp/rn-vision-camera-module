@@ -13,7 +13,9 @@
     "react": "*",
     "react-native": "*"
   },
-  "dependencies": {
+  "devDependencies": {
+    "react": "17.0.2",
+    "react-native": "0.67.3",
     "@react-native-community/cameraroll": "^4.1.2",
     "axios": "^0.24.0",
     "fbjs": "^3.0.4",
@@ -21,13 +23,9 @@
     "react-native-gesture-handler": "^2.0.0",
     "react-native-orientation-locker": "^1.4.0",
     "react-native-reanimated": "^2.2.4",
-    "react-native-vision-camera": "^2.9.4"
-  },
-  "devDependencies": {
+    "react-native-vision-camera": "^2.9.4",
     "@babel/core": "^7.16.0",
     "@babel/runtime": "^7.16.3",
-    "react": "17.0.2",
-    "react-native": "0.67.3",
     "@react-native-community/eslint-config": "^3.0.1",
     "babel-jest": "^27.3.1",
     "eslint": "^8.3.0",
