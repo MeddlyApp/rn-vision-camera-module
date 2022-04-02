@@ -4,11 +4,30 @@ import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import styles from '../styles';
 
 export default function RenderCamera(props) {
-  const {camera, camera_active, front_camera, zoom} = props;
+  const {camera, config, camera_active, front_camera, zoom} = props;
   const devices = useCameraDevices();
   const device = front_camera ? devices.front : devices.back;
 
   // NOTE: zoom state is multiplied by 10 because 1 is minimum
+
+  const {
+    photo,
+    video,
+    audio,
+    fps,
+    enableHighQualityPhotos,
+    lowLightBoost,
+    videoStabilizationMode,
+    autoFocusSystem,
+  } = config;
+
+  console.log('DEVICES', devices);
+
+  const hghqlphto = enableHighQualityPhotos ? enableHighQualityPhotos : null;
+  const lwLghtBst = lowLightBoost ? lowLightBoost : false;
+  const vidStblMd = videoStabilizationMode ? videoStabilizationMode : null;
+  const autoFcsSys = autoFocusSystem ? autoFocusSystem : null;
+  const framesPerSec = fps ? fps : null;
 
   if (device == null) {
     return (
@@ -19,16 +38,22 @@ export default function RenderCamera(props) {
   } else {
     return (
       <Camera
+        // Root
         ref={camera}
         device={device}
         isActive={camera_active}
-        photo={true}
-        video={true}
-        audio={true}
-        fps={240}
+        // Custom Config - Required
+        photo={photo}
+        video={video}
+        audio={audio}
+        // Custom Config - Optional
+        enableHighQualityPhotos={hghqlphto}
+        lowLightBoost={lwLghtBst}
+        autoFocusSystem={autoFcsSys}
+        videoStabilizationMode={vidStblMd}
+        fps={framesPerSec}
+        // Lib Decisions
         zoom={zoom * 10}
-        autoFocusSystem={'contrast-detection'}
-        videoStabilizationMode={'cinematic-extended'}
         minZoom={device.minZoom}
         maxZoom={device.maxZoom}
         style={StyleSheet.absoluteFill}
@@ -42,15 +67,20 @@ export default function RenderCamera(props) {
  * - photo: boolean
  * - video: boolean
  * - audio: boolean
+ * - enableHighQualityPhotos: boolean
+ * - lowLightBoost: boolean
+ * - autoFocusSystem: ['contrast-detection', 'phase-detection', 'none']
+ * - videoStabilizationMode: ['off', 'standard', 'cinematic', 'cinematic-extended', 'auto']
+ * - fps: number
+ * - hdr: boolean
+ * - supportsVideoHDR: boolean
+ * - supportsPhotoHDR: boolean
+ * 
  * - photoHeight: number
  * - photoWidth: number
- * - enableHighQualityPhotos: boolean
  * - enableZoomGesture: boolean
  * - videoHeight: number
  * - videoWidth: number
- * - fps: number
- * - hdr: boolean
- * - lowLightBoost: boolean
  * - isHighestPhotoQualitySupported: boolean
  * - maxISO: number
  * - minISO: number
@@ -60,12 +90,8 @@ export default function RenderCamera(props) {
  * - colorSpace: 
        ios: ['hlg-bt2020', 'p3-d65', 'srgb'
        android: ['yuv', 'jpeg', 'jpeg-depth', 'raw', 'heic', 'private', 'depth-16', 'unknown']
- * - supportsVideoHDR: boolean
- * - supportsPhotoHDR: boolean
  * - frameRateRanges: {
        minFrameRate: number;        
        maxFrameRate: number;
      }
- * - autoFocusSystem: ['contrast-detection', 'phase-detection', 'none']
- * - videoStabilizationMode: ['off', 'standard', 'cinematic', 'cinematic-extended', 'auto']
 /*/

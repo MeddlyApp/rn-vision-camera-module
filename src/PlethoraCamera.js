@@ -167,12 +167,15 @@ export default class PlethoraCamera extends Component {
   };
 
   tapToFocus = async e => {
-    return await this.camera.current
-      .focus({
-        x: e.nativeEvent.absoluteX,
-        y: e.nativeEvent.absoluteY,
-      })
-      .catch(e => console.log('Focus Error: ', e));
+    const {camera} = this;
+    if (camera && camera.current) {
+      return await this.camera.current
+        .focus({
+          x: e.nativeEvent.absoluteX,
+          y: e.nativeEvent.absoluteY,
+        })
+        .catch(e => console.log('Focus Error: ', e));
+    }
   };
 
   onPinchStart = () => (this._prevPinch = 1);
@@ -385,7 +388,7 @@ export default class PlethoraCamera extends Component {
   /******************** RENDERS ********************/
 
   render() {
-    const {icons, children} = this.props;
+    const {camConfig, icons, children} = this.props;
     const {
       has_camera_permission,
       has_microphone_permission,
@@ -424,6 +427,7 @@ export default class PlethoraCamera extends Component {
           camera_active={camera_active}
           front_camera={front_camera}
           zoom={zoom}
+          config={camConfig}
         />
 
         <GestureHandler

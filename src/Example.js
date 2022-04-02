@@ -4,12 +4,37 @@ import PlethoraCamera from './PlethoraCamera';
 
 export default function App() {
   const children = {
-    cameraTop: <Text style={{color: '#FFF'}}>Topddd</Text>,
+    cameraTop: <Text style={{color: '#FFF'}}>Top</Text>,
     cameraMiddle: <Text style={{color: '#FFF'}}>Middle</Text>,
   };
 
+  /*/ Config takes all arguments from Vision Camera
+   *  https://mrousavy.com/react-native-vision-camera/docs/api/interfaces/CameraProps
+   * 
+   *    Config Requires...
+   *    - photo: boolean
+   *    - video: boolean
+   *    - audio: boolean
+  /*/
+
   return (
     <PlethoraCamera
+      // Camera Config
+      camConfig={{
+        photo: true, // Required
+        video: true, // Required
+        audio: true, // Required
+        // Optional
+        enableHighQualityPhotos: true,
+        lowLightBoost: true,
+        autoFocusSystem: 'contrast-detection',
+        videoStabilizationMode: 'cinematic-extended',
+        // hdr: true,
+        // supportsVideoHDR: true,
+        // supportsPhotoHDR: true,
+        // fps: 240,
+      }}
+      // Pre-Built Actions
       upload={{
         uploadUrl: ``,
         authToken: null,
