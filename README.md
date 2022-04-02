@@ -1,12 +1,14 @@
 # Setup
 
 - **Follow setup instructions for the following libraries**
-  - [react-native-vision-camera](https://github.com/mrousavy/react-native-vision-camera)
-  - [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
+  - [axios](https://github.com/axios/axios)
+  - [fbjs](https://github.com/facebook/fbjs)
+    - [@react-native-community/cameraroll](https://github.com/react-native-cameraroll/react-native-cameraroll)
+  - [react-native-fs](https://github.com/itinance/react-native-fs)
   - [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler)
   - [react-native-orientation-locker](https://github.com/wonday/react-native-orientation-locker)
-  - [@react-native-community/cameraroll](https://github.com/react-native-cameraroll/react-native-cameraroll)
-  - [react-native-fs](https://github.com/itinance/react-native-fs)
+  - [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
+  - [react-native-vision-camera](https://github.com/mrousavy/react-native-vision-camera)
 
 # Overview
 

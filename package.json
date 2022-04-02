@@ -1,6 +1,6 @@
 {
   "name": "@plethora_co/rn-vision-camera",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": false,
   "scripts": {
     "android": "react-native run-android",
@@ -11,7 +11,15 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "@react-native-community/cameraroll": "*",
+    "axios": "*",
+    "fbjs": "*",
+    "react-native-fs": "*",
+    "react-native-gesture-handler": "*",
+    "react-native-orientation-locker": "*",
+    "react-native-reanimated": "*",
+    "react-native-vision-camera": "*"
   },
   "devDependencies": {
     "react": "17.0.2",
