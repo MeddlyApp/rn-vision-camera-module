@@ -1,12 +1,14 @@
 # OSX
-#
 .DS_Store
-tmp
-build
-dist
+
+# ENV
+.env*
+
+# Lock Files
+yarn.lock
+package-lock.json
 
 # Xcode
-#
 build/
 *.pbxuser
 !default.pbxuser
@@ -25,7 +27,6 @@ DerivedData
 *.xcuserstate
 
 # Android/IntelliJ
-#
 build/
 .idea
 .gradle
@@ -46,7 +47,6 @@ buck-out/
 !debug.keystore
 
 # fastlane
-#
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
 # screenshots whenever they are needed.
 # For more information about the recommended setup visit:
@@ -61,3 +61,4 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+/ios/Podfile.lock

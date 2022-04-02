@@ -51,10 +51,16 @@ export default function CameraControlsHorizontal(props) {
       <View style={topVoid} />
 
       <View style={styles.horizontal_row_select_event}>
-        {children.children}
+        {children && children.children && children.children.cameraTop
+          ? children.children.cameraTop
+          : null}
       </View>
 
-      <View style={styles.horizontal_gesture_controls} />
+      <View style={styles.horizontal_gesture_controls}>
+        {children && children.children && children.children.cameraMiddle
+          ? children.children.cameraMiddle
+          : null}
+      </View>
 
       <View style={camera_controls_container_styles}>
         {!is_recording ? (

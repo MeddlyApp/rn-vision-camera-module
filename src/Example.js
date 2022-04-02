@@ -2,7 +2,12 @@ import React from 'react';
 import {Text} from 'react-native';
 import PlethoraCamera from './PlethoraCamera';
 
-export default function App(props) {
+export default function App() {
+  const children = {
+    cameraTop: <Text style={{color: '#FFF'}}>Topddd</Text>,
+    cameraMiddle: <Text style={{color: '#FFF'}}>Middle</Text>,
+  };
+
   return (
     <PlethoraCamera
       upload={{
@@ -12,9 +17,7 @@ export default function App(props) {
       }}
       saveToCameraRoll={true}
       // Lifecycle Events
-      onRecordingFinished={payload => {
-        return await UploadHTTP.uploadVideo(payload, null);
-      }}
+      onRecordingFinished={p => console.log('onRecordingFinishedCallback', p)}
       onRecordingError={e => console.log('RECORDING_ERROR', e)}
       onTakePicture={p => console.log('PICTURE', p)}
       onUploadComplete={u => console.log('UPLOADED', u)}
@@ -37,7 +40,7 @@ export default function App(props) {
           flashOff: <Text style={{color: '#00FF00'}}>Off</Text>,
         },
       }}>
-      <Text style={{color: '#FFF'}}>child</Text>
+      {children}
     </PlethoraCamera>
   );
 }

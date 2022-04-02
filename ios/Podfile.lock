@@ -343,9 +343,9 @@ PODS:
     - React-perflogger (= 0.67.3)
   - RNFS (2.19.0):
     - React-Core
-  - RNGestureHandler (2.3.1):
+  - RNGestureHandler (2.3.2):
     - React-Core
-  - RNReanimated (2.4.1):
+  - RNReanimated (2.5.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -373,7 +373,7 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - VisionCamera (2.12.2):
+  - VisionCamera (2.13.1):
     - React
     - React-callinvoker
     - React-Core
@@ -580,9 +580,9 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: af1946623656f9c5fd64ca6f36f3863516193446
   ReactCommon: 650e33cde4fb7d36781cd3143f5276da0abb2f96
   RNFS: fc610f78fdf8bfc89a9e5cc2f898519f4dba1002
-  RNGestureHandler: 68f660f1080d3300936a67ce5c6879bd8f26ecc2
-  RNReanimated: 32c91e28f5780937b8efc07ddde1bab8d373fe0b
-  VisionCamera: 740aef16201941514e571be7fc72b0423db3ea0a
+  RNGestureHandler: 6e757e487a4834e7280e98e9bac66d2d9c575e9c
+  RNReanimated: 190b6930d5d94832061278e1070bbe313e50c830
+  VisionCamera: 73658533c79f60ecba935d2128cff182f9e0cca0
   Yoga: 90dcd029e45d8a7c1ff059e8b3c6612ff409061a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
