@@ -359,7 +359,9 @@ export default class PlethoraCamera extends Component {
         timestamp_start: timestamp,
       };
 
-      if (!upload.uploadUrl) return alert('Missing Upload URL');
+      if (!upload.uploadUrl) {
+        return console.log('Upload Error: Upload URL not set');
+      }
 
       const config = {
         url: upload.uploadUrl,
