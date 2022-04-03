@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Platform} from 'react-native';
+import {View, Platform} from 'react-native';
 import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
