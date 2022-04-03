@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Platform} from 'react-native';
 import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
@@ -39,12 +39,15 @@ export default function CameraControlsHorizontal(props) {
     };
   }
 
-  const topVoid = landscape_right
-    ? styles.horizontal_top_void_right
-    : styles.horizontal_top_void_left;
-  const bottomVoid = landscape_right
-    ? styles.horizontal_bottom_void_right
-    : styles.horizontal_bottom_void_left;
+  const topVoid =
+    landscape_right && Platform.OS === 'ios'
+      ? styles.horizontal_top_void_right
+      : styles.horizontal_top_void_left;
+
+  const bottomVoid =
+    landscape_right && Platform.OS === 'ios'
+      ? styles.horizontal_bottom_void_right
+      : styles.horizontal_bottom_void_left;
 
   return (
     <View style={horizontal_content_container}>

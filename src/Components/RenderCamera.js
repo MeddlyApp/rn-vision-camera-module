@@ -21,8 +21,6 @@ export default function RenderCamera(props) {
     autoFocusSystem,
   } = config;
 
-  console.log('DEVICES', devices);
-
   const hghqlphto = enableHighQualityPhotos ? enableHighQualityPhotos : null;
   const lwLghtBst = lowLightBoost ? lowLightBoost : false;
   const vidStblMd = videoStabilizationMode ? videoStabilizationMode : null;
