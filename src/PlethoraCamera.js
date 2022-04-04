@@ -242,7 +242,7 @@ export default class PlethoraCamera extends Component {
 
         const nameConvention =
           upload && upload.nameConvention ? upload.nameConvention : null;
-        const file_name = nameConvention ? `${nameConvention}_TS-` : null;
+        const file_name = nameConvention ? `${nameConvention}_TS` : null;
 
         const newName = `${file_name}${timestamp2}`;
         const finalFile = await renameFile(video, newName);
@@ -339,7 +339,7 @@ export default class PlethoraCamera extends Component {
 
     const nameConvention =
       upload && upload.nameConvention ? upload.nameConvention : null;
-    const file_name = nameConvention ? `${nameConvention}_TS-` : null;
+    const file_name = nameConvention ? `${nameConvention}_TS` : null;
 
     const newName = `${file_name}${timestamp}`;
     const finalFile = await renameFile(photo, newName);
