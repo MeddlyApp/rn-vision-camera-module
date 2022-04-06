@@ -43,7 +43,7 @@ export default class PlethoraCamera extends Component {
     super(props);
 
     this.state = {
-      is_video: true,
+      is_video: false,
       screen_size: Dimensions.get('window'),
       orientation: 'PORTRAIT',
       // Camera Settings

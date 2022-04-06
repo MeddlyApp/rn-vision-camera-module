@@ -8,9 +8,20 @@ export default function CameraControlsVertical(props) {
   const {is_recording, screen_size, front_camera, flash, is_video} = state;
 
   const camera_controls_container_styles = {
-    height: 80,
+    height: 60,
     width: window.width,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 255, 0, 0.15)',
+  };
+  const bottom_controls_container_styles = {
+    height: 60,
+    width: window.width,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 0, 255, 0.15)',
   };
   const vertical_content_container = {
     height: screen_size.height,
@@ -49,6 +60,21 @@ export default function CameraControlsVertical(props) {
 
       <View style={styles.vertical_row_recording_controls}>
         {is_video ? children.videoControls : children.pictureControls}
+      </View>
+
+      <View style={bottom_controls_container_styles}>
+        {!is_recording ? (
+          <CameraSettings
+            screen_size={screen_size}
+            front_camera={front_camera}
+            flash={flash}
+            is_video={is_video}
+            toggleVideoOrPicture={props.toggleVideoOrPicture}
+            toggleCamera={props.toggleCamera}
+            toggleFlash={props.toggleFlash}
+            icons={icons}
+          />
+        ) : null}
       </View>
 
       <View style={styles.vertical_bottom_void} />

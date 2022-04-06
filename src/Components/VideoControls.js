@@ -7,25 +7,25 @@ export default function VideoControls(props) {
 
   if (!is_recording) {
     return (
-      <TouchableOpacity onPress={props.startVideo}>
+      <TouchableOpacity
+        onPress={props.startVideo}
+        style={!icons.startRecordingIcon ? styles.rec_btn : styles.camera_btn}>
         {icons.startRecordingIcon ? (
           icons.startRecordingIcon
         ) : (
-          <View style={styles.rec_btn}>
-            <Text style={styles.txt_white}>Record</Text>
-          </View>
+          <Text style={styles.txt_white}>Record</Text>
         )}
       </TouchableOpacity>
     );
   } else {
     return (
-      <TouchableOpacity onPress={props.endVideo}>
+      <TouchableOpacity
+        onPress={props.endVideo}
+        style={!icons.stopRecordingIcon ? styles.stop_btn : styles.camera_btn}>
         {icons.stopRecordingIcon ? (
           icons.stopRecordingIcon
         ) : (
-          <View style={styles.stop_btn}>
-            <Text style={styles.txt_white}>Stop</Text>
-          </View>
+          <Text style={styles.txt_white}>Stop</Text>
         )}
       </TouchableOpacity>
     );

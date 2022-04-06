@@ -3,16 +3,16 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function PictureControls(props) {
-  const {icons} = props;
+  const {takePictureIcon} = props.icons;
 
   return (
-    <TouchableOpacity onPress={props.takePicture}>
-      {icons.takePictureIcon ? (
-        icons.takePictureIcon
+    <TouchableOpacity
+      onPress={props.takePicture}
+      style={!takePictureIcon ? styles.snap_btn : null}>
+      {takePictureIcon ? (
+        takePictureIcon
       ) : (
-        <View style={styles.stop_btn}>
-          <Text style={styles.txt_white}>Snap</Text>
-        </View>
+        <Text style={styles.txt_white}>Snap</Text>
       )}
     </TouchableOpacity>
   );

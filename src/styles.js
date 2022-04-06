@@ -31,10 +31,11 @@ const styles = StyleSheet.create({
 
   // Vertical Layout Formatting
   vertical_row_select_event: {
-    height: 145,
+    height: 100,
     width: window.width,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
   },
   vertical_gesture_controls: {
     flex: 5,
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
     height: window.height,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
   },
   horizontal_gesture_controls: {
     flex: 5,
@@ -88,10 +90,34 @@ const styles = StyleSheet.create({
   },
 
   /******************** RENDER CAMERA ********************/
+  action_btn: {
+    height: 90,
+    width: 90,
+    borderColor: '#FFFFFF',
+    borderWidth: 3,
+    borderRadius: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'green',
+  },
 
   camera_btn: {
-    height: 50,
-    width: 50,
+    height: 60,
+    width: 60,
+    // borderColor: '#FFFFFF',
+    // borderWidth: 3,
+    // borderRadius: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor: 'green',
+  },
+  //
+  snap_btn: {
+    height: 90,
+    width: 90,
+    borderColor: '#FFFFFF',
+    borderWidth: 3,
+    borderRadius: 45,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -103,6 +129,7 @@ const styles = StyleSheet.create({
     borderRadius: 45,
     alignItems: 'center',
     justifyContent: 'center',
+    // backgroundColor: 'green',
   },
   stop_btn: {
     height: 90,
@@ -112,6 +139,7 @@ const styles = StyleSheet.create({
     borderRadius: 45,
     alignItems: 'center',
     justifyContent: 'center',
+    // backgroundColor: 'green',
   },
   no_device_container: {
     flex: 1,

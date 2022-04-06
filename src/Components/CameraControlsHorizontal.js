@@ -16,11 +16,21 @@ export default function CameraControlsHorizontal(props) {
 
   const landscape_right = orientation === 'LANDSCAPE-RIGHT';
   const camera_controls_container_styles = {
-    width: 80,
+    width: 60,
     height: screen_size.height,
     flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 255, 0, 0.15)',
   };
-
+  const bottom_controls_container_styles = {
+    width: 60,
+    height: screen_size.height,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 0, 255, 0.15)',
+  };
   let horizontal_content_container = {
     height: screen_size.height,
     width: screen_size.width,
@@ -82,6 +92,21 @@ export default function CameraControlsHorizontal(props) {
 
       <View style={styles.horizontal_row_recording_controls}>
         {is_video ? children.videoControls : children.pictureControls}
+      </View>
+
+      <View style={bottom_controls_container_styles}>
+        {!is_recording ? (
+          <CameraSettings
+            screen_size={screen_size}
+            front_camera={front_camera}
+            flash={flash}
+            is_video={is_video}
+            toggleVideoOrPicture={props.toggleVideoOrPicture}
+            toggleCamera={props.toggleCamera}
+            toggleFlash={props.toggleFlash}
+            icons={icons}
+          />
+        ) : null}
       </View>
 
       <View style={bottomVoid} />
