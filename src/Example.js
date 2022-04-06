@@ -50,11 +50,12 @@ export default function App() {
       onUploadProgress={p => console.log(`UPLOADING... ${p}%`)}
       onUploadError={e => console.log('UPLOAD_ERROR', e)}
       // Custom Icons
-      icons={{
-        // Base Camera Controls
-        takePictureIcon: <Text style={{color: '#FFFF00'}}>Snap</Text>,
-        startRecordingIcon: <Text style={{color: '#00FF00'}}>Record</Text>,
-        stopRecordingIcon: <Text style={{color: '#00FFFF'}}>Stop</Text>,
+      icons={
+        {
+          /*/ Base Camera Controls
+        takePictureIcon: <Text style={{color: '#FFFF00'}}>SNP</Text>,
+        startRecordingIcon: <Text style={{color: '#00FF00'}}>REC</Text>,
+        stopRecordingIcon: <Text style={{color: '#00FFFF'}}>STP</Text>,
         // Built In Setting Controls
         togglePictureIcon: <Text style={{color: '#00AAFF'}}>Picture</Text>,
         toggleVideoIcon: <Text style={{color: '#FFAAFF'}}>Video</Text>,
@@ -69,7 +70,9 @@ export default function App() {
         },
         // Additional Recording Controls
         cameraSecondary: <Text style={{color: '#FFAAFF'}}>SEC</Text>,
-      }}>
+        */
+        }
+      }>
       {children}
     </PlethoraCamera>
   );

@@ -21,10 +21,10 @@ export default function PictureControls(props) {
         {cameraSecondary ? cameraSecondary : <View />}
       </View>
 
-      <View styles={styles.camera_action}>
+      <View style={styles.camera_action}>
         <TouchableOpacity
           onPress={props.takePicture}
-          style={!takePictureIcon ? styles.snap_btn : null}>
+          style={!takePictureIcon ? styles.snap_btn : styles.camera_action_btn}>
           {takePictureIcon ? (
             takePictureIcon
           ) : (
