@@ -400,7 +400,6 @@ export default class PlethoraCamera extends Component {
       zoom,
       is_recording,
       is_video,
-      orientation,
     } = this.state;
     const has_permissions = has_camera_permission && has_microphone_permission;
     const is_vertical = screen_size.height > screen_size.width;
@@ -446,9 +445,9 @@ export default class PlethoraCamera extends Component {
                 icons={icons}
                 state={this.state}
                 children={children}
-                toggleVideoOrPicture={this.toggleVideoOrPicture}
                 toggleCamera={this.toggleCamera}
-                toggleFlash={this.toggleFlash}>
+                toggleFlash={this.toggleFlash}
+                toggleVideoOrPicture={this.toggleVideoOrPicture}>
                 {is_video
                   ? {
                       children,
@@ -457,6 +456,8 @@ export default class PlethoraCamera extends Component {
                           is_recording={is_recording}
                           startVideo={this.startVideo}
                           endVideo={this.endVideo}
+                          toggleCamera={this.toggleCamera}
+                          state={this.state}
                           icons={icons}
                         />
                       ),
@@ -466,6 +467,8 @@ export default class PlethoraCamera extends Component {
                       pictureControls: (
                         <PictureControls
                           takePicture={this.takePicture}
+                          toggleCamera={this.toggleCamera}
+                          state={this.state}
                           icons={icons}
                         />
                       ),
@@ -476,9 +479,9 @@ export default class PlethoraCamera extends Component {
                 icons={icons}
                 state={this.state}
                 children={children}
-                toggleVideoOrPicture={this.toggleVideoOrPicture}
                 toggleCamera={this.toggleCamera}
-                toggleFlash={this.toggleFlash}>
+                toggleFlash={this.toggleFlash}
+                toggleVideoOrPicture={this.toggleVideoOrPicture}>
                 {is_video
                   ? {
                       children,
@@ -487,6 +490,8 @@ export default class PlethoraCamera extends Component {
                           is_recording={is_recording}
                           startVideo={this.startVideo}
                           endVideo={this.endVideo}
+                          toggleCamera={this.toggleCamera}
+                          state={this.state}
                           icons={icons}
                         />
                       ),
@@ -496,6 +501,8 @@ export default class PlethoraCamera extends Component {
                       pictureControls: (
                         <PictureControls
                           takePicture={this.takePicture}
+                          toggleCamera={this.toggleCamera}
+                          state={this.state}
                           icons={icons}
                         />
                       ),

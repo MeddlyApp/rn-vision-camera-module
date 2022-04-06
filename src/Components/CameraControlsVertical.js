@@ -13,7 +13,7 @@ export default function CameraControlsVertical(props) {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0, 255, 0, 0.15)',
+    // backgroundColor: 'rgba(0, 255, 0, 0.15)',
   };
   const bottom_controls_container_styles = {
     height: 60,
@@ -21,7 +21,7 @@ export default function CameraControlsVertical(props) {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 0, 255, 0.15)',
+    // backgroundColor: 'rgba(255, 0, 255, 0.15)',
   };
   const vertical_content_container = {
     height: screen_size.height,

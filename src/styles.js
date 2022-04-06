@@ -35,18 +35,22 @@ const styles = StyleSheet.create({
     width: window.width,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    // backgroundColor: 'rgba(255, 255, 255, 0.25)',
   },
   vertical_gesture_controls: {
     flex: 5,
+    width: window.width,
     alignItems: 'center',
     justifyContent: 'center',
+    // backgroundColor: 'rgba(255, 0, 0, 0.25)',
   },
   vertical_row_recording_controls: {
     height: 120,
     width: window.width,
+    // backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
   vertical_bottom_void: {
     flex: 1,
@@ -59,18 +63,22 @@ const styles = StyleSheet.create({
     height: window.height,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    // backgroundColor: 'rgba(255, 255, 255, 0.25)',
   },
   horizontal_gesture_controls: {
     flex: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  horizontal_row_recording_controls: {
-    width: 120,
     height: window.height,
     alignItems: 'center',
     justifyContent: 'center',
+    // backgroundColor: 'rgba(255, 0, 0, 0.25)',
+  },
+  horizontal_row_recording_controls: {
+    height: window.width,
+    width: 120,
+    // backgroundColor: 'pink',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
   },
   horizontal_top_void_right: {
     flex: 1,
@@ -90,28 +98,14 @@ const styles = StyleSheet.create({
   },
 
   /******************** RENDER CAMERA ********************/
-  action_btn: {
-    height: 90,
-    width: 90,
-    borderColor: '#FFFFFF',
-    borderWidth: 3,
-    borderRadius: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'green',
-  },
-
-  camera_btn: {
+  camera_action_btn: {
     height: 60,
     width: 60,
-    // borderColor: '#FFFFFF',
-    // borderWidth: 3,
-    // borderRadius: 45,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'green',
   },
-  //
+
+  // Built In Camera Component Contorls
   snap_btn: {
     height: 90,
     width: 90,
@@ -129,7 +123,6 @@ const styles = StyleSheet.create({
     borderRadius: 45,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'green',
   },
   stop_btn: {
     height: 90,
@@ -139,9 +132,14 @@ const styles = StyleSheet.create({
     borderRadius: 45,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'green',
   },
   no_device_container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  camera_action: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

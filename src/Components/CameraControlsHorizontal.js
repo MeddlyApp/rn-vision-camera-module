@@ -21,7 +21,7 @@ export default function CameraControlsHorizontal(props) {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0, 255, 0, 0.15)',
+    // backgroundColor: 'rgba(0, 255, 0, 0.15)',
   };
   const bottom_controls_container_styles = {
     width: 60,
@@ -29,7 +29,7 @@ export default function CameraControlsHorizontal(props) {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 0, 255, 0.15)',
+    // backgroundColor: 'rgba(255, 0, 255, 0.15)',
   };
   let horizontal_content_container = {
     height: screen_size.height,

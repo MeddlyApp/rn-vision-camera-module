@@ -3,31 +3,78 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function VideoControls(props) {
-  const {is_recording, icons} = props;
+  const {state, icons} = props;
+  const {front_camera, is_recording} = state;
+  const {cameraSecondary, viewPortIcon, togglePictureIcon, toggleVideoIcon} =
+    icons;
 
-  if (!is_recording) {
-    return (
-      <TouchableOpacity
-        onPress={props.startVideo}
-        style={!icons.startRecordingIcon ? styles.rec_btn : styles.camera_btn}>
-        {icons.startRecordingIcon ? (
-          icons.startRecordingIcon
+  const cameraView = front_camera ? 'Front' : 'Back';
+
+  return (
+    <>
+      <View style={styles.camera_action}>
+        {cameraSecondary ? cameraSecondary : null}
+      </View>
+
+      <View style={styles.camera_action}>
+        {!is_recording ? (
+          <TouchableOpacity
+            onPress={props.startVideo}
+            style={
+              !icons.startRecordingIcon
+                ? styles.rec_btn
+                : styles.camera_action_btn
+            }>
+            {icons.startRecordingIcon ? (
+              icons.startRecordingIcon
+            ) : (
+              <Text style={styles.txt_white}>Record</Text>
+            )}
+          </TouchableOpacity>
         ) : (
-          <Text style={styles.txt_white}>Record</Text>
+          <TouchableOpacity
+            onPress={props.endVideo}
+            style={
+              !icons.stopRecordingIcon
+                ? styles.stop_btn
+                : styles.camera_action_btn
+            }>
+            {icons.stopRecordingIcon ? (
+              icons.stopRecordingIcon
+            ) : (
+              <Text style={styles.txt_white}>Stop</Text>
+            )}
+          </TouchableOpacity>
         )}
-      </TouchableOpacity>
-    );
-  } else {
-    return (
-      <TouchableOpacity
-        onPress={props.endVideo}
-        style={!icons.stopRecordingIcon ? styles.stop_btn : styles.camera_btn}>
-        {icons.stopRecordingIcon ? (
-          icons.stopRecordingIcon
+      </View>
+
+      <View style={styles.camera_action}>
+        {cameraView === 'Front' ? (
+          <TouchableOpacity
+            onPress={props.toggleCamera}
+            style={styles.camera_action_btn}>
+            {viewPortIcon && viewPortIcon.frontCamera ? (
+              viewPortIcon.frontCamera
+            ) : (
+              <View>
+                <Text style={styles.txt_white}>Front</Text>
+              </View>
+            )}
+          </TouchableOpacity>
         ) : (
-          <Text style={styles.txt_white}>Stop</Text>
+          <TouchableOpacity
+            onPress={props.toggleCamera}
+            style={styles.camera_action_btn}>
+            {viewPortIcon && viewPortIcon.backCamera ? (
+              viewPortIcon.backCamera
+            ) : (
+              <View>
+                <Text style={styles.txt_white}>Back</Text>
+              </View>
+            )}
+          </TouchableOpacity>
         )}
-      </TouchableOpacity>
-    );
-  }
+      </View>
+    </>
+  );
 }

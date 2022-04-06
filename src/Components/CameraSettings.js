@@ -23,7 +23,7 @@ export default function CameraSettings(props) {
   };
 
   const toggle_btn_style = is_vertical ? vertical_styles : horizontal_styles;
-  const {flashIcons, viewPortIcon, togglePictureIcon, toggleVideoIcon} = icons;
+  const {flashIcons, togglePictureIcon, toggleVideoIcon} = icons;
 
   return (
     <>
@@ -32,15 +32,16 @@ export default function CameraSettings(props) {
         {cameraView === 'Front' ? null : (
           <TouchableOpacity
             onPress={props.toggleFlash}
-            //style={!icons.flashIcons.flashOn ? styles.action_btn : styles.camera_btn}
-          >
+            style={styles.camera_action_btn}>
             <>
               {flash === 'on' ? (
                 <>
                   {flashIcons && flashIcons.flashOn ? (
                     flashIcons.flashOn
                   ) : (
-                    <Text style={styles.txt_white}>On</Text>
+                    <View>
+                      <Text style={styles.txt_white}>On</Text>
+                    </View>
                   )}
                 </>
               ) : null}
@@ -50,7 +51,9 @@ export default function CameraSettings(props) {
                   {flashIcons && flashIcons.flashOff ? (
                     flashIcons.flashOff
                   ) : (
-                    <Text style={styles.txt_white}>Off</Text>
+                    <View>
+                      <Text style={styles.txt_white}>Off</Text>
+                    </View>
                   )}
                 </>
               ) : null}
@@ -60,7 +63,9 @@ export default function CameraSettings(props) {
                   {flashIcons && flashIcons.flashAuto ? (
                     flashIcons.flashAuto
                   ) : (
-                    <Text style={styles.txt_white}>Auto</Text>
+                    <View>
+                      <Text style={styles.txt_white}>Auto</Text>
+                    </View>
                   )}
                 </>
               ) : null}
@@ -69,17 +74,19 @@ export default function CameraSettings(props) {
         )}
       </View>
 
-      {/* Camera Mode *}
+      {/* Camera Mode */}
       <View style={toggle_btn_style}>
         <TouchableOpacity
           onPress={props.toggleVideoOrPicture}
-          style={!icons.startRecordingIcon ? styles.camera_btn : styles.action_btn}>
+          style={styles.camera_action_btn}>
           {is_video ? (
             <>
               {toggleVideoIcon ? (
                 toggleVideoIcon
               ) : (
-                <Text style={styles.txt_white}>Video</Text>
+                <View>
+                  <Text style={styles.txt_white}>Video</Text>
+                </View>
               )}
             </>
           ) : (
@@ -87,34 +94,9 @@ export default function CameraSettings(props) {
               {togglePictureIcon ? (
                 togglePictureIcon
               ) : (
-                <Text style={styles.txt_white}>Picture</Text>
-              )}
-            </>
-          )}
-        </TouchableOpacity>
-      </View>
-      */}
-
-      {/* Viewport */}
-      <View style={toggle_btn_style}>
-        <TouchableOpacity
-          onPress={props.toggleCamera}
-          // style={!icons.viewPortIcon.frontCamera? styles.camera_btn: styles.action_btn}
-        >
-          {cameraView === 'Front' ? (
-            <>
-              {viewPortIcon && viewPortIcon.frontCamera ? (
-                viewPortIcon.frontCamera
-              ) : (
-                <Text style={styles.txt_white}>{cameraView}</Text>
-              )}
-            </>
-          ) : (
-            <>
-              {viewPortIcon && viewPortIcon.backCamera ? (
-                viewPortIcon.backCamera
-              ) : (
-                <Text style={styles.txt_white}>{cameraView}</Text>
+                <View>
+                  <Text style={styles.txt_white}>Picture</Text>
+                </View>
               )}
             </>
           )}
