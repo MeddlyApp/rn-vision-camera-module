@@ -1,14 +1,8 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
 import PlethoraCamera from './PlethoraCamera';
 
 export default function App() {
-  const children = {
-    cameraTop: <Text style={{color: '#FFF'}}>Top</Text>,
-    cameraMiddle: <Text style={{color: '#FFF'}}>Middle</Text>,
-    cameraActionsSectionLeft: null,
-  };
-
   /*/ Config takes all arguments from Vision Camera
    *  https://mrousavy.com/react-native-vision-camera/docs/api/interfaces/CameraProps
    * 
@@ -17,6 +11,12 @@ export default function App() {
    *    - video: boolean
    *    - audio: boolean
   /*/
+
+  const children = {
+    cameraTop: <Text style={{color: '#FFF'}}>Top</Text>,
+    cameraMiddle: <Text style={{color: '#FFF'}}>Middle</Text>,
+    cameraBottom: <Text style={{color: '#FFF'}}>Bottom</Text>,
+  };
 
   return (
     <PlethoraCamera
@@ -50,9 +50,8 @@ export default function App() {
       onUploadProgress={p => console.log(`UPLOADING... ${p}%`)}
       onUploadError={e => console.log('UPLOAD_ERROR', e)}
       // Custom Icons
-      icons={
-        {
-          /*/ Base Camera Controls
+      icons={{
+        // Base Camera Controls
         takePictureIcon: <Text style={{color: '#FFFF00'}}>SNP</Text>,
         startRecordingIcon: <Text style={{color: '#00FF00'}}>REC</Text>,
         stopRecordingIcon: <Text style={{color: '#00FFFF'}}>STP</Text>,
@@ -70,9 +69,7 @@ export default function App() {
         },
         // Additional Recording Controls
         cameraSecondary: <Text style={{color: '#FFAAFF'}}>SEC</Text>,
-        */
-        }
-      }>
+      }}>
       {children}
     </PlethoraCamera>
   );

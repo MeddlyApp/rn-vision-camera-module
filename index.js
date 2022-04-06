@@ -2,6 +2,7 @@
 import 'react-native-gesture-handler';
 import PlethoraCamera from './src/PlethoraCamera';
 export default PlethoraCamera;
+//
 
 /*/ Testing
 import 'react-native-gesture-handler';

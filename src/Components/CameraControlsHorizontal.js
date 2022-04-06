@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Platform} from 'react-native';
+import {View, Platform, Text} from 'react-native';
 import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
@@ -13,6 +13,8 @@ export default function CameraControlsHorizontal(props) {
     flash,
     is_video,
   } = state;
+
+  const {cameraTop, cameraMiddle, cameraBottom} = children.children;
 
   const landscape_right = orientation === 'LANDSCAPE-RIGHT';
   const camera_controls_container_styles = {
@@ -59,20 +61,17 @@ export default function CameraControlsHorizontal(props) {
       ? styles.horizontal_bottom_void_right
       : styles.horizontal_bottom_void_left;
 
+  console.log('CHILDREN', children.cameraBottom);
   return (
     <View style={horizontal_content_container}>
       <View style={topVoid} />
 
       <View style={styles.horizontal_row_select_event}>
-        {children && children.children && children.children.cameraTop
-          ? children.children.cameraTop
-          : null}
+        {cameraTop ? cameraTop : null}
       </View>
 
       <View style={styles.horizontal_gesture_controls}>
-        {children && children.children && children.children.cameraMiddle
-          ? children.children.cameraMiddle
-          : null}
+        {cameraMiddle ? cameraMiddle : null}
       </View>
 
       <View style={camera_controls_container_styles}>
@@ -95,18 +94,9 @@ export default function CameraControlsHorizontal(props) {
       </View>
 
       <View style={bottom_controls_container_styles}>
-        {!is_recording ? (
-          <CameraSettings
-            screen_size={screen_size}
-            front_camera={front_camera}
-            flash={flash}
-            is_video={is_video}
-            toggleVideoOrPicture={props.toggleVideoOrPicture}
-            toggleCamera={props.toggleCamera}
-            toggleFlash={props.toggleFlash}
-            icons={icons}
-          />
-        ) : null}
+        <View style={styles.camera_bottom_container}>
+          {!is_recording ? <>{cameraBottom ? cameraBottom : null}</> : null}
+        </View>
       </View>
 
       <View style={bottomVoid} />

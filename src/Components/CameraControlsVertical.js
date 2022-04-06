@@ -1,15 +1,17 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
 export default function CameraControlsVertical(props) {
-  const {children, state, icons} = props;
+  let {children, state, icons} = props;
+
+  const {cameraTop, cameraMiddle, cameraBottom} = children.children;
   const {is_recording, screen_size, front_camera, flash, is_video} = state;
 
   const camera_controls_container_styles = {
     height: 60,
-    width: window.width,
+    width: screen_size.width,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -17,7 +19,7 @@ export default function CameraControlsVertical(props) {
   };
   const bottom_controls_container_styles = {
     height: 60,
-    width: window.width,
+    width: screen_size.width,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -33,14 +35,10 @@ export default function CameraControlsVertical(props) {
   return (
     <View style={vertical_content_container}>
       <View style={styles.vertical_row_select_event}>
-        {children && children.children && children.children.cameraTop
-          ? children.children.cameraTop
-          : null}
+        {cameraTop ? cameraTop : null}
       </View>
       <View style={styles.vertical_gesture_controls}>
-        {children && children.children && children.children.cameraMiddle
-          ? children.children.cameraMiddle
-          : null}
+        {cameraMiddle ? cameraMiddle : null}
       </View>
 
       <View style={camera_controls_container_styles}>
@@ -63,18 +61,9 @@ export default function CameraControlsVertical(props) {
       </View>
 
       <View style={bottom_controls_container_styles}>
-        {!is_recording ? (
-          <CameraSettings
-            screen_size={screen_size}
-            front_camera={front_camera}
-            flash={flash}
-            is_video={is_video}
-            toggleVideoOrPicture={props.toggleVideoOrPicture}
-            toggleCamera={props.toggleCamera}
-            toggleFlash={props.toggleFlash}
-            icons={icons}
-          />
-        ) : null}
+        <View style={styles.camera_bottom_container}>
+          {!is_recording ? <>{cameraBottom ? cameraBottom : null}</> : null}
+        </View>
       </View>
 
       <View style={styles.vertical_bottom_void} />
