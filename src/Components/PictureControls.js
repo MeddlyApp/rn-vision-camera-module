@@ -3,8 +3,8 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function PictureControls(props) {
-  const {state, icons} = props;
-  const {front_camera} = state;
+  const {state, icons, cameraState} = props;
+  const {frontCamera} = cameraState;
   const {
     takePictureIcon,
     cameraSecondary,
@@ -13,7 +13,7 @@ export default function PictureControls(props) {
     toggleVideoIcon,
   } = icons;
 
-  const cameraView = front_camera ? 'Front' : 'Back';
+  const cameraView = frontCamera ? 'Front' : 'Back';
 
   return (
     <>

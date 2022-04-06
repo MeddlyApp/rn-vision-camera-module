@@ -4,15 +4,10 @@ import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
 export default function CameraControlsHorizontal(props) {
-  const {children, state, icons} = props;
-  const {
-    is_recording,
-    screen_size,
-    orientation,
-    front_camera,
-    flash,
-    is_video,
-  } = state;
+  const {children, state, icons, cameraState} = props;
+  console.log(cameraState);
+  const {flash, isVideo, isRecording, frontCamera} = cameraState;
+  const {screen_size, orientation} = state;
 
   const {cameraTop, cameraMiddle, cameraBottom} = children.children;
 
@@ -75,12 +70,12 @@ export default function CameraControlsHorizontal(props) {
       </View>
 
       <View style={camera_controls_container_styles}>
-        {!is_recording ? (
+        {!isRecording ? (
           <CameraSettings
             screen_size={screen_size}
-            front_camera={front_camera}
+            frontCamera={frontCamera}
             flash={flash}
-            is_video={is_video}
+            isVideo={isVideo}
             toggleVideoOrPicture={props.toggleVideoOrPicture}
             toggleCamera={props.toggleCamera}
             toggleFlash={props.toggleFlash}
@@ -90,12 +85,12 @@ export default function CameraControlsHorizontal(props) {
       </View>
 
       <View style={styles.horizontal_row_recording_controls}>
-        {is_video ? children.videoControls : children.pictureControls}
+        {isVideo ? children.videoControls : children.pictureControls}
       </View>
 
       <View style={bottom_controls_container_styles}>
         <View style={styles.camera_bottom_container}>
-          {!is_recording ? <>{cameraBottom ? cameraBottom : null}</> : null}
+          {!isRecording ? <>{cameraBottom ? cameraBottom : null}</> : null}
         </View>
       </View>
 

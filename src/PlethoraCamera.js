@@ -1,3 +1,5 @@
+// // SET_IS_RECORDING
+
 /*/
  * COMPONENT LIFECYCLE
  * PERMISSIONS
@@ -43,15 +45,11 @@ export default class PlethoraCamera extends Component {
     super(props);
 
     this.state = {
-      is_video: false,
       screen_size: Dimensions.get('window'),
       orientation: 'PORTRAIT',
       // Camera Settings
       camera_active: false,
-      front_camera: false,
       zoom: 0,
-      flash: 'off',
-      is_recording: false,
       video_start_time: null,
       // Permissions
       has_camera_permission: false,
@@ -197,35 +195,27 @@ export default class PlethoraCamera extends Component {
   /******************** CAMERA ACTIONS ********************/
 
   toggleVideoOrPicture = () => {
-    const {is_video} = this.state;
-    this.setState({is_video: !is_video});
+    console.log('TOGGLED VIDEO / PHOTO MODE');
+    const {toggleVideoOrPicture} = this.props.stateActions;
+    if (toggleVideoOrPicture) toggleVideoOrPicture();
   };
   toggleCamera = () => {
-    const {front_camera} = this.state;
-    this.setState({
-      front_camera: !front_camera,
-      zoom: 0,
-    });
+    console.log('TOGGLED CAMERA');
+    const {toggleFrontCamera} = this.props.stateActions;
+    if (toggleFrontCamera) toggleFrontCamera();
+    this.setState({zoom: 0});
   };
   toggleFlash = () => {
-    const {flash} = this.state;
-    switch (flash) {
-      case 'off':
-        return this.setState({flash: 'on'});
-      case 'on':
-        return this.setState({flash: 'auto'});
-      case 'auto':
-        return this.setState({flash: 'off'});
-      default:
-        return this.setState({flash: 'off'});
-    }
+    console.log('TOGGLED_FLASH');
+    const {toggleFlash} = this.props.stateActions;
+    if (toggleFlash) toggleFlash();
   };
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
   startVideo = async () => {
-    const {saveToCameraRoll, upload} = this.props;
-    const {flash} = this.state;
+    const {saveToCameraRoll, upload, cameraState} = this.props;
+    const {flash} = cameraState;
     await this.lockOrientation();
 
     const timestamp1 = new Date().getTime();
@@ -311,7 +301,8 @@ export default class PlethoraCamera extends Component {
 
     const timestamp2 = new Date().getTime();
     console.log('Video Started', timestamp2);
-    this.setState({is_recording: true});
+    // SET_IS_RECORDING: true
+    // this.setState({is_recording: true});
   };
 
   endVideo = async () => {
@@ -320,14 +311,15 @@ export default class PlethoraCamera extends Component {
     await this.camera.current.stopRecording();
     const timestamp2 = new Date().getTime();
     console.log('Video Stopped', timestamp2);
-    return this.setState({is_recording: false});
+    // SET_IS_RECORDING: false
+    // return this.setState({is_recording: false});
   };
 
   /******************** PICTURE LIFECYCLE ********************/
 
   takePicture = async () => {
-    const {saveToCameraRoll, upload} = this.props;
-    const {flash} = this.state;
+    const {saveToCameraRoll, upload, cameraState} = this.props;
+    const {flash} = cameraState;
     const photo = await this.camera.current.takePhoto({
       flash,
       enableAutoRedEyeReduction: true,
@@ -390,16 +382,15 @@ export default class PlethoraCamera extends Component {
   /******************** RENDERS ********************/
 
   render() {
-    const {camConfig, icons, children} = this.props;
+    const {cameraConfig, icons, children, cameraState} = this.props;
+
+    const {isVideo, isRecording, frontCamera} = cameraState;
     const {
       has_camera_permission,
       has_microphone_permission,
       screen_size,
       camera_active,
-      front_camera,
       zoom,
-      is_recording,
-      is_video,
     } = this.state;
     const has_permissions = has_camera_permission && has_microphone_permission;
     const is_vertical = screen_size.height > screen_size.width;
@@ -426,9 +417,9 @@ export default class PlethoraCamera extends Component {
         <RenderCamera
           camera={this.camera}
           camera_active={camera_active}
-          front_camera={front_camera}
+          frontCamera={frontCamera}
           zoom={zoom}
-          config={camConfig}
+          config={cameraConfig}
         />
 
         <GestureHandler
@@ -444,20 +435,21 @@ export default class PlethoraCamera extends Component {
               <CameraControlsVertical
                 icons={icons}
                 state={this.state}
+                cameraState={cameraState}
                 children={children}
                 toggleCamera={this.toggleCamera}
                 toggleFlash={this.toggleFlash}
                 toggleVideoOrPicture={this.toggleVideoOrPicture}>
-                {is_video
+                {isVideo
                   ? {
                       children,
                       videoControls: (
                         <VideoControls
-                          is_recording={is_recording}
+                          isRecording={isRecording}
                           startVideo={this.startVideo}
                           endVideo={this.endVideo}
                           toggleCamera={this.toggleCamera}
-                          state={this.state}
+                          cameraState={cameraState}
                           icons={icons}
                         />
                       ),
@@ -468,6 +460,7 @@ export default class PlethoraCamera extends Component {
                         <PictureControls
                           takePicture={this.takePicture}
                           toggleCamera={this.toggleCamera}
+                          cameraState={cameraState}
                           state={this.state}
                           icons={icons}
                         />
@@ -478,20 +471,21 @@ export default class PlethoraCamera extends Component {
               <CameraControlsHorizontal
                 icons={icons}
                 state={this.state}
+                cameraState={cameraState}
                 children={children}
                 toggleCamera={this.toggleCamera}
                 toggleFlash={this.toggleFlash}
                 toggleVideoOrPicture={this.toggleVideoOrPicture}>
-                {is_video
+                {isVideo
                   ? {
                       children,
                       videoControls: (
                         <VideoControls
-                          is_recording={is_recording}
+                          isRecording={isRecording}
                           startVideo={this.startVideo}
                           endVideo={this.endVideo}
                           toggleCamera={this.toggleCamera}
-                          state={this.state}
+                          cameraState={cameraState}
                           icons={icons}
                         />
                       ),
@@ -502,6 +496,7 @@ export default class PlethoraCamera extends Component {
                         <PictureControls
                           takePicture={this.takePicture}
                           toggleCamera={this.toggleCamera}
+                          cameraState={cameraState}
                           state={this.state}
                           icons={icons}
                         />

@@ -3,21 +3,21 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function VideoControls(props) {
-  const {state, icons} = props;
-  const {front_camera, is_recording} = state;
+  const {icons, cameraState} = props;
+  const {isRecording, frontCamera} = cameraState;
   const {cameraSecondary, viewPortIcon, togglePictureIcon, toggleVideoIcon} =
     icons;
 
-  const cameraView = front_camera ? 'Front' : 'Back';
+  const cameraView = frontCamera ? 'Front' : 'Back';
 
   return (
     <>
       <View style={styles.camera_action}>
-        {cameraSecondary ? cameraSecondary : null}
+        {!isRecording ? <>{cameraSecondary ? cameraSecondary : null}</> : null}
       </View>
 
       <View style={styles.camera_action}>
-        {!is_recording ? (
+        {!isRecording ? (
           <TouchableOpacity
             onPress={props.startVideo}
             style={
@@ -49,31 +49,35 @@ export default function VideoControls(props) {
       </View>
 
       <View style={styles.camera_action}>
-        {cameraView === 'Front' ? (
-          <TouchableOpacity
-            onPress={props.toggleCamera}
-            style={styles.camera_action_btn}>
-            {viewPortIcon && viewPortIcon.frontCamera ? (
-              viewPortIcon.frontCamera
+        {!isRecording ? (
+          <>
+            {cameraView === 'Front' ? (
+              <TouchableOpacity
+                onPress={props.toggleCamera}
+                style={styles.camera_action_btn}>
+                {viewPortIcon && viewPortIcon.frontCamera ? (
+                  viewPortIcon.frontCamera
+                ) : (
+                  <View>
+                    <Text style={styles.txt_white}>Front</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
             ) : (
-              <View>
-                <Text style={styles.txt_white}>Front</Text>
-              </View>
+              <TouchableOpacity
+                onPress={props.toggleCamera}
+                style={styles.camera_action_btn}>
+                {viewPortIcon && viewPortIcon.backCamera ? (
+                  viewPortIcon.backCamera
+                ) : (
+                  <View>
+                    <Text style={styles.txt_white}>Back</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
             )}
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            onPress={props.toggleCamera}
-            style={styles.camera_action_btn}>
-            {viewPortIcon && viewPortIcon.backCamera ? (
-              viewPortIcon.backCamera
-            ) : (
-              <View>
-                <Text style={styles.txt_white}>Back</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        )}
+          </>
+        ) : null}
       </View>
     </>
   );

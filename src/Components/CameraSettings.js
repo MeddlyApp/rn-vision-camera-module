@@ -3,8 +3,8 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import styles from '../styles';
 
 export default function CameraSettings(props) {
-  const {screen_size, front_camera, flash, is_video, icons} = props;
-  const cameraView = front_camera ? 'Front' : 'Back';
+  const {screen_size, frontCamera, flash, isVideo, icons} = props;
+  const cameraView = frontCamera ? 'Front' : 'Back';
   const is_vertical = screen_size.height > screen_size.width;
 
   const base_styles = {
@@ -79,7 +79,7 @@ export default function CameraSettings(props) {
         <TouchableOpacity
           onPress={props.toggleVideoOrPicture}
           style={styles.camera_action_btn}>
-          {is_video ? (
+          {isVideo ? (
             <>
               {toggleVideoIcon ? (
                 toggleVideoIcon

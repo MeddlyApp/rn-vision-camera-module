@@ -4,9 +4,9 @@ import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import styles from '../styles';
 
 export default function RenderCamera(props) {
-  const {camera, config, camera_active, front_camera, zoom} = props;
+  const {camera, config, camera_active, frontCamera, zoom} = props;
   const devices = useCameraDevices();
-  const device = front_camera ? devices.front : devices.back;
+  const device = frontCamera ? devices.front : devices.back;
 
   // NOTE: zoom state is multiplied by 10 because 1 is minimum
 
