@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
 import PlethoraCamera from './PlethoraCamera';
 
 export default function App() {
@@ -8,8 +8,7 @@ export default function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [flash, setFlash] = useState('auto');
 
-  const toggleFlash = flash => {
-    console.log('FLASH Toggled');
+  const toggleFlash = () => {
     switch (flash) {
       case 'off':
         return setFlash('on');
@@ -24,14 +23,10 @@ export default function App() {
 
   const cameraState = {isVideo, frontCamera, isRecording, flash};
   const stateActions = {
-    // toggleFlash: toggleFlash,
-    // toggleFrontCamera: setFrontCamera(!frontCamera),
-    // setIsVideo: setIsVideo(!isVideo),
-    // setIsRecording: v => setIsRecording(v),
     toggleFlash: toggleFlash,
-    toggleFrontCamera: null,
-    setIsVideo: null,
-    setIsRecording: null,
+    toggleFrontCamera: () => setFrontCamera(!frontCamera),
+    setIsVideo: () => setIsVideo(!isVideo),
+    setIsRecording: v => setIsRecording(v),
   };
 
   const children = {

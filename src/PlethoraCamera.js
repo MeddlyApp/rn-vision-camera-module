@@ -195,18 +195,15 @@ export default class PlethoraCamera extends Component {
   /******************** CAMERA ACTIONS ********************/
 
   toggleVideoOrPicture = () => {
-    console.log('TOGGLED VIDEO / PHOTO MODE');
-    const {toggleVideoOrPicture} = this.props.stateActions;
-    if (toggleVideoOrPicture) toggleVideoOrPicture();
+    const {setIsVideo} = this.props.stateActions;
+    if (setIsVideo) setIsVideo();
   };
   toggleCamera = () => {
-    console.log('TOGGLED CAMERA');
     const {toggleFrontCamera} = this.props.stateActions;
     if (toggleFrontCamera) toggleFrontCamera();
     this.setState({zoom: 0});
   };
   toggleFlash = () => {
-    console.log('TOGGLED_FLASH');
     const {toggleFlash} = this.props.stateActions;
     if (toggleFlash) toggleFlash();
   };
@@ -301,8 +298,9 @@ export default class PlethoraCamera extends Component {
 
     const timestamp2 = new Date().getTime();
     console.log('Video Started', timestamp2);
+
     // SET_IS_RECORDING: true
-    // this.setState({is_recording: true});
+    this.props.stateActions.setIsRecording(true);
   };
 
   endVideo = async () => {
@@ -311,8 +309,9 @@ export default class PlethoraCamera extends Component {
     await this.camera.current.stopRecording();
     const timestamp2 = new Date().getTime();
     console.log('Video Stopped', timestamp2);
+
     // SET_IS_RECORDING: false
-    // return this.setState({is_recording: false});
+    this.props.stateActions.setIsRecording(false);
   };
 
   /******************** PICTURE LIFECYCLE ********************/
