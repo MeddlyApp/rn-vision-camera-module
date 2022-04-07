@@ -5,9 +5,8 @@ import styles from '../styles';
 
 export default function CameraControlsHorizontal(props) {
   const {children, state, icons, cameraState} = props;
-  console.log(cameraState);
-  const {flash, isVideo, isRecording, frontCamera} = cameraState;
-  const {screen_size, orientation} = state;
+  const {flash, isVideo, frontCamera} = cameraState;
+  const {screen_size, orientation, is_recording} = state;
 
   const {cameraTop, cameraMiddle, cameraBottom} = children.children;
 
@@ -56,7 +55,6 @@ export default function CameraControlsHorizontal(props) {
       ? styles.horizontal_bottom_void_right
       : styles.horizontal_bottom_void_left;
 
-  console.log('CHILDREN', children.cameraBottom);
   return (
     <View style={horizontal_content_container}>
       <View style={topVoid} />
@@ -70,7 +68,7 @@ export default function CameraControlsHorizontal(props) {
       </View>
 
       <View style={camera_controls_container_styles}>
-        {!isRecording ? (
+        {!is_recording ? (
           <CameraSettings
             screen_size={screen_size}
             frontCamera={frontCamera}
@@ -90,7 +88,7 @@ export default function CameraControlsHorizontal(props) {
 
       <View style={bottom_controls_container_styles}>
         <View style={styles.camera_bottom_container}>
-          {!isRecording ? <>{cameraBottom ? cameraBottom : null}</> : null}
+          {!is_recording ? <>{cameraBottom ? cameraBottom : null}</> : null}
         </View>
       </View>
 

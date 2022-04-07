@@ -3,8 +3,8 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function VideoControls(props) {
-  const {icons, cameraState} = props;
-  const {isRecording, frontCamera} = cameraState;
+  const {icons, cameraState, is_recording} = props;
+  const {frontCamera} = cameraState;
   const {cameraSecondary, viewPortIcon, togglePictureIcon, toggleVideoIcon} =
     icons;
 
@@ -13,11 +13,11 @@ export default function VideoControls(props) {
   return (
     <>
       <View style={styles.camera_action}>
-        {!isRecording ? <>{cameraSecondary ? cameraSecondary : null}</> : null}
+        {!is_recording ? <>{cameraSecondary ? cameraSecondary : null}</> : null}
       </View>
 
       <View style={styles.camera_action}>
-        {!isRecording ? (
+        {!is_recording ? (
           <TouchableOpacity
             onPress={props.startVideo}
             style={
@@ -49,7 +49,7 @@ export default function VideoControls(props) {
       </View>
 
       <View style={styles.camera_action}>
-        {!isRecording ? (
+        {!is_recording ? (
           <>
             {cameraView === 'Front' ? (
               <TouchableOpacity

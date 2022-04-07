@@ -48,6 +48,7 @@ export default class PlethoraCamera extends Component {
       screen_size: Dimensions.get('window'),
       orientation: 'PORTRAIT',
       // Camera Settings
+      is_recording: false,
       camera_active: false,
       zoom: 0,
       video_start_time: null,
@@ -299,8 +300,8 @@ export default class PlethoraCamera extends Component {
     const timestamp2 = new Date().getTime();
     console.log('Video Started', timestamp2);
 
-    // SET_IS_RECORDING: true
-    this.props.stateActions.setIsRecording(true);
+    this.setState({is_recording: true});
+    this.props.onRecordingStart();
   };
 
   endVideo = async () => {
@@ -310,8 +311,7 @@ export default class PlethoraCamera extends Component {
     const timestamp2 = new Date().getTime();
     console.log('Video Stopped', timestamp2);
 
-    // SET_IS_RECORDING: false
-    this.props.stateActions.setIsRecording(false);
+    this.setState({is_recording: false});
   };
 
   /******************** PICTURE LIFECYCLE ********************/
@@ -383,12 +383,13 @@ export default class PlethoraCamera extends Component {
   render() {
     const {cameraConfig, icons, children, cameraState} = this.props;
 
-    const {isVideo, isRecording, frontCamera} = cameraState;
+    const {isVideo, frontCamera} = cameraState;
     const {
       has_camera_permission,
       has_microphone_permission,
       screen_size,
       camera_active,
+      is_recording,
       zoom,
     } = this.state;
     const has_permissions = has_camera_permission && has_microphone_permission;
@@ -444,7 +445,7 @@ export default class PlethoraCamera extends Component {
                       children,
                       videoControls: (
                         <VideoControls
-                          isRecording={isRecording}
+                          is_recording={is_recording}
                           startVideo={this.startVideo}
                           endVideo={this.endVideo}
                           toggleCamera={this.toggleCamera}
@@ -480,7 +481,7 @@ export default class PlethoraCamera extends Component {
                       children,
                       videoControls: (
                         <VideoControls
-                          isRecording={isRecording}
+                          is_recording={is_recording}
                           startVideo={this.startVideo}
                           endVideo={this.endVideo}
                           toggleCamera={this.toggleCamera}

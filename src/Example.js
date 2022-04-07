@@ -5,7 +5,6 @@ import PlethoraCamera from './PlethoraCamera';
 export default function App() {
   const [isVideo, setIsVideo] = useState(!false);
   const [frontCamera, setFrontCamera] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
   const [flash, setFlash] = useState('auto');
 
   const toggleFlash = () => {
@@ -21,12 +20,11 @@ export default function App() {
     }
   };
 
-  const cameraState = {isVideo, frontCamera, isRecording, flash};
+  const cameraState = {isVideo, frontCamera, flash};
   const stateActions = {
     toggleFlash: toggleFlash,
     toggleFrontCamera: () => setFrontCamera(!frontCamera),
     setIsVideo: () => setIsVideo(!isVideo),
-    setIsRecording: v => setIsRecording(v),
   };
 
   const children = {
@@ -96,12 +94,13 @@ export default function App() {
       upload={uploadConfig}
       saveToCameraRoll={true}
       // Lifecycle Events
-      onRecordingFinished={p => console.log('onRecordingFinishedCallback', p)}
-      onRecordingError={e => console.log('RECORDING_ERROR', e)}
-      onTakePicture={p => console.log('PICTURE', p)}
-      onUploadComplete={u => console.log('UPLOADED', u)}
-      onUploadProgress={p => console.log(`UPLOADING... ${p}%`)}
-      onUploadError={e => console.log('UPLOAD_ERROR', e)}
+      onRecordingStart={r => console.log('onRecordingStart', r)}
+      onRecordingFinished={r => console.log('onRecordingFinishedCallback', r)}
+      onRecordingError={e => console.log('onRecordingError', e)}
+      onTakePicture={p => console.log('onTakePicture', p)}
+      onUploadComplete={u => console.log('onUploadComplete', u)}
+      onUploadProgress={p => console.log(`onUploadProgress... ${p}%`)}
+      onUploadError={e => console.log('onUploadError', e)}
       // Custom Icons
       icons={iconsConfig}>
       {children}

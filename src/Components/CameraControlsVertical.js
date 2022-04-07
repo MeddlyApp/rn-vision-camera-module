@@ -6,10 +6,10 @@ import styles from '../styles';
 export default function CameraControlsVertical(props) {
   let {children, state, icons, cameraState} = props;
 
-  const {flash, isVideo, isRecording, frontCamera} = cameraState;
+  const {flash, isVideo, frontCamera} = cameraState;
 
   const {cameraTop, cameraMiddle, cameraBottom} = children.children;
-  const {screen_size} = state;
+  const {screen_size, is_recording} = state;
 
   const camera_controls_container_styles = {
     height: 60,
@@ -44,7 +44,7 @@ export default function CameraControlsVertical(props) {
       </View>
 
       <View style={camera_controls_container_styles}>
-        {!isRecording ? (
+        {!is_recording ? (
           <CameraSettings
             screen_size={screen_size}
             frontCamera={frontCamera}
@@ -64,7 +64,7 @@ export default function CameraControlsVertical(props) {
 
       <View style={bottom_controls_container_styles}>
         <View style={styles.camera_bottom_container}>
-          {!isRecording ? <>{cameraBottom ? cameraBottom : null}</> : null}
+          {!is_recording ? <>{cameraBottom ? cameraBottom : null}</> : null}
         </View>
       </View>
 
