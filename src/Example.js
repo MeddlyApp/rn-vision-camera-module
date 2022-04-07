@@ -95,7 +95,7 @@ export default function App() {
       saveToCameraRoll={true}
       // Lifecycle Events
       onRecordingStart={r => console.log('onRecordingStart', r)}
-      onRecordingFinished={r => console.log('onRecordingFinishedCallback', r)}
+      onRecordingFinished={r => console.log('onRecordingFinished', r)}
       onRecordingError={e => console.log('onRecordingError', e)}
       onTakePicture={p => console.log('onTakePicture', p)}
       onUploadComplete={u => console.log('onUploadComplete', u)}
