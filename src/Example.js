@@ -101,6 +101,7 @@ export default function App() {
       onUploadComplete={u => console.log('onUploadComplete', u)}
       onUploadProgress={p => console.log(`onUploadProgress... ${p}%`)}
       onUploadError={e => console.log('onUploadError', e)}
+      onOrientationChange={o => console.log('onOrientationChange', o)}
       // Custom Icons
       icons={iconsConfig}>
       {children}
