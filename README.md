@@ -23,69 +23,90 @@
 - Save to camera roll
 - Upload media to API
 - Flash
+- Custom icons, custom top bar, custom middle section, and custom bottom bar
 - Component Example (includes all props)
+- Camera settings: control state and hook into component
 
-  ```javascript
-  // import Camera from '@plethora_co/rn-vision-camera';
+  - Flash:
+  - Viewport:
+  - Video / Photo Mode:
 
-  const children = {
-    cameraTop: <Text style={{color: '#FFF'}}>Top</Text>,
-    cameraMiddle: <Text style={{color: '#FFF'}}>Middle</Text>,
-  };
+```javascript
+// import Camera from '@plethora_co/rn-vision-camera';
 
-  // Render
-  <PlethoraCamera
-    // Camera Config
-    camConfig={{
-      photo: true, // Required
-      video: true, // Required
-      audio: true, // Required
-      // Optional
-      enableHighQualityPhotos: true,
-      lowLightBoost: true,
-      autoFocusSystem: 'contrast-detection',
-      videoStabilizationMode: 'cinematic-extended',
-      // hdr: true,
-      // supportsVideoHDR: true,
-      // supportsPhotoHDR: true,
-      // fps: 240,
-    }}
-    // Pre-Built Actions
-    upload={{
-      uploadUrl: ``,
-      authToken: null,
-      nameConvention: 'Plethora',
-    }}
-    saveToCameraRoll={true}
-    // Lifecycle Events
-    onRecordingFinished={p => console.log('onRecordingFinishedCallback', p)}
-    onRecordingError={e => console.log('RECORDING_ERROR', e)}
-    onTakePicture={p => console.log('PICTURE', p)}
-    onUploadComplete={u => console.log('UPLOADED', u)}
-    onUploadProgress={p => console.log(`UPLOADING... ${p}%`)}
-    onUploadError={e => console.log('UPLOAD_ERROR', e)}
-    // Custom Icons
-    icons={{
-      takePictureIcon: <Text style={{color: '#00FF00'}}>Snap</Text>,
-      startRecordingIcon: <Text style={{color: '#00FF00'}}>Record</Text>,
-      stopRecordingIcon: <Text style={{color: '#00FFFF'}}>Stop</Text>,
-      togglePictureIcon: <Text style={{color: '#FF00AA'}}>Picture</Text>,
-      toggleVideoIcon: <Text style={{color: '#FFAAFF'}}>Video</Text>,
-      viewPortIcon: {
-        frontCamera: <Text style={{color: '#00FF00'}}>Front</Text>,
-        backCamera: <Text style={{color: '#00FFFF'}}>Back</Text>,
-      },
-      flashIcons: {
-        flashOn: <Text style={{color: '#FFFF00'}}>On</Text>,
-        flashAuto: <Text style={{color: '#00FFFF'}}>Auto</Text>,
-        flashOff: <Text style={{color: '#00FF00'}}>Off</Text>,
-      },
-    }}>
-    {children}
-  </PlethoraCamera>;
-  ```
+const cameraConfig = {
+  photo: true, // Required
+  video: true, // Required
+  audio: true, // Required
+  // Optional
+  enableHighQualityPhotos: true,
+  lowLightBoost: true,
+  autoFocusSystem: 'contrast-detection',
+  videoStabilizationMode: 'cinematic-extended',
+  // hdr: true,
+  // supportsVideoHDR: true,
+  // supportsPhotoHDR: true,
+  // fps: 240,
+};
 
-  # Roadmap
+const uploadConfig = {
+  uploadUrl: ``,
+  authToken: null,
+  nameConvention: 'Plethora',
+};
 
-  - Add ability to get device camera info
-  - Add ability for users to set their camera props for quality, fps, etc
+const children = {
+  cameraTop: <Text style={{color: '#FFF'}}>Top</Text>,
+  cameraMiddle: <Text style={{color: '#FFF'}}>Middle</Text>,
+  cameraBottom: <Text style={{color: '#FFF'}}>Bottom</Text>,
+};
+
+const iconsConfig = {
+  // Base Camera Controls
+  takePictureIcon: <Text style={{color: '#FFFF00'}}>SNP</Text>,
+  startRecordingIcon: <Text style={{color: '#00FF00'}}>REC</Text>,
+  stopRecordingIcon: <Text style={{color: '#00FFFF'}}>STP</Text>,
+  // Built In Setting Controls
+  togglePictureIcon: <Text style={{color: '#00AAFF'}}>Picture</Text>,
+  toggleVideoIcon: <Text style={{color: '#FFAAFF'}}>Video</Text>,
+  viewPortIcon: {
+    frontCamera: <Text style={{color: '#00FF00'}}>Front</Text>,
+    backCamera: <Text style={{color: '#00FFFF'}}>Back</Text>,
+  },
+  flashIcons: {
+    flashOn: <Text style={{color: '#FFFF00'}}>On</Text>,
+    flashAuto: <Text style={{color: '#00FFFF'}}>Auto</Text>,
+    flashOff: <Text style={{color: '#00FF00'}}>Off</Text>,
+  },
+  // Additional Recording Controls
+  cameraSecondary: <Text style={{color: '#FFAAFF'}}>SEC</Text>,
+};
+
+// Render
+<PlethoraCamera
+  // Camera Config
+  cameraConfig={cameraConfig}
+  cameraState={cameraState}
+  stateActions={stateActions}
+  // Pre-Built Actions
+  upload={uploadConfig}
+  saveToCameraRoll={true}
+  // Lifecycle Events
+  onRecordingStart={r => console.log('onRecordingStart', r)}
+  onRecordingFinished={r => console.log('onRecordingFinished', r)}
+  onRecordingError={e => console.log('onRecordingError', e)}
+  onTakePicture={p => console.log('onTakePicture', p)}
+  onUploadComplete={u => console.log('onUploadComplete', u)}
+  onUploadProgress={p => console.log(`onUploadProgress... ${p}%`)}
+  onUploadError={e => console.log('onUploadError', e)}
+  onOrientationChange={o => console.log('onOrientationChange', o)}
+  // Custom Icons
+  icons={iconsConfig}>
+  {children}
+</PlethoraCamera>;
+```
+
+# Roadmap
+
+- Add: Write Geolocation data to file metadata
+- Add: Ability to get device camera info
