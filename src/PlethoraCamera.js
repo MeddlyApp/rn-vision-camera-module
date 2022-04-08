@@ -322,10 +322,14 @@ export default class PlethoraCamera extends Component {
   takePicture = async () => {
     const {saveToCameraRoll, upload, cameraState} = this.props;
     const {flash} = cameraState;
+    console.log('FLASH_STATUS: ', flash);
+
     const photo = await this.camera.current.takePhoto({
-      flash,
+      flash: flash,
       enableAutoRedEyeReduction: true,
       enableAutoStabilization: true,
+      enableAutoRedEyeReduction: true,
+      qualityPrioritization: 'balanced',
     });
     const timestamp = new Date().getTime();
 
