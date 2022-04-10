@@ -56,9 +56,6 @@ export default class PlethoraCamera extends Component {
       has_camera_permission: false,
       has_microphone_permission: false,
       has_camera_roll_permission: false,
-      // Gesture Controls
-      panStart: null,
-      panUpdate: null,
     };
 
     this.camera = React.createRef();
@@ -142,7 +139,7 @@ export default class PlethoraCamera extends Component {
       if (hasPermission) return true;
       else {
         const status = await PermissionsAndroid.request(permission);
-        console.log('CAMERA_STORAGE: ', status);
+        // console.log('CAMERA_STORAGE: ', status);
         return status === 'authorized' || status === 'granted';
       }
     }
@@ -201,29 +198,45 @@ export default class PlethoraCamera extends Component {
     }
   };
 
-  onPanStart = () => {
-    this._prevPan = 1;
-    console.log('START');
-  };
-  onPanEnd = () => {
-    this._prevPan = 1;
-    console.log('STOP');
-    this.setState({
-      panStart: null,
-      panUpdate: [],
-    });
-  };
+  onPanStart = () => (this._prevPan = 1);
+  onPanEnd = () => (this._prevPan = 1);
   onPanProgress = p => {
-    if (panStart === null) this.setState({panStart: p});
-    else this.setState({panUpdates: p});
-    console.log('onPanProgress', p);
-    const {panStart, panUpdates} = this.state;
+    const {onSwipeRight, onSwipeLeft, onSwipeUp, onSwipeDown} = this.props;
+    if (p.velocityX > 0 && p.translationX > 20) {
+      if (p.translationY > -20 && p.translationY < 20) {
+        console.log('RIGHT', p.translationY);
+        return onSwipeRight ? onSwipeRight(p) : null;
+      }
+    } else if (p.velocityX < 0 && p.translationX < -20) {
+      if (p.translationY > -20 && p.translationY < 20) {
+        console.log('LEFT', p.translationY);
+        return onSwipeLeft ? onSwipeLeft(p) : null;
+      }
+    }
+
+    if (p.velocityY > 0 && p.translationY > 20) {
+      console.log('DOWN', p.translationX);
+      if (p.translationX > -20 && p.translationX < 20) {
+        console.log('DOWN', p.translationX);
+        return onSwipeDown ? onSwipeDown(p) : null;
+      }
+    } else if (p.velocityY < 0 && p.translationY < -20) {
+      console.log('UP', p.translationX);
+      if (p.translationX > -20 && p.translationX < 20) {
+        console.log('UP', p.translationX);
+        return onSwipeUp ? onSwipeUp(p) : null;
+      }
+    }
 
     /*
-    onSwipeLeft ? onSwipeLeft() : null;
-    onSwipeRight ? onSwipeRight() : null;
-    onSwipeUp ? onSwipeUp() : null;
-    onSwipeDown ? onSwipeDown() : null;
+    if (p.velocityY > 0) {
+      // console.log('YAY', p);
+      console.log('DOWN', p.velocityX);
+      onSwipeDown ? onSwipeDown(p) : null;
+    } else if (p.velocityX === 0) {
+      console.log('UP', p.velocityX);
+      onSwipeUp ? onSwipeUp(p) : null;
+    }
     */
   };
 
@@ -361,6 +374,9 @@ export default class PlethoraCamera extends Component {
       enableAutoStabilization: true,
       enableAutoRedEyeReduction: true,
       qualityPrioritization: 'balanced',
+      metadata: {
+        Exif: {},
+      },
     });
     const timestamp = new Date().getTime();
 
@@ -373,6 +389,8 @@ export default class PlethoraCamera extends Component {
     const newName = `${file_name}${timestamp}`;
     const finalFile = await renameFile(photo, newName);
     photo.path = finalFile;
+
+    console.log('PHOTO: ', photo);
 
     // Write additional metadata here...
     // console.log('FINAL', finalFile);
@@ -469,6 +487,7 @@ export default class PlethoraCamera extends Component {
           onPinchProgress={this.onPinchProgress}
           onPinchStart={this.onPinchStart}
           onPinchEnd={this.onPinchEnd}
+          panDistance={this.props.panDistance}
           onPanProgress={this.onPanProgress}
           onPanStart={this.onPanStart}
           onPanEnd={this.onPanEnd}>

@@ -3,7 +3,7 @@
  * https://github.com/software-mansion/react-native-gesture-handler/blob/main/example/src/new_api/camera/index.tsx
 /*/
 
-import React, {useState} from 'react';
+import React from 'react';
 import {
   GestureHandlerRootView,
   PinchGestureHandler,
@@ -27,6 +27,7 @@ export default function GestureHandler(props) {
     onPanProgress,
     onPanEnd,
     // Other
+    panDistance,
     children,
   } = props;
 
@@ -60,7 +61,7 @@ export default function GestureHandler(props) {
         ref={swipeRef}
         onGestureEvent={onGesturePan}
         onHandlerStateChange={onPanStateChange}
-        minDist={50}>
+        minDist={panDistance ? panDistance : 50}>
         <PinchGestureHandler
           ref={pinchRef}
           onGestureEvent={onGesturePinch}
@@ -69,7 +70,7 @@ export default function GestureHandler(props) {
           <TapGestureHandler waitFor={doubleTapRef} onActivated={onSingleTap}>
             <TapGestureHandler
               ref={doubleTapRef}
-              onActivated={onDoubleTap}
+              onActivated={e => onDoubleTap(e.nativeEvent)}
               waitFor={pinchRef}
               numberOfTaps={2}
               maxDelayMs={175}>
