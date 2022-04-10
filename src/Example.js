@@ -105,23 +105,13 @@ export default function App() {
       // Custom Icons
       icons={iconsConfig}
       // Custom Gesture Controls
-      // onTapFocus={t => alert('onTapFocus', t)}
+      onTapFocus={t => alert('onTapFocus', t)}
       onDoubleTap={t => alert('onDoubleTap', t)}
       panDistance={90}
-      //
-      onSwipeLeft={t => alert('onSwipeLeft', t)}
-      onSwipeRight={t => alert('onSwipeRight', t)}
-      onSwipeUp={t => alert('onSwipeUp', t)}
-      onSwipeDown={t => alert('onSwipeDown', t)}
-      /*        
-      onDoubleTap={t => console.log('onDoubleTap', t)}
-      panDistance={80}
       onSwipeLeft={t => console.log('onSwipeLeft', t)}
       onSwipeRight={t => console.log('onSwipeRight', t)}
       onSwipeUp={t => console.log('onSwipeUp', t)}
-      onSwipeDown={t => console.log('onSwipeDown', t)}
-      */
-    >
+      onSwipeDown={t => console.log('onSwipeDown', t)}>
       {children}
     </PlethoraCamera>
   );

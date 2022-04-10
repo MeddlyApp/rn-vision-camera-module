@@ -206,24 +206,24 @@ export default class PlethoraCamera extends Component {
 
     if (p.translationX > panDistance * 1.5) {
       if (p.translationY > -20 && p.translationY < 20) {
-        console.log('RIGHT', p.translationY);
+        // console.log('RIGHT', p.translationY);
         return onSwipeRight ? onSwipeRight(p) : null;
       }
     } else if (p.translationX < -20) {
       if (p.translationY > -20 && p.translationY < 20) {
-        console.log('LEFT', p.translationY);
+        // console.log('LEFT', p.translationY);
         return onSwipeLeft ? onSwipeLeft(p) : null;
       }
     }
 
     if (p.translationY > panDistance * 1.5) {
       if (p.translationX > -20 && p.translationX < 20) {
-        console.log('DOWN', p.translationX);
+        // console.log('DOWN', p.translationX);
         return onSwipeDown ? onSwipeDown(p) : null;
       }
     } else if (p.translationY < -20) {
       if (p.translationX > -20 && p.translationX < 20) {
-        console.log('UP', p.translationX);
+        // console.log('UP', p.translationX);
         return onSwipeUp ? onSwipeUp(p) : null;
       }
     }
