@@ -107,7 +107,7 @@ export default function App() {
       // Custom Gesture Controls
       onTapFocus={t => alert('onTapFocus', t)}
       onDoubleTap={t => alert('onDoubleTap', t)}
-      panDistance={90}
+      swipeDistance={200}
       onSwipeLeft={t => console.log('onSwipeLeft', t)}
       onSwipeRight={t => console.log('onSwipeRight', t)}
       onSwipeUp={t => console.log('onSwipeUp', t)}

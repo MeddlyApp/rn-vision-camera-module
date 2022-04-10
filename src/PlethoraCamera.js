@@ -61,7 +61,6 @@ export default class PlethoraCamera extends Component {
     this.camera = React.createRef();
     this.pinchRef = React.createRef();
     this.doubleTapRef = React.createRef();
-    this.swipeRef = React.createRef();
   }
 
   /******************** COMPONENT LIFECYCLE ********************/
@@ -195,37 +194,6 @@ export default class PlethoraCamera extends Component {
     } else if (p2 < 0 && p2 < -zoom_value) {
       this._prevPinch = p;
       this.setState({zoom: Math.max(zoom - zoom_value * 1.5, 0)}, () => {});
-    }
-  };
-
-  onPanStart = () => (this._prevPan = 1);
-  onPanEnd = () => (this._prevPan = 1);
-  onPanProgress = p => {
-    const {onSwipeRight, onSwipeLeft, onSwipeUp, onSwipeDown, panDistance} =
-      this.props;
-
-    if (p.translationX > panDistance * 1.5) {
-      if (p.translationY > -20 && p.translationY < 20) {
-        // console.log('RIGHT', p.translationY);
-        return onSwipeRight ? onSwipeRight(p) : null;
-      }
-    } else if (p.translationX < -20) {
-      if (p.translationY > -20 && p.translationY < 20) {
-        // console.log('LEFT', p.translationY);
-        return onSwipeLeft ? onSwipeLeft(p) : null;
-      }
-    }
-
-    if (p.translationY > panDistance * 1.5) {
-      if (p.translationX > -20 && p.translationX < 20) {
-        // console.log('DOWN', p.translationX);
-        return onSwipeDown ? onSwipeDown(p) : null;
-      }
-    } else if (p.translationY < -20) {
-      if (p.translationX > -20 && p.translationX < 20) {
-        // console.log('UP', p.translationX);
-        return onSwipeUp ? onSwipeUp(p) : null;
-      }
     }
   };
 
@@ -470,16 +438,16 @@ export default class PlethoraCamera extends Component {
         <GestureHandler
           pinchRef={this.pinchRef}
           doubleTapRef={this.doubleTapRef}
-          swipeRef={this.swipeRef}
           onSingleTap={this.tapToFocus}
           onDoubleTap={this.props.onDoubleTap ? this.props.onDoubleTap : null}
           onPinchProgress={this.onPinchProgress}
           onPinchStart={this.onPinchStart}
           onPinchEnd={this.onPinchEnd}
-          panDistance={this.props.panDistance}
-          onPanProgress={this.onPanProgress}
-          onPanStart={this.onPanStart}
-          onPanEnd={this.onPanEnd}>
+          swipeDistance={this.props.swipeDistance}
+          onSwipeUp={this.props.onSwipeUp}
+          onSwipeDown={this.props.onSwipeDown}
+          onSwipeLeft={this.props.onSwipeLeft}
+          onSwipeRight={this.props.onSwipeRight}>
           <View>
             {is_vertical ? (
               <CameraControlsVertical
