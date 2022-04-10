@@ -201,43 +201,32 @@ export default class PlethoraCamera extends Component {
   onPanStart = () => (this._prevPan = 1);
   onPanEnd = () => (this._prevPan = 1);
   onPanProgress = p => {
-    const {onSwipeRight, onSwipeLeft, onSwipeUp, onSwipeDown} = this.props;
-    if (p.velocityX > 0 && p.translationX > 20) {
+    const {onSwipeRight, onSwipeLeft, onSwipeUp, onSwipeDown, panDistance} =
+      this.props;
+
+    if (p.translationX > panDistance * 1.5) {
       if (p.translationY > -20 && p.translationY < 20) {
         console.log('RIGHT', p.translationY);
         return onSwipeRight ? onSwipeRight(p) : null;
       }
-    } else if (p.velocityX < 0 && p.translationX < -20) {
+    } else if (p.translationX < -20) {
       if (p.translationY > -20 && p.translationY < 20) {
         console.log('LEFT', p.translationY);
         return onSwipeLeft ? onSwipeLeft(p) : null;
       }
     }
 
-    if (p.velocityY > 0 && p.translationY > 20) {
-      console.log('DOWN', p.translationX);
+    if (p.translationY > panDistance * 1.5) {
       if (p.translationX > -20 && p.translationX < 20) {
         console.log('DOWN', p.translationX);
         return onSwipeDown ? onSwipeDown(p) : null;
       }
-    } else if (p.velocityY < 0 && p.translationY < -20) {
-      console.log('UP', p.translationX);
+    } else if (p.translationY < -20) {
       if (p.translationX > -20 && p.translationX < 20) {
         console.log('UP', p.translationX);
         return onSwipeUp ? onSwipeUp(p) : null;
       }
     }
-
-    /*
-    if (p.velocityY > 0) {
-      // console.log('YAY', p);
-      console.log('DOWN', p.velocityX);
-      onSwipeDown ? onSwipeDown(p) : null;
-    } else if (p.velocityX === 0) {
-      console.log('UP', p.velocityX);
-      onSwipeUp ? onSwipeUp(p) : null;
-    }
-    */
   };
 
   /******************** CAMERA ACTIONS ********************/
