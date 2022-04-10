@@ -23,7 +23,15 @@ export default function CameraSettings(props) {
   };
 
   const toggle_btn_style = is_vertical ? vertical_styles : horizontal_styles;
-  const {flashIcons, togglePictureIcon, toggleVideoIcon} = icons;
+
+  let flashIcons,
+    togglePictureIcon,
+    toggleVideoIcon = null;
+  if (icons) {
+    flashIcons = icons.flashIcons;
+    togglePictureIcon = icons.togglePictureIcon;
+    toggleVideoIcon = icons.toggleVideoIcon;
+  }
 
   return (
     <>

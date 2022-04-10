@@ -394,7 +394,7 @@ export default class PlethoraCamera extends Component {
   /******************** RENDERS ********************/
 
   render() {
-    const {cameraConfig, icons, children, cameraState} = this.props;
+    const {cameraConfig, children, cameraState} = this.props;
 
     const {isVideo, frontCamera} = cameraState;
     const {
@@ -423,6 +423,8 @@ export default class PlethoraCamera extends Component {
       );
     }
 
+    // console.log('CHILDREN', children.cameraTop);
+
     return (
       <SafeAreaView style={styles.base_container} onLayout={this.deviceRotated}>
         <StatusBar hidden={true} />
@@ -439,7 +441,9 @@ export default class PlethoraCamera extends Component {
           pinchRef={this.pinchRef}
           doubleTapRef={this.doubleTapRef}
           onSingleTap={this.tapToFocus}
-          onDoubleTap={this.props.onDoubleTap ? this.props.onDoubleTap : null}
+          onDoubleTap={
+            this.props.onDoubleTap ? this.props.onDoubleTap : () => null
+          }
           onPinchProgress={this.onPinchProgress}
           onPinchStart={this.onPinchStart}
           onPinchEnd={this.onPinchEnd}
@@ -451,7 +455,6 @@ export default class PlethoraCamera extends Component {
           <View>
             {is_vertical ? (
               <CameraControlsVertical
-                icons={icons}
                 state={this.state}
                 cameraState={cameraState}
                 children={children}
@@ -468,7 +471,7 @@ export default class PlethoraCamera extends Component {
                           endVideo={this.endVideo}
                           toggleCamera={this.toggleCamera}
                           cameraState={cameraState}
-                          icons={icons}
+                          icons={children.icons ? children.icons : null}
                         />
                       ),
                     }
@@ -479,15 +482,13 @@ export default class PlethoraCamera extends Component {
                           takePicture={this.takePicture}
                           toggleCamera={this.toggleCamera}
                           cameraState={cameraState}
-                          state={this.state}
-                          icons={icons}
+                          icons={children.icons ? children.icons : null}
                         />
                       ),
                     }}
               </CameraControlsVertical>
             ) : (
               <CameraControlsHorizontal
-                icons={icons}
                 state={this.state}
                 cameraState={cameraState}
                 children={children}
@@ -504,7 +505,7 @@ export default class PlethoraCamera extends Component {
                           endVideo={this.endVideo}
                           toggleCamera={this.toggleCamera}
                           cameraState={cameraState}
-                          icons={icons}
+                          icons={children.icons ? children.icons : null}
                         />
                       ),
                     }
@@ -515,8 +516,7 @@ export default class PlethoraCamera extends Component {
                           takePicture={this.takePicture}
                           toggleCamera={this.toggleCamera}
                           cameraState={cameraState}
-                          state={this.state}
-                          icons={icons}
+                          icons={children.icons ? children.icons : null}
                         />
                       ),
                     }}

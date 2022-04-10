@@ -4,11 +4,11 @@ import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
 export default function CameraControlsHorizontal(props) {
-  const {children, state, icons, cameraState} = props;
+  const {children, state, cameraState} = props;
   const {flash, isVideo, frontCamera} = cameraState;
   const {screen_size, orientation, is_recording} = state;
 
-  const {cameraTop, cameraMiddle, cameraBottom} = children.children;
+  const {cameraTop, cameraMiddle, cameraBottom, icons} = children.children;
 
   const landscape_right = orientation === 'LANDSCAPE-RIGHT';
   const camera_controls_container_styles = {
@@ -77,7 +77,7 @@ export default function CameraControlsHorizontal(props) {
             toggleVideoOrPicture={props.toggleVideoOrPicture}
             toggleCamera={props.toggleCamera}
             toggleFlash={props.toggleFlash}
-            icons={icons}
+            icons={icons ? icons : null}
           />
         ) : null}
       </View>

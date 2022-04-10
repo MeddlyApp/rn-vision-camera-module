@@ -5,8 +5,17 @@ import styles from '../styles';
 export default function VideoControls(props) {
   const {icons, cameraState, is_recording} = props;
   const {frontCamera} = cameraState;
-  const {cameraSecondary, viewPortIcon, togglePictureIcon, toggleVideoIcon} =
-    icons;
+
+  let startRecordingIcon,
+    stopRecordingIcon,
+    cameraSecondary,
+    viewportIcon = null;
+  if (icons) {
+    startRecordingIcon = icons.startRecordingIcon;
+    stopRecordingIcon = icons.stopRecordingIcon;
+    cameraSecondary = icons.cameraSecondary;
+    viewportIcon = icons.viewportIcon;
+  }
 
   const cameraView = frontCamera ? 'Front' : 'Back';
 
@@ -21,12 +30,10 @@ export default function VideoControls(props) {
           <TouchableOpacity
             onPress={props.startVideo}
             style={
-              !icons.startRecordingIcon
-                ? styles.rec_btn
-                : styles.camera_action_btn
+              !startRecordingIcon ? styles.rec_btn : styles.camera_action_btn
             }>
-            {icons.startRecordingIcon ? (
-              icons.startRecordingIcon
+            {startRecordingIcon ? (
+              startRecordingIcon
             ) : (
               <Text style={styles.txt_white}>Record</Text>
             )}
@@ -35,12 +42,10 @@ export default function VideoControls(props) {
           <TouchableOpacity
             onPress={props.endVideo}
             style={
-              !icons.stopRecordingIcon
-                ? styles.stop_btn
-                : styles.camera_action_btn
+              !stopRecordingIcon ? styles.stop_btn : styles.camera_action_btn
             }>
-            {icons.stopRecordingIcon ? (
-              icons.stopRecordingIcon
+            {stopRecordingIcon ? (
+              stopRecordingIcon
             ) : (
               <Text style={styles.txt_white}>Stop</Text>
             )}
@@ -55,8 +60,8 @@ export default function VideoControls(props) {
               <TouchableOpacity
                 onPress={props.toggleCamera}
                 style={styles.camera_action_btn}>
-                {viewPortIcon && viewPortIcon.frontCamera ? (
-                  viewPortIcon.frontCamera
+                {viewportIcon && viewportIcon.frontCamera ? (
+                  viewportIcon.frontCamera
                 ) : (
                   <View>
                     <Text style={styles.txt_white}>Front</Text>
@@ -67,8 +72,8 @@ export default function VideoControls(props) {
               <TouchableOpacity
                 onPress={props.toggleCamera}
                 style={styles.camera_action_btn}>
-                {viewPortIcon && viewPortIcon.backCamera ? (
-                  viewPortIcon.backCamera
+                {viewportIcon && viewportIcon.backCamera ? (
+                  viewportIcon.backCamera
                 ) : (
                   <View>
                     <Text style={styles.txt_white}>Back</Text>

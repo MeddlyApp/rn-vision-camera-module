@@ -16,7 +16,6 @@ export default function GestureHandler(props) {
     onPinchStart,
     onPinchProgress,
     onPinchEnd,
-    swipeDistance,
     onSwipeUp,
     onSwipeDown,
     onSwipeLeft,
@@ -41,25 +40,26 @@ export default function GestureHandler(props) {
   };
   onTouchEnd = e => {
     const event = e.nativeEvent;
+    const distance = props.swipeDistance ? props.swipeDistance : 200;
 
     // Vetical - Up
-    if (this.touchY - event.pageY > swipeDistance) {
+    if (this.touchY - event.pageY > distance) {
       // console.log('Swiped: Up');
       return onSwipeUp ? onSwipeUp(event) : null;
     }
     // Vetical - Down
-    if (this.touchY - event.pageY < -swipeDistance) {
+    if (this.touchY - event.pageY < -distance) {
       // console.log('Swiped: Down');
       return onSwipeDown ? onSwipeDown(e.nativeEvent) : null;
     }
 
     // Horizontal - Left
-    if (this.touchX - event.pageX > swipeDistance) {
+    if (this.touchX - event.pageX > distance) {
       // console.log('Swiped: Left');
       return onSwipeLeft ? onSwipeLeft(event) : null;
     }
     // Horizontal - Right
-    if (this.touchX - event.pageX < -swipeDistance) {
+    if (this.touchX - event.pageX < -distance) {
       // console.log('Swiped: Right');
       return onSwipeRight ? onSwipeRight(event) : null;
     }

@@ -3,15 +3,17 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function PictureControls(props) {
-  const {state, icons, cameraState} = props;
+  const {icons, cameraState} = props;
   const {frontCamera} = cameraState;
-  const {
-    takePictureIcon,
+
+  let takePictureIcon,
     cameraSecondary,
-    viewPortIcon,
-    togglePictureIcon,
-    toggleVideoIcon,
-  } = icons;
+    viewportIcon = null;
+  if (icons) {
+    takePictureIcon = icons.takePictureIcon;
+    cameraSecondary = icons.cameraSecondary;
+    viewportIcon = icons.viewportIcon;
+  }
 
   const cameraView = frontCamera ? 'Front' : 'Back';
 
@@ -38,8 +40,8 @@ export default function PictureControls(props) {
           <TouchableOpacity
             onPress={props.toggleCamera}
             style={styles.camera_action_btn}>
-            {viewPortIcon && viewPortIcon.frontCamera ? (
-              viewPortIcon.frontCamera
+            {viewportIcon && viewportIcon.frontCamera ? (
+              viewportIcon.frontCamera
             ) : (
               <View>
                 <Text style={styles.txt_white}>Front</Text>
@@ -50,8 +52,8 @@ export default function PictureControls(props) {
           <TouchableOpacity
             onPress={props.toggleCamera}
             style={styles.camera_action_btn}>
-            {viewPortIcon && viewPortIcon.backCamera ? (
-              viewPortIcon.backCamera
+            {viewportIcon && viewportIcon.backCamera ? (
+              viewportIcon.backCamera
             ) : (
               <View>
                 <Text style={styles.txt_white}>Back</Text>

@@ -18,7 +18,12 @@
 - Gesture Controls
   - Pinch to Zoom
   - Tap to focus
-  - Double tap to switch viewport
+  - Custom Gestures via props
+    - onDoubleTap
+    - onSwipeLeft
+    - onSwipeRight
+    - onSwipeUp
+    - onSwipeDown
 - Portrait / Landscape UI for right and left handed individuals
 - Save to camera roll
 - Upload media to API
@@ -34,6 +39,15 @@
 ```javascript
 // import Camera from '@plethora_co/rn-vision-camera';
 
+/*/ Config takes all arguments from Vision Camera
+   *  https://mrousavy.com/react-native-vision-camera/docs/api/interfaces/CameraProps
+   * 
+   *    Config Requires...
+   *    - photo: boolean
+   *    - video: boolean
+   *    - audio: boolean
+  /*/
+
 const cameraConfig = {
   photo: true, // Required
   video: true, // Required
@@ -46,7 +60,7 @@ const cameraConfig = {
   // hdr: true,
   // supportsVideoHDR: true,
   // supportsPhotoHDR: true,
-  // fps: 240,
+  // fps: 60,
 };
 
 const uploadConfig = {
@@ -55,31 +69,30 @@ const uploadConfig = {
   nameConvention: 'Plethora',
 };
 
-const children = {
+const custom = {
   cameraTop: <Text style={{color: '#FFF'}}>Top</Text>,
   cameraMiddle: <Text style={{color: '#FFF'}}>Middle</Text>,
   cameraBottom: <Text style={{color: '#FFF'}}>Bottom</Text>,
-};
-
-const iconsConfig = {
-  // Base Camera Controls
-  takePictureIcon: <Text style={{color: '#FFFF00'}}>SNP</Text>,
-  startRecordingIcon: <Text style={{color: '#00FF00'}}>REC</Text>,
-  stopRecordingIcon: <Text style={{color: '#00FFFF'}}>STP</Text>,
-  // Built In Setting Controls
-  togglePictureIcon: <Text style={{color: '#00AAFF'}}>Picture</Text>,
-  toggleVideoIcon: <Text style={{color: '#FFAAFF'}}>Video</Text>,
-  viewPortIcon: {
-    frontCamera: <Text style={{color: '#00FF00'}}>Front</Text>,
-    backCamera: <Text style={{color: '#00FFFF'}}>Back</Text>,
+  icons: {
+    // Base Camera Controls
+    takePictureIcon: <Text style={{color: '#FFFF00'}}>SNP</Text>,
+    startRecordingIcon: <Text style={{color: '#00FF00'}}>REC</Text>,
+    stopRecordingIcon: <Text style={{color: '#00FFFF'}}>STP</Text>,
+    // Built In Setting Controls
+    togglePictureIcon: <Text style={{color: '#00AAFF'}}>Picture</Text>,
+    toggleVideoIcon: <Text style={{color: '#FFAAFF'}}>Video</Text>,
+    viewportIcon: {
+      frontCamera: <Text style={{color: '#00FF00'}}>Front</Text>,
+      backCamera: <Text style={{color: '#00FFFF'}}>Back</Text>,
+    },
+    flashIcons: {
+      flashOn: <Text style={{color: '#FFFF00'}}>On</Text>,
+      flashAuto: <Text style={{color: '#00FFFF'}}>Auto</Text>,
+      flashOff: <Text style={{color: '#00FF00'}}>Off</Text>,
+    },
+    // Additional Recording Controls
+    cameraSecondary: <Text style={{color: '#FFAAFF'}}>SEC</Text>,
   },
-  flashIcons: {
-    flashOn: <Text style={{color: '#FFFF00'}}>On</Text>,
-    flashAuto: <Text style={{color: '#00FFFF'}}>Auto</Text>,
-    flashOff: <Text style={{color: '#00FF00'}}>Off</Text>,
-  },
-  // Additional Recording Controls
-  cameraSecondary: <Text style={{color: '#FFAAFF'}}>SEC</Text>,
 };
 
 // Render
@@ -100,9 +113,15 @@ const iconsConfig = {
   onUploadProgress={p => console.log(`onUploadProgress... ${p}%`)}
   onUploadError={e => console.log('onUploadError', e)}
   onOrientationChange={o => console.log('onOrientationChange', o)}
-  // Custom Icons
-  icons={iconsConfig}>
-  {children}
+  // Custom Gesture Controls
+  onTapFocus={t => alert('onTapFocus', t)}
+  onDoubleTap={t => alert('onDoubleTap', t)}
+  swipeDistance={200}
+  onSwipeLeft={t => console.log('onSwipeLeft', t)}
+  onSwipeRight={t => console.log('onSwipeRight', t)}
+  onSwipeUp={t => console.log('onSwipeUp', t)}
+  onSwipeDown={t => console.log('onSwipeDown', t)}>
+  {custom}
 </PlethoraCamera>;
 ```
 

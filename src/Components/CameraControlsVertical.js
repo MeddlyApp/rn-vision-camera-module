@@ -4,11 +4,11 @@ import CameraSettings from './CameraSettings';
 import styles from '../styles';
 
 export default function CameraControlsVertical(props) {
-  let {children, state, icons, cameraState} = props;
+  let {children, state, cameraState} = props;
 
   const {flash, isVideo, frontCamera} = cameraState;
 
-  const {cameraTop, cameraMiddle, cameraBottom} = children.children;
+  const {cameraTop, cameraMiddle, cameraBottom, icons} = children.children;
   const {screen_size, is_recording} = state;
 
   const camera_controls_container_styles = {
@@ -53,7 +53,7 @@ export default function CameraControlsVertical(props) {
             toggleVideoOrPicture={props.toggleVideoOrPicture}
             toggleCamera={props.toggleCamera}
             toggleFlash={props.toggleFlash}
-            icons={icons}
+            icons={icons ? icons : null}
           />
         ) : null}
       </View>
