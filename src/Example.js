@@ -54,7 +54,7 @@ export default function App() {
     // hdr: true,
     // supportsVideoHDR: true,
     // supportsPhotoHDR: true,
-    // fps: 240,
+    // fps: 60,
   };
 
   const uploadConfig = {
@@ -103,7 +103,15 @@ export default function App() {
       onUploadError={e => console.log('onUploadError', e)}
       onOrientationChange={o => console.log('onOrientationChange', o)}
       // Custom Icons
-      icons={iconsConfig}>
+      icons={iconsConfig}
+      // Custom Gesture Controls
+      // onTapFocus={t => console.log('onTapFocus', t)}
+      // onDoubleTap={t => console.log('onDoubleTap', t)}
+      onSwipeLeft={t => console.log('onSwipeLeft', t)}
+      // onSwipeRight={t => console.log('onSwipeRight', t)}
+      // onSwipeUp={t => console.log('onSwipeUp', t)}
+      // onSwipeDown={t => console.log('onSwipeDown', t)}
+    >
       {children}
     </PlethoraCamera>
   );

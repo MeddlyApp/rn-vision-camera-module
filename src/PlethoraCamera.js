@@ -56,11 +56,15 @@ export default class PlethoraCamera extends Component {
       has_camera_permission: false,
       has_microphone_permission: false,
       has_camera_roll_permission: false,
+      // Gesture Controls
+      panStart: null,
+      panUpdate: null,
     };
 
     this.camera = React.createRef();
     this.pinchRef = React.createRef();
     this.doubleTapRef = React.createRef();
+    this.swipeRef = React.createRef();
   }
 
   /******************** COMPONENT LIFECYCLE ********************/
@@ -171,6 +175,7 @@ export default class PlethoraCamera extends Component {
   tapToFocus = async e => {
     const {camera} = this;
     if (camera && camera.current) {
+      if (this.props.onTapFocus) this.props.onTapFocus(e);
       return await this.camera.current
         .focus({
           x: e.nativeEvent.absoluteX,
@@ -194,6 +199,32 @@ export default class PlethoraCamera extends Component {
       this._prevPinch = p;
       this.setState({zoom: Math.max(zoom - zoom_value * 1.5, 0)}, () => {});
     }
+  };
+
+  onPanStart = () => {
+    this._prevPan = 1;
+    console.log('START');
+  };
+  onPanEnd = () => {
+    this._prevPan = 1;
+    console.log('STOP');
+    this.setState({
+      panStart: null,
+      panUpdate: [],
+    });
+  };
+  onPanProgress = p => {
+    if (panStart === null) this.setState({panStart: p});
+    else this.setState({panUpdates: p});
+    console.log('onPanProgress', p);
+    const {panStart, panUpdates} = this.state;
+
+    /*
+    onSwipeLeft ? onSwipeLeft() : null;
+    onSwipeRight ? onSwipeRight() : null;
+    onSwipeUp ? onSwipeUp() : null;
+    onSwipeDown ? onSwipeDown() : null;
+    */
   };
 
   /******************** CAMERA ACTIONS ********************/
@@ -432,11 +463,15 @@ export default class PlethoraCamera extends Component {
         <GestureHandler
           pinchRef={this.pinchRef}
           doubleTapRef={this.doubleTapRef}
+          swipeRef={this.swipeRef}
           onSingleTap={this.tapToFocus}
-          onDoubleTap={this.toggleCamera}
+          onDoubleTap={this.props.onDoubleTap ? this.props.onDoubleTap : null}
           onPinchProgress={this.onPinchProgress}
           onPinchStart={this.onPinchStart}
-          onPinchEnd={this.onPinchEnd}>
+          onPinchEnd={this.onPinchEnd}
+          onPanProgress={this.onPanProgress}
+          onPanStart={this.onPanStart}
+          onPanEnd={this.onPanEnd}>
           <View>
             {is_vertical ? (
               <CameraControlsVertical
