@@ -46,9 +46,9 @@ export default function App() {
     autoFocusSystem: 'contrast-detection',
     videoStabilizationMode: 'cinematic-extended',
     // hdr: true,
-    // supportsVideoHDR: true,
-    // supportsPhotoHDR: true,
-    // fps: 60,
+    supportsVideoHDR: true,
+    supportsPhotoHDR: true,
+    fps: 60,
   };
 
   const uploadConfig = {

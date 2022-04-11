@@ -6,9 +6,11 @@ import {
   TapGestureHandler,
   State,
 } from 'react-native-gesture-handler';
+import styles from '../styles';
 
 export default function GestureHandler(props) {
   const {
+    showTakePicIndicator,
     pinchRef,
     doubleTapRef,
     onSingleTap,
@@ -79,7 +81,10 @@ export default function GestureHandler(props) {
             waitFor={pinchRef}
             numberOfTaps={2}
             maxDelayMs={175}>
-            <View onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+            <View
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+              style={showTakePicIndicator ? styles.take_pic_indicator : null}>
               {children}
             </View>
           </TapGestureHandler>

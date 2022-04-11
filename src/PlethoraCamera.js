@@ -52,6 +52,7 @@ export default class PlethoraCamera extends Component {
       camera_active: false,
       zoom: 0,
       video_start_time: null,
+      showTakePicIndicator: false,
       // Permissions
       has_camera_permission: false,
       has_microphone_permission: false,
@@ -326,6 +327,7 @@ export default class PlethoraCamera extends Component {
     const {saveToCameraRoll, upload, cameraState} = this.props;
     const {flash} = cameraState;
 
+    this.setState({showTakePicIndicator: true});
     const photo = await this.camera.current.takePhoto({
       flash: flash,
       enableAutoRedEyeReduction: true,
@@ -334,13 +336,13 @@ export default class PlethoraCamera extends Component {
       qualityPrioritization: 'balanced',
       skipMetadata: true,
     });
-    const timestamp = new Date().getTime();
+    this.setState({showTakePicIndicator: false});
 
     // Rename File
-
     const nameConvention =
       upload && upload.nameConvention ? upload.nameConvention : null;
     const file_name = nameConvention ? `${nameConvention}_TS` : null;
+    const timestamp = new Date().getTime();
 
     const newName = `${file_name}${timestamp}`;
     const finalFile = await renameFile(photo, newName);
@@ -396,6 +398,8 @@ export default class PlethoraCamera extends Component {
   render() {
     const {cameraConfig, children, cameraState} = this.props;
 
+    console.log('CAMERA', this.camera);
+
     const {isVideo, frontCamera} = cameraState;
     const {
       has_camera_permission,
@@ -404,6 +408,7 @@ export default class PlethoraCamera extends Component {
       camera_active,
       is_recording,
       zoom,
+      showTakePicIndicator,
     } = this.state;
     const has_permissions = has_camera_permission && has_microphone_permission;
     const is_vertical = screen_size.height > screen_size.width;
@@ -438,6 +443,7 @@ export default class PlethoraCamera extends Component {
         />
 
         <GestureHandler
+          showTakePicIndicator={showTakePicIndicator}
           pinchRef={this.pinchRef}
           doubleTapRef={this.doubleTapRef}
           onSingleTap={this.tapToFocus}

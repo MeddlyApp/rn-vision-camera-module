@@ -151,6 +151,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  // Photo Indicator
+  take_pic_indicator: {
+    borderColor: '#FFFFAA',
+    borderWidth: 1,
+    height: '100%',
+    width: '100%',
+  },
 });
 
 export default styles;
