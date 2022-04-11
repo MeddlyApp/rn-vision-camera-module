@@ -37,10 +37,10 @@ export default function CameraControlsVertical(props) {
   return (
     <View style={vertical_content_container}>
       <View style={styles.vertical_row_select_event}>
-        {cameraTop ? cameraTop : null}
+        {!is_recording ? <>{cameraTop ? cameraTop : null}</> : null}
       </View>
       <View style={styles.vertical_gesture_controls}>
-        {cameraMiddle ? cameraMiddle : null}
+        {!is_recording ? <>{cameraMiddle ? cameraMiddle : null}</> : null}
       </View>
 
       <View style={camera_controls_container_styles}>
