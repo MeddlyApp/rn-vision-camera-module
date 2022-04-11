@@ -26,43 +26,41 @@ export default function GestureHandler(props) {
     children,
   } = props;
 
-  const onGesturePinch = ({e}) => onPinchProgress(e.scale);
-  const onPinchHandlerStateChange = e => {
-    const pinch_end = e.nativeEvent.state === State.END;
-    const pinch_begin = e.nativeEvent.oldState === State.BEGAN;
-    const pinch_active = e.nativeEvent.state === State.ACTIVE;
+  const onGesturePinch = ({nativeEvent}) => {
+    onPinchProgress(nativeEvent.scale);
+  };
+  const onPinchHandlerStateChange = ({nativeEvent}) => {
+    const pinch_end = nativeEvent.state === State.END;
+    const pinch_begin = nativeEvent.oldState === State.BEGAN;
+    const pinch_active = nativeEvent.state === State.ACTIVE;
     if (pinch_end) onPinchEnd();
-    else if (pinch_begin && pinch_active) onPinchStart();
+    if (pinch_begin && pinch_active) onPinchStart();
   };
 
   // Swipe Gestures
-  onTouchStart = e => {
-    this.touchY = e.nativeEvent.pageY;
-    this.touchX = e.nativeEvent.pageX;
+  onTouchStart = ({nativeEvent}) => {
+    this.touchY = nativeEvent.pageY;
+    this.touchX = nativeEvent.pageX;
   };
-  onTouchEnd = e => {
-    const event = e.nativeEvent;
+  onTouchEnd = ({nativeEvent}) => {
+    const event = nativeEvent;
     const distance = props.swipeDistance ? props.swipeDistance : 200;
 
     // Vetical - Up
     if (this.touchY - event.pageY > distance) {
-      // console.log('Swiped: Up');
       return onSwipeUp ? onSwipeUp(event) : null;
     }
     // Vetical - Down
     if (this.touchY - event.pageY < -distance) {
-      // console.log('Swiped: Down');
-      return onSwipeDown ? onSwipeDown(e.nativeEvent) : null;
+      return onSwipeDown ? onSwipeDown(event) : null;
     }
 
     // Horizontal - Left
     if (this.touchX - event.pageX > distance) {
-      // console.log('Swiped: Left');
       return onSwipeLeft ? onSwipeLeft(event) : null;
     }
     // Horizontal - Right
     if (this.touchX - event.pageX < -distance) {
-      // console.log('Swiped: Right');
       return onSwipeRight ? onSwipeRight(event) : null;
     }
   };
@@ -77,7 +75,7 @@ export default function GestureHandler(props) {
         <TapGestureHandler waitFor={doubleTapRef} onActivated={onSingleTap}>
           <TapGestureHandler
             ref={doubleTapRef}
-            onActivated={e => onDoubleTap(e.nativeEvent)}
+            onActivated={({nativeEvent}) => onDoubleTap(nativeEvent)}
             waitFor={pinchRef}
             numberOfTaps={2}
             maxDelayMs={175}>

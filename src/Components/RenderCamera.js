@@ -27,7 +27,6 @@ export default function RenderCamera(props) {
   const autoFcsSys = autoFocusSystem ? autoFocusSystem : null;
   const framesPerSec = fps ? fps : 25;
 
-  console.log(fps);
   if (device == null) {
     return (
       <View style={styles.no_device_container}>

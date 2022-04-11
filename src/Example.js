@@ -46,8 +46,8 @@ export default function App() {
     autoFocusSystem: 'contrast-detection',
     videoStabilizationMode: 'cinematic-extended',
     // hdr: true,
-    supportsVideoHDR: true,
-    supportsPhotoHDR: true,
+    // supportsVideoHDR: true,
+    // supportsPhotoHDR: true,
     fps: 60,
   };
 
@@ -93,22 +93,23 @@ export default function App() {
       upload={uploadConfig}
       saveToCameraRoll={true}
       // Lifecycle Events
-      onTakePicture={p => console.log('onTakePicture', p)}
-      onRecordingStart={r => console.log('onRecordingStart', r)}
-      onRecordingFinished={r => console.log('onRecordingFinished', r)}
-      onRecordingError={e => console.log('onRecordingError', e)}
-      onUploadComplete={u => console.log('onUploadComplete', u)}
-      onUploadProgress={p => console.log(`onUploadProgress... ${p}%`)}
-      onUploadError={e => console.log('onUploadError', e)}
-      onOrientationChange={o => console.log('onOrientationChange', o)}
+      // onTakePicture={p => console.log('onTakePicture', p)}
+      // onRecordingStart={() => console.log('onRecordingStart')}
+      // onRecordingFinished={r => console.log('onRecordingFinished', r)}
+      // onRecordingError={e => console.log('onRecordingError', e)}
+      // onUploadComplete={u => console.log('onUploadComplete', u)}
+      // onUploadProgress={p => console.log(`onUploadProgress... ${p}%`)}
+      // onUploadError={e => console.log('onUploadError', e)}
+      // onOrientationChange={o => console.log('onOrientationChange', o)}
       // Custom Gesture Controls
-      onTapFocus={t => console.log('onTapFocus', t)}
-      onDoubleTap={t => console.log('onDoubleTap', t)}
-      swipeDistance={200}
-      onSwipeLeft={t => console.log('onSwipeLeft', t)}
-      onSwipeRight={t => console.log('onSwipeRight', t)}
-      onSwipeUp={t => console.log('onSwipeUp', t)}
-      onSwipeDown={t => console.log('onSwipeDown', t)}>
+      // onTapFocus={t => console.log('onTapFocus', t)}
+      // onDoubleTap={t => console.log('onDoubleTap', t)}
+      // swipeDistance={200}
+      // onSwipeLeft={t => console.log('onSwipeLeft', t)}
+      // onSwipeRight={t => console.log('onSwipeRight', t)}
+      // onSwipeUp={t => console.log('onSwipeUp', t)}
+      // onSwipeDown={t => console.log('onSwipeDown', t)}
+    >
       {custom}
     </PlethoraCamera>
   );

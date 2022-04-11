@@ -171,16 +171,16 @@ export default class PlethoraCamera extends Component {
     });
   };
 
-  tapToFocus = async e => {
+  tapToFocus = async ({nativeEvent}) => {
     const {camera} = this;
     if (camera && camera.current) {
-      if (this.props.onTapFocus) this.props.onTapFocus(e.nativeEvent);
+      if (this.props.onTapFocus) this.props.onTapFocus(nativeEvent);
       return await this.camera.current
-        .focus({
-          x: e.nativeEvent.absoluteX,
-          y: e.nativeEvent.absoluteY,
-        })
-        .catch(e => console.log('Focus Error: ', e));
+        .focus({x: nativeEvent.absoluteX, y: nativeEvent.absoluteY})
+        .catch(e => {
+          // console.log('Focus Error: ', e);
+          null;
+        });
     }
   };
 
@@ -220,18 +220,18 @@ export default class PlethoraCamera extends Component {
 
   startVideo = async () => {
     const {saveToCameraRoll, upload, cameraState} = this.props;
-    const {flash} = cameraState;
+    const {flash, frontCamera} = cameraState;
     await this.lockOrientation();
 
     const timestamp1 = new Date().getTime();
-    console.log('Starting Video', timestamp1);
+    // console.log('Starting Video', timestamp1);
 
     await this.camera.current.startRecording({
-      flash: flash,
+      flash: frontCamera ? 'off' : flash,
       fileType: 'mp4',
       onRecordingFinished: async video => {
-        console.log('Recording Finished', video);
-        console.log('Video Start Timestamp => To Record', timestamp2);
+        // console.log('Recording Finished', video);
+        // console.log('Video Start Timestamp => To Record', timestamp2);
 
         // Write additional metadata here...
         // ...
@@ -305,18 +305,18 @@ export default class PlethoraCamera extends Component {
     });
 
     const timestamp2 = new Date().getTime();
-    console.log('Video Started', timestamp2);
+    // console.log('Video Started', timestamp2);
 
     this.setState({is_recording: true});
     if (this.props.onRecordingStart) this.props.onRecordingStart();
   };
 
   endVideo = async () => {
-    const timestamp1 = new Date().getTime();
-    console.log('Ending Video', timestamp1);
+    // const timestamp1 = new Date().getTime();
+    // console.log('Ending Video', timestamp1);
     await this.camera.current.stopRecording();
-    const timestamp2 = new Date().getTime();
-    console.log('Video Stopped', timestamp2);
+    // const timestamp3 = new Date().getTime();
+    // console.log('Video Stopped', timestamp3);
 
     this.setState({is_recording: false});
   };
@@ -325,16 +325,16 @@ export default class PlethoraCamera extends Component {
 
   takePicture = async () => {
     const {saveToCameraRoll, upload, cameraState} = this.props;
-    const {flash} = cameraState;
+    const {flash, frontCamera} = cameraState;
 
     this.setState({showTakePicIndicator: true});
     const photo = await this.camera.current.takePhoto({
-      flash: flash,
-      enableAutoRedEyeReduction: true,
-      enableAutoStabilization: true,
-      enableAutoRedEyeReduction: true,
-      qualityPrioritization: 'balanced',
-      skipMetadata: true,
+      flash: frontCamera ? 'off' : flash,
+      // enableAutoRedEyeReduction: true,
+      // enableAutoStabilization: true,
+      // enableAutoRedEyeReduction: true,
+      // qualityPrioritization: 'balanced',
+      // skipMetadata: true,
     });
     this.setState({showTakePicIndicator: false});
 
@@ -351,7 +351,7 @@ export default class PlethoraCamera extends Component {
     // console.log('PHOTO: ', photo);
 
     // Write additional metadata here...
-    console.log('FINAL', finalFile);
+    // console.log('FINAL', finalFile);
 
     if (saveToCameraRoll) CameraRoll.save(finalFile);
     if (this.props.onTakePicture) this.props.onTakePicture(photo);
@@ -397,9 +397,6 @@ export default class PlethoraCamera extends Component {
 
   render() {
     const {cameraConfig, children, cameraState} = this.props;
-
-    console.log('CAMERA', this.camera);
-
     const {isVideo, frontCamera} = cameraState;
     const {
       has_camera_permission,
