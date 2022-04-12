@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 
   // Horizontal Layout Formatting
   horizontal_row_select_event: {
-    width: 145,
+    width: 100,
     height: window.height,
     alignItems: 'center',
     justifyContent: 'center',
