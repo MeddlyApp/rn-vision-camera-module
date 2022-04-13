@@ -1,4 +1,4 @@
-var RNFS = require('react-native-fs');
+const RNFS = require('react-native-fs');
 
 export default async function renameFile(file, newName) {
   const {path} = file;
