@@ -6,6 +6,9 @@
 
 #import <React/RCTAppSetupUtils.h>
 
+// Orientation Locker
+// #import "Orientation.h"
+
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -105,4 +108,11 @@
 
 #endif
 
+// Orientation Locker
+// - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+//    return [Orientation getOrientation];
+// }
+
 @end
+
+
