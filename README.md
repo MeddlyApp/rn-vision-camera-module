@@ -26,7 +26,6 @@
     - onSwipeDown
 - Portrait / Landscape UI for right and left handed individuals
 - Save to camera roll
-- Upload media to API
 - Flash
 - Custom icons, custom top bar, custom middle section, and custom bottom bar
 - Component Example (includes all props)
@@ -61,11 +60,7 @@ const cameraConfig = {
   // supportsVideoHDR: true,
   // supportsPhotoHDR: true,
   // fps: 60,
-};
-
-const uploadConfig = {
-  uploadUrl: ``,
-  authToken: null,
+  // Name
   nameConvention: 'Plethora',
 };
 
@@ -102,16 +97,12 @@ const custom = {
   cameraState={cameraState}
   stateActions={stateActions}
   // Pre-Built Actions
-  upload={uploadConfig}
   saveToCameraRoll={true}
   // Lifecycle Events
   onRecordingStart={r => console.log('onRecordingStart', r)}
   onRecordingFinished={r => console.log('onRecordingFinished', r)}
   onRecordingError={e => console.log('onRecordingError', e)}
   onTakePicture={p => console.log('onTakePicture', p)}
-  onUploadComplete={u => console.log('onUploadComplete', u)}
-  onUploadProgress={p => console.log(`onUploadProgress... ${p}%`)}
-  onUploadError={e => console.log('onUploadError', e)}
   onOrientationChange={o => console.log('onOrientationChange', o)}
   // Custom Gesture Controls
   onTapFocus={t => alert('onTapFocus', t)}

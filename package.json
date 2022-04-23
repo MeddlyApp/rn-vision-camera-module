@@ -1,6 +1,6 @@
 {
   "name": "@plethora_co/rn-vision-camera",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "private": false,
   "scripts": {
     "android": "react-native run-android",
@@ -11,7 +11,6 @@
   },
   "peerDependencies": {
     "@react-native-community/cameraroll": "*",
-    "axios": "*",
     "fbjs": "*",
     "react": "*",
     "react-native": "*",
@@ -26,7 +25,6 @@
     "@babel/runtime": "^7.16.3",
     "@react-native-community/cameraroll": "^4.1.2",
     "@react-native-community/eslint-config": "^3.0.1",
-    "axios": "^0.26.1",
     "babel-jest": "^27.3.1",
     "eslint": "^8.3.0",
     "fbjs": "^3.0.4",
