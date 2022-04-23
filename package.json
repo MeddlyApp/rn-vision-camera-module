@@ -33,7 +33,7 @@
     "jest": "^27.3.1",
     "metro-react-native-babel-preset": "^0.69.0",
     "react": "17.0.2",
-    "react-native": "0.67.3",
+    "react-native": "0.68.1",
     "react-native-fs": "^2.19.0",
     "react-native-gesture-handler": "^2.0.0",
     "react-native-orientation-locker": "^1.4.0",
