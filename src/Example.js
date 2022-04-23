@@ -51,9 +51,13 @@ export default function App() {
     fps: 60,
   };
 
+  const authToken = '';
   const uploadConfig = {
     uploadUrl: ``,
-    authToken: null,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      Accept: 'application/json',
+    },
     nameConvention: 'Plethora',
   };
 

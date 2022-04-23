@@ -274,7 +274,7 @@ export default class PlethoraCamera extends Component {
         if (upload && upload.uploadUrl) {
           const config = {
             url: upload.uploadUrl,
-            authToken: upload.authToken ? upload.authToken : null,
+            headers: upload.headers,
             nameConvention: upload.nameConvention
               ? upload.nameConvention
               : null,
@@ -371,7 +371,7 @@ export default class PlethoraCamera extends Component {
 
       const config = {
         url: upload.uploadUrl,
-        authToken: upload.authToken ? upload.authToken : null,
+        headers: upload.headers,
         nameConvention: upload.nameConvention ? upload.nameConvention : null,
       };
 

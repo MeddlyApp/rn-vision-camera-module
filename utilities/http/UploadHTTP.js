@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const uploadImage = async (config, payload, onUploadProgress) => {
-  const {url, authToken, nameConvention} = config;
+  const {url, headers, nameConvention} = config;
   const {data, timestamp_start} = payload;
   const name = `${
     nameConvention ? `${nameConvention}_TS` : null
@@ -18,11 +18,11 @@ const uploadImage = async (config, payload, onUploadProgress) => {
 
   console.log('Image Upload: Starting...');
 
-  return await uploadFile(formData, url, authToken, onUploadProgress);
+  return await uploadFile(formData, url, headers, onUploadProgress);
 };
 
 const uploadVideo = async (config, payload, onUploadProgress) => {
-  const {url, authToken, nameConvention} = config;
+  const {url, headers, nameConvention} = config;
   const {data, timestamp_start} = payload;
   const name = `${
     nameConvention ? `${nameConvention}_TS` : null
@@ -39,22 +39,18 @@ const uploadVideo = async (config, payload, onUploadProgress) => {
 
   // console.log('Video Upload: Starting...');
 
-  return await uploadFile(formData, url, authToken, onUploadProgress);
+  return await uploadFile(formData, url, headers, onUploadProgress);
 };
 
-const uploadFile = async (formData, url, authToken, onUploadProgress) => {
-  const authorization = authToken
-    ? {Authorization: `Bearer ${authToken}`, Accept: 'application/json'}
-    : null;
-
+const uploadFile = async (formData, url, headers, onUploadProgress) => {
   // console.log('FORM_DATA', formData);
   // console.log('URL', url);
-
+  console.log('HEADERS', headers);
   return new Promise(resolve => {
     axios({
       url: url,
       method: 'POST',
-      headers: authorization,
+      headers: headers,
       data: formData,
       onUploadProgress: ({total, loaded}) => {
         const progress = (loaded / total) * 100;
