@@ -36,7 +36,7 @@ export default function App() {
    *    - audio: boolean
   /*/
 
-  const cameraConfig = {
+  const config = {
     photo: true, // Required
     video: true, // Required
     audio: true, // Required
@@ -49,12 +49,8 @@ export default function App() {
     // supportsVideoHDR: true,
     // supportsPhotoHDR: true,
     fps: 60,
-  };
-
-  const uploadConfig = {
-    uploadUrl: ``,
-    authToken: null,
-    nameConvention: 'Plethora',
+    // Name
+    nameConvention: `Plethora`,
   };
 
   const custom = {
@@ -86,30 +82,25 @@ export default function App() {
   return (
     <PlethoraCamera
       // Camera Config
-      cameraConfig={cameraConfig}
+      config={config}
       cameraState={cameraState}
       stateActions={stateActions}
       // Pre-Built Actions
-      upload={uploadConfig}
       saveToCameraRoll={true}
       // Lifecycle Events
-      // onTakePicture={p => console.log('onTakePicture', p)}
-      // onRecordingStart={() => console.log('onRecordingStart')}
-      // onRecordingFinished={r => console.log('onRecordingFinished', r)}
-      // onRecordingError={e => console.log('onRecordingError', e)}
-      // onUploadComplete={u => console.log('onUploadComplete', u)}
-      // onUploadProgress={p => console.log(`onUploadProgress... ${p}%`)}
-      // onUploadError={e => console.log('onUploadError', e)}
-      // onOrientationChange={o => console.log('onOrientationChange', o)}
+      onTakePicture={p => console.log('onTakePicture', p)}
+      onRecordingStart={() => console.log('onRecordingStart')}
+      onRecordingFinished={r => console.log('onRecordingFinished', r)}
+      onRecordingError={e => console.log('onRecordingError', e)}
+      onOrientationChange={o => console.log('onOrientationChange', o)}
       // Custom Gesture Controls
-      // onTapFocus={t => console.log('onTapFocus', t)}
-      // onDoubleTap={t => console.log('onDoubleTap', t)}
-      // swipeDistance={200}
-      // onSwipeLeft={t => console.log('onSwipeLeft', t)}
-      // onSwipeRight={t => console.log('onSwipeRight', t)}
-      // onSwipeUp={t => console.log('onSwipeUp', t)}
-      // onSwipeDown={t => console.log('onSwipeDown', t)}
-    >
+      onTapFocus={t => console.log('onTapFocus', t)}
+      onDoubleTap={t => console.log('onDoubleTap', t)}
+      swipeDistance={200}
+      onSwipeLeft={t => console.log('onSwipeLeft', t)}
+      onSwipeRight={t => console.log('onSwipeRight', t)}
+      onSwipeUp={t => console.log('onSwipeUp', t)}
+      onSwipeDown={t => console.log('onSwipeDown', t)}>
       {custom}
     </PlethoraCamera>
   );

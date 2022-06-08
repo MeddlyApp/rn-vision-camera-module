@@ -33,7 +33,6 @@ import CameraControlsVertical from './Components/CameraControlsVertical';
 import VideoControls from './Components/VideoControls';
 import PictureControls from './Components/PictureControls';
 import renameFile from '../utilities/RenameFile';
-import UploadHTTP from '../utilities/http/UploadHTTP';
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 LogBox.ignoreLogs([
@@ -139,7 +138,6 @@ export default class PlethoraCamera extends Component {
       if (hasPermission) return true;
       else {
         const status = await PermissionsAndroid.request(permission);
-        // console.log('CAMERA_STORAGE: ', status);
         return status === 'authorized' || status === 'granted';
       }
     }
@@ -177,10 +175,7 @@ export default class PlethoraCamera extends Component {
       if (this.props.onTapFocus) this.props.onTapFocus(nativeEvent);
       return await this.camera.current
         .focus({x: nativeEvent.absoluteX, y: nativeEvent.absoluteY})
-        .catch(e => {
-          // console.log('Focus Error: ', e);
-          null;
-        });
+        .catch(e => null);
     }
   };
 
@@ -219,29 +214,25 @@ export default class PlethoraCamera extends Component {
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
   startVideo = async () => {
-    const {saveToCameraRoll, upload, cameraState} = this.props;
+    const {saveToCameraRoll, cameraState, config} = this.props;
     const {flash, frontCamera} = cameraState;
     await this.lockOrientation();
 
     const timestamp1 = new Date().getTime();
-    // console.log('Starting Video', timestamp1);
 
     await this.camera.current.startRecording({
       flash: frontCamera ? 'off' : flash,
       fileType: 'mp4',
       onRecordingFinished: async video => {
-        // console.log('Recording Finished', video);
-        // console.log('Video Start Timestamp => To Record', timestamp2);
-
         // Write additional metadata here...
         // ...
         // ...
         // ...
 
         // Rename File
-
-        const nameConvention =
-          upload && upload.nameConvention ? upload.nameConvention : null;
+        const nameConvention = config.nameConvention
+          ? config.nameConvention
+          : null;
         const file_name = nameConvention ? `${nameConvention}_TS` : null;
 
         const newName = `${file_name}${timestamp2}`;
@@ -263,38 +254,10 @@ export default class PlethoraCamera extends Component {
           timestamp_start: timestamp2,
         };
 
-        // Unlock Orientations
         Orientation.unlockAllOrientations();
 
         if (this.props.onRecordingFinished) {
           this.props.onRecordingFinished(payload);
-        }
-
-        // Upload Video to API
-        if (upload && upload.uploadUrl) {
-          const config = {
-            url: upload.uploadUrl,
-            authToken: upload.authToken ? upload.authToken : null,
-            nameConvention: upload.nameConvention
-              ? upload.nameConvention
-              : null,
-          };
-
-          const response = await UploadHTTP.uploadVideo(
-            config,
-            payload,
-            this.props.onUploadProgress,
-          );
-
-          if (response.status === 201) {
-            if (this.props.onUploadComplete) {
-              return this.props.onUploadComplete(response);
-            }
-          } else {
-            if (this.props.onUploadError) {
-              return this.props.onUploadError(response);
-            }
-          }
         }
       },
       onRecordingError: error => {
@@ -305,26 +268,19 @@ export default class PlethoraCamera extends Component {
     });
 
     const timestamp2 = new Date().getTime();
-    // console.log('Video Started', timestamp2);
-
     this.setState({is_recording: true});
     if (this.props.onRecordingStart) this.props.onRecordingStart();
   };
 
   endVideo = async () => {
-    // const timestamp1 = new Date().getTime();
-    // console.log('Ending Video', timestamp1);
     await this.camera.current.stopRecording();
-    // const timestamp3 = new Date().getTime();
-    // console.log('Video Stopped', timestamp3);
-
     this.setState({is_recording: false});
   };
 
   /******************** PICTURE LIFECYCLE ********************/
 
   takePicture = async () => {
-    const {saveToCameraRoll, upload, cameraState} = this.props;
+    const {saveToCameraRoll, cameraState, config} = this.props;
     const {flash, frontCamera} = cameraState;
 
     this.setState({showTakePicIndicator: true});
@@ -339,8 +295,7 @@ export default class PlethoraCamera extends Component {
     this.setState({showTakePicIndicator: false});
 
     // Rename File
-    const nameConvention =
-      upload && upload.nameConvention ? upload.nameConvention : null;
+    const nameConvention = config.nameConvention ? config.nameConvention : null;
     const file_name = nameConvention ? `${nameConvention}_TS` : null;
     const timestamp = new Date().getTime();
 
@@ -348,55 +303,17 @@ export default class PlethoraCamera extends Component {
     const finalFile = await renameFile(photo, newName);
     photo.path = finalFile;
 
-    // console.log('PHOTO: ', photo);
-
     // Write additional metadata here...
     // console.log('FINAL', finalFile);
 
     if (saveToCameraRoll) CameraRoll.save(finalFile);
     if (this.props.onTakePicture) this.props.onTakePicture(photo);
-
-    // If Upload...
-    if (upload) {
-      if (Platform.OS === 'android') photo.path = `file://${photo.path}`;
-      const payload = {
-        data: photo.path,
-        timestamp_start: timestamp,
-      };
-
-      if (!upload.uploadUrl) {
-        // console.log('Upload Error: Upload URL not set');
-        return;
-      }
-
-      const config = {
-        url: upload.uploadUrl,
-        authToken: upload.authToken ? upload.authToken : null,
-        nameConvention: upload.nameConvention ? upload.nameConvention : null,
-      };
-
-      const response = await UploadHTTP.uploadImage(
-        config,
-        payload,
-        this.props.onUploadProgress,
-      );
-
-      if (response.status === 201) {
-        if (this.props.onUploadComplete) {
-          return this.props.onUploadComplete(response);
-        }
-      } else {
-        if (this.props.onUploadError) {
-          return this.props.onUploadError(response);
-        }
-      }
-    }
   };
 
   /******************** RENDERS ********************/
 
   render() {
-    const {cameraConfig, children, cameraState} = this.props;
+    const {config, children, cameraState} = this.props;
     const {isVideo, frontCamera} = cameraState;
     const {
       has_camera_permission,
@@ -425,8 +342,6 @@ export default class PlethoraCamera extends Component {
       );
     }
 
-    // console.log('CHILDREN', children.cameraTop);
-
     return (
       <SafeAreaView style={styles.base_container} onLayout={this.deviceRotated}>
         <StatusBar hidden={true} />
@@ -436,7 +351,7 @@ export default class PlethoraCamera extends Component {
           camera_active={camera_active}
           frontCamera={frontCamera}
           zoom={zoom}
-          config={cameraConfig}
+          config={config}
         />
 
         <GestureHandler
