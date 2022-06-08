@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function PictureControls(props) {
-  const {icons, cameraState, screenSize} = props;
+  const {icons, cameraState, is_recording, screenSize} = props;
   const {frontCamera} = cameraState;
 
   let takePictureIcon,
@@ -17,25 +17,36 @@ export default function PictureControls(props) {
 
   const is_vertical = screenSize.height > screenSize.width;
   const vertical_styles = {
-    ...base_styles,
-    height: 50,
-    width: screenSize.width / 3,
+    ...styles.camera_action,
+    height: 120,
+    minWidth: screenSize.width / 3,
+    maxWidth: screenSize.width / 3,
+    backgroundColor: 'blue',
   };
   const horizontal_styles = {
-    ...base_styles,
-    width: 50,
-    height: screenSize.height / 3,
+    ...styles.camera_action,
+    flex: 1,
+    width: 120,
+    minHeight: screenSize.height / 3,
+    maxHeight: screenSize.height / 3,
+    backgroundColor: 'blue',
   };
 
   const cameraView = frontCamera ? 'Front' : 'Back';
 
   return (
     <>
-      <View style={styles.camera_action}>
-        {cameraSecondary ? cameraSecondary : <View />}
+      <View style={is_vertical ? vertical_styles : horizontal_styles}>
+        {!is_recording || cameraSecondary.showWhileRecording ? (
+          <>
+            {cameraSecondary && cameraSecondary.component
+              ? cameraSecondary.component
+              : null}
+          </>
+        ) : null}
       </View>
 
-      <View style={styles.camera_action}>
+      <View style={is_vertical ? vertical_styles : horizontal_styles}>
         <TouchableOpacity
           onPress={props.takePicture}
           style={!takePictureIcon ? styles.snap_btn : styles.camera_action_btn}>
@@ -47,7 +58,7 @@ export default function PictureControls(props) {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.camera_action}>
+      <View style={is_vertical ? vertical_styles : horizontal_styles}>
         {cameraView === 'Front' ? (
           <TouchableOpacity
             onPress={props.toggleCamera}

@@ -64,11 +64,19 @@ export default function CameraControlsHorizontal(props) {
       <View style={topVoid} />
 
       <View style={styles.horizontal_row_select_event}>
-        {!is_recording ? <>{cameraTop ? cameraTop : null}</> : null}
+        {!is_recording || cameraTop.showWhileRecording ? (
+          <>{cameraTop && cameraTop.component ? cameraTop.component : null}</>
+        ) : null}
       </View>
 
       <View style={styles.horizontal_gesture_controls}>
-        {!is_recording ? <>{cameraMiddle ? cameraMiddle : null}</> : null}
+        {!is_recording || cameraMiddle.showWhileRecording ? (
+          <>
+            {cameraMiddle && cameraMiddle.component
+              ? cameraMiddle.component
+              : null}
+          </>
+        ) : null}
       </View>
 
       <View style={camera_controls_container_styles}>
@@ -92,7 +100,13 @@ export default function CameraControlsHorizontal(props) {
 
       <View style={bottom_controls_container_styles}>
         <View style={styles.camera_bottom_container}>
-          {!is_recording ? <>{cameraBottom ? cameraBottom : null}</> : null}
+          {!is_recording || cameraBottom.showWhileRecording ? (
+            <>
+              {cameraBottom && cameraBottom.component
+                ? cameraBottom.component
+                : null}
+            </>
+          ) : null}
         </View>
       </View>
 

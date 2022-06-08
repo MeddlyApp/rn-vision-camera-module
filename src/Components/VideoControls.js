@@ -39,7 +39,14 @@ export default function VideoControls(props) {
   return (
     <>
       <View style={is_vertical ? vertical_styles : horizontal_styles}>
-        {!is_recording ? <>{cameraSecondary ? cameraSecondary : null}</> : null}
+        {/* cameraSecondary.showWhileRecording */}
+        {!is_recording || cameraSecondary.showWhileRecording ? (
+          <>
+            {cameraSecondary && cameraSecondary.component
+              ? cameraSecondary.component
+              : null}
+          </>
+        ) : null}
       </View>
 
       <View style={is_vertical ? vertical_styles : horizontal_styles}>

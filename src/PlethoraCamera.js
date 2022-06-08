@@ -282,7 +282,7 @@ export default class PlethoraCamera extends Component {
   endVideo = async () => {
     // await this.camera.current.stopRecording();
     this.setState({is_recording: false});
-    Orientation.unlockAllOrientations();
+    Orientation.unlockAllOrientations(); // Remove
   };
 
   /******************** PICTURE LIFECYCLE ********************/

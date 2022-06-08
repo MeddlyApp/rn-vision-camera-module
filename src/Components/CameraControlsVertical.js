@@ -41,10 +41,18 @@ export default function CameraControlsVertical(props) {
   return (
     <View style={vertical_content_container}>
       <View style={styles.vertical_row_select_event}>
-        {!is_recording ? <>{cameraTop ? cameraTop : null}</> : null}
+        {!is_recording || cameraTop.showWhileRecording ? (
+          <>{cameraTop && cameraTop.component ? cameraTop.component : null}</>
+        ) : null}
       </View>
       <View style={styles.vertical_gesture_controls}>
-        {!is_recording ? <>{cameraMiddle ? cameraMiddle : null}</> : null}
+        {!is_recording || cameraMiddle.showWhileRecording ? (
+          <>
+            {cameraMiddle && cameraMiddle.component
+              ? cameraMiddle.component
+              : null}
+          </>
+        ) : null}
       </View>
 
       <View style={camera_controls_container_styles}>
@@ -68,7 +76,13 @@ export default function CameraControlsVertical(props) {
 
       <View style={bottom_controls_container_styles}>
         <View style={styles.camera_bottom_container}>
-          {!is_recording ? <>{cameraBottom ? cameraBottom : null}</> : null}
+          {!is_recording || cameraBottom.showWhileRecording ? (
+            <>
+              {cameraBottom && cameraBottom.component
+                ? cameraBottom.component
+                : null}
+            </>
+          ) : null}
         </View>
       </View>
 

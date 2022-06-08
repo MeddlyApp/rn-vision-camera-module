@@ -54,9 +54,18 @@ export default function App() {
   };
 
   const custom = {
-    cameraTop: <Text style={{color: '#FFF'}}>Top</Text>,
-    cameraMiddle: <Text style={{color: '#FFF'}}>Middle</Text>,
-    cameraBottom: <Text style={{color: '#FFF'}}>Bottom</Text>,
+    cameraTop: {
+      component: <Text style={{color: '#FFF'}}>Top</Text>,
+      showWhileRecording: true,
+    },
+    cameraMiddle: {
+      component: <Text style={{color: '#FFF'}}>Middle</Text>,
+      showWhileRecording: true,
+    },
+    cameraBottom: {
+      component: <Text style={{color: '#FFF'}}>Bottom</Text>,
+      showWhileRecording: true,
+    },
     icons: {
       // Base Camera Controls
       takePictureIcon: <Text style={{color: '#FFFF00'}}>SNP</Text>,
@@ -75,7 +84,10 @@ export default function App() {
         flashOff: <Text style={{color: '#00FF00'}}>Off</Text>,
       },
       // Additional Recording Controls
-      cameraSecondary: <Text style={{color: '#FFAAFF'}}>SEC</Text>,
+      cameraSecondary: {
+        component: <Text style={{color: '#FFAAFF'}}>SEC</Text>,
+        showWhileRecording: true,
+      },
     },
   };
 
