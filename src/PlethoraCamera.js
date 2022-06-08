@@ -362,98 +362,100 @@ export default class PlethoraCamera extends Component {
           config={config}
         />
 
-        <GestureHandler
-          showTakePicIndicator={showTakePicIndicator}
-          pinchRef={this.pinchRef}
-          doubleTapRef={this.doubleTapRef}
-          onSingleTap={this.tapToFocus}
-          onDoubleTap={
-            this.props.onDoubleTap ? this.props.onDoubleTap : () => null
-          }
-          onPinchProgress={this.onPinchProgress}
-          onPinchStart={this.onPinchStart}
-          onPinchEnd={this.onPinchEnd}
-          swipeDistance={this.props.swipeDistance}
-          onSwipeUp={this.props.onSwipeUp}
-          onSwipeDown={this.props.onSwipeDown}
-          onSwipeLeft={this.props.onSwipeLeft}
-          onSwipeRight={this.props.onSwipeRight}>
-          <View>
-            {is_vertical ? (
-              <CameraControlsVertical
-                state={this.state}
-                cameraState={cameraState}
-                children={children}
-                toggleCamera={this.toggleCamera}
-                toggleFlash={this.toggleFlash}
-                toggleVideoOrPicture={this.toggleVideoOrPicture}>
-                {isVideo
-                  ? {
-                      children,
-                      videoControls: (
-                        <VideoControls
-                          is_recording={is_recording}
-                          startVideo={this.startVideo}
-                          endVideo={this.endVideo}
-                          toggleCamera={this.toggleCamera}
-                          cameraState={cameraState}
-                          icons={children.icons ? children.icons : null}
-                          screenSize={screen_size}
-                        />
-                      ),
-                    }
-                  : {
-                      children,
-                      pictureControls: (
-                        <PictureControls
-                          takePicture={this.takePicture}
-                          toggleCamera={this.toggleCamera}
-                          cameraState={cameraState}
-                          icons={children.icons ? children.icons : null}
-                          screenSize={screen_size}
-                        />
-                      ),
-                    }}
-              </CameraControlsVertical>
-            ) : (
-              <CameraControlsHorizontal
-                state={this.state}
-                cameraState={cameraState}
-                children={children}
-                toggleCamera={this.toggleCamera}
-                toggleFlash={this.toggleFlash}
-                toggleVideoOrPicture={this.toggleVideoOrPicture}>
-                {isVideo
-                  ? {
-                      children,
-                      videoControls: (
-                        <VideoControls
-                          is_recording={is_recording}
-                          startVideo={this.startVideo}
-                          endVideo={this.endVideo}
-                          toggleCamera={this.toggleCamera}
-                          cameraState={cameraState}
-                          icons={children.icons ? children.icons : null}
-                          screenSize={screen_size}
-                        />
-                      ),
-                    }
-                  : {
-                      children,
-                      pictureControls: (
-                        <PictureControls
-                          takePicture={this.takePicture}
-                          toggleCamera={this.toggleCamera}
-                          cameraState={cameraState}
-                          icons={children.icons ? children.icons : null}
-                          screenSize={screen_size}
-                        />
-                      ),
-                    }}
-              </CameraControlsHorizontal>
-            )}
-          </View>
-        </GestureHandler>
+        {this.props.showCameraControls ? (
+          <GestureHandler
+            showTakePicIndicator={showTakePicIndicator}
+            pinchRef={this.pinchRef}
+            doubleTapRef={this.doubleTapRef}
+            onSingleTap={this.tapToFocus}
+            onDoubleTap={
+              this.props.onDoubleTap ? this.props.onDoubleTap : () => null
+            }
+            onPinchProgress={this.onPinchProgress}
+            onPinchStart={this.onPinchStart}
+            onPinchEnd={this.onPinchEnd}
+            swipeDistance={this.props.swipeDistance}
+            onSwipeUp={this.props.onSwipeUp}
+            onSwipeDown={this.props.onSwipeDown}
+            onSwipeLeft={this.props.onSwipeLeft}
+            onSwipeRight={this.props.onSwipeRight}>
+            <View>
+              {is_vertical ? (
+                <CameraControlsVertical
+                  state={this.state}
+                  cameraState={cameraState}
+                  children={children}
+                  toggleCamera={this.toggleCamera}
+                  toggleFlash={this.toggleFlash}
+                  toggleVideoOrPicture={this.toggleVideoOrPicture}>
+                  {isVideo
+                    ? {
+                        children,
+                        videoControls: (
+                          <VideoControls
+                            is_recording={is_recording}
+                            startVideo={this.startVideo}
+                            endVideo={this.endVideo}
+                            toggleCamera={this.toggleCamera}
+                            cameraState={cameraState}
+                            icons={children.icons ? children.icons : null}
+                            screenSize={screen_size}
+                          />
+                        ),
+                      }
+                    : {
+                        children,
+                        pictureControls: (
+                          <PictureControls
+                            takePicture={this.takePicture}
+                            toggleCamera={this.toggleCamera}
+                            cameraState={cameraState}
+                            icons={children.icons ? children.icons : null}
+                            screenSize={screen_size}
+                          />
+                        ),
+                      }}
+                </CameraControlsVertical>
+              ) : (
+                <CameraControlsHorizontal
+                  state={this.state}
+                  cameraState={cameraState}
+                  children={children}
+                  toggleCamera={this.toggleCamera}
+                  toggleFlash={this.toggleFlash}
+                  toggleVideoOrPicture={this.toggleVideoOrPicture}>
+                  {isVideo
+                    ? {
+                        children,
+                        videoControls: (
+                          <VideoControls
+                            is_recording={is_recording}
+                            startVideo={this.startVideo}
+                            endVideo={this.endVideo}
+                            toggleCamera={this.toggleCamera}
+                            cameraState={cameraState}
+                            icons={children.icons ? children.icons : null}
+                            screenSize={screen_size}
+                          />
+                        ),
+                      }
+                    : {
+                        children,
+                        pictureControls: (
+                          <PictureControls
+                            takePicture={this.takePicture}
+                            toggleCamera={this.toggleCamera}
+                            cameraState={cameraState}
+                            icons={children.icons ? children.icons : null}
+                            screenSize={screen_size}
+                          />
+                        ),
+                      }}
+                </CameraControlsHorizontal>
+              )}
+            </View>
+          </GestureHandler>
+        ) : null}
       </SafeAreaView>
     );
   }

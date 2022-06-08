@@ -56,15 +56,15 @@ export default function App() {
   const custom = {
     cameraTop: {
       component: <Text style={{color: '#FFF'}}>Top</Text>,
-      showWhileRecording: true,
+      showWhileRecording: false,
     },
     cameraMiddle: {
       component: <Text style={{color: '#FFF'}}>Middle</Text>,
-      showWhileRecording: true,
+      showWhileRecording: false,
     },
     cameraBottom: {
       component: <Text style={{color: '#FFF'}}>Bottom</Text>,
-      showWhileRecording: true,
+      showWhileRecording: false,
     },
     icons: {
       // Base Camera Controls
@@ -98,6 +98,7 @@ export default function App() {
       cameraState={cameraState}
       stateActions={stateActions}
       // Pre-Built Actions
+      showCameraControls={true}
       saveToCameraRoll={true}
       // Lifecycle Events
       onTakePicture={p => console.log('onTakePicture', p)}
