@@ -34,6 +34,10 @@ export default function CameraControlsVertical(props) {
     justifyContent: 'center',
   };
 
+  const recording_controls = {
+    ...styles.vertical_row_recording_controls,
+  };
+
   return (
     <View style={vertical_content_container}>
       <View style={styles.vertical_row_select_event}>
@@ -58,7 +62,7 @@ export default function CameraControlsVertical(props) {
         ) : null}
       </View>
 
-      <View style={styles.vertical_row_recording_controls}>
+      <View style={recording_controls}>
         {isVideo ? children.videoControls : children.pictureControls}
       </View>
 

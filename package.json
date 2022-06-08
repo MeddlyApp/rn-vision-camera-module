@@ -25,19 +25,19 @@
     "@babel/runtime": "^7.16.3",
     "@react-native-community/cameraroll": "^4.1.2",
     "@react-native-community/eslint-config": "^3.0.1",
-    "babel-jest": "^27.3.1",
+    "babel-jest": "^28.1.1",
     "eslint": "^8.3.0",
     "fbjs": "^3.0.4",
-    "jest": "^27.3.1",
-    "metro-react-native-babel-preset": "^0.70.2",
-    "react": "18.0.0",
-    "react-native": "0.68.1",
+    "jest": "^28.1.1",
+    "metro-react-native-babel-preset": "^0.71.0",
+    "react": "18.1.0",
+    "react-native": "0.68.2",
     "react-native-fs": "^2.19.0",
     "react-native-gesture-handler": "^2.0.0",
     "react-native-orientation-locker": "^1.4.0",
     "react-native-reanimated": "^2.2.4",
     "react-native-vision-camera": "^2.9.4",
-    "react-test-renderer": "18.0.0"
+    "react-test-renderer": "18.1.0"
   },
   "jest": {
     "preset": "react-native"

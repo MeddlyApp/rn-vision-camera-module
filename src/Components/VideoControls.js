@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function VideoControls(props) {
-  const {icons, cameraState, is_recording} = props;
+  const {icons, cameraState, is_recording, screenSize} = props;
   const {frontCamera} = cameraState;
 
   let startRecordingIcon,
@@ -17,15 +17,32 @@ export default function VideoControls(props) {
     viewportIcon = icons.viewportIcon;
   }
 
+  const is_vertical = screenSize.height > screenSize.width;
+  const vertical_styles = {
+    ...styles.camera_action,
+    height: 120,
+    minWidth: screenSize.width / 3,
+    maxWidth: screenSize.width / 3,
+    backgroundColor: 'blue',
+  };
+  const horizontal_styles = {
+    ...styles.camera_action,
+    flex: 1,
+    width: 120,
+    minHeight: screenSize.height / 3,
+    maxHeight: screenSize.height / 3,
+    backgroundColor: 'blue',
+  };
+
   const cameraView = frontCamera ? 'Front' : 'Back';
 
   return (
     <>
-      <View style={styles.camera_action}>
+      <View style={is_vertical ? vertical_styles : horizontal_styles}>
         {!is_recording ? <>{cameraSecondary ? cameraSecondary : null}</> : null}
       </View>
 
-      <View style={styles.camera_action}>
+      <View style={is_vertical ? vertical_styles : horizontal_styles}>
         {!is_recording ? (
           <TouchableOpacity
             onPress={props.startVideo}
@@ -53,7 +70,7 @@ export default function VideoControls(props) {
         )}
       </View>
 
-      <View style={styles.camera_action}>
+      <View style={is_vertical ? vertical_styles : horizontal_styles}>
         {!is_recording ? (
           <>
             {cameraView === 'Front' ? (

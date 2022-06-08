@@ -55,6 +55,10 @@ export default function CameraControlsHorizontal(props) {
       ? styles.horizontal_bottom_void_right
       : styles.horizontal_bottom_void_left;
 
+  const recording_controls = {
+    ...styles.horizontal_row_recording_controls,
+  };
+
   return (
     <View style={horizontal_content_container}>
       <View style={topVoid} />
@@ -82,7 +86,7 @@ export default function CameraControlsHorizontal(props) {
         ) : null}
       </View>
 
-      <View style={styles.horizontal_row_recording_controls}>
+      <View style={recording_controls}>
         {isVideo ? children.videoControls : children.pictureControls}
       </View>
 

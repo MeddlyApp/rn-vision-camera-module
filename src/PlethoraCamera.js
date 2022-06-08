@@ -152,7 +152,10 @@ export default class PlethoraCamera extends Component {
       this.props.onOrientationChange(orientation);
     }
   };
-  deviceRotated = () => this.setState({screen_size: Dimensions.get('window')});
+  deviceRotated = () => {
+    const screen_size = Dimensions.get('window');
+    this.setState({screen_size});
+  };
   lockOrientation = async () => {
     new Promise(resolve => {
       const {orientation} = this.state;
@@ -220,6 +223,9 @@ export default class PlethoraCamera extends Component {
 
     const timestamp1 = new Date().getTime();
 
+    this.setState({is_recording: true});
+
+    /*
     await this.camera.current.startRecording({
       flash: frontCamera ? 'off' : flash,
       fileType: 'mp4',
@@ -270,11 +276,13 @@ export default class PlethoraCamera extends Component {
     const timestamp2 = new Date().getTime();
     this.setState({is_recording: true});
     if (this.props.onRecordingStart) this.props.onRecordingStart();
+    */
   };
 
   endVideo = async () => {
-    await this.camera.current.stopRecording();
+    // await this.camera.current.stopRecording();
     this.setState({is_recording: false});
+    Orientation.unlockAllOrientations();
   };
 
   /******************** PICTURE LIFECYCLE ********************/
@@ -390,6 +398,7 @@ export default class PlethoraCamera extends Component {
                           toggleCamera={this.toggleCamera}
                           cameraState={cameraState}
                           icons={children.icons ? children.icons : null}
+                          screenSize={screen_size}
                         />
                       ),
                     }
@@ -401,6 +410,7 @@ export default class PlethoraCamera extends Component {
                           toggleCamera={this.toggleCamera}
                           cameraState={cameraState}
                           icons={children.icons ? children.icons : null}
+                          screenSize={screen_size}
                         />
                       ),
                     }}
@@ -424,6 +434,7 @@ export default class PlethoraCamera extends Component {
                           toggleCamera={this.toggleCamera}
                           cameraState={cameraState}
                           icons={children.icons ? children.icons : null}
+                          screenSize={screen_size}
                         />
                       ),
                     }
@@ -435,6 +446,7 @@ export default class PlethoraCamera extends Component {
                           toggleCamera={this.toggleCamera}
                           cameraState={cameraState}
                           icons={children.icons ? children.icons : null}
+                          screenSize={screen_size}
                         />
                       ),
                     }}

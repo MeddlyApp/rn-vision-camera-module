@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function PictureControls(props) {
-  const {icons, cameraState} = props;
+  const {icons, cameraState, screenSize} = props;
   const {frontCamera} = cameraState;
 
   let takePictureIcon,
@@ -14,6 +14,18 @@ export default function PictureControls(props) {
     cameraSecondary = icons.cameraSecondary;
     viewportIcon = icons.viewportIcon;
   }
+
+  const is_vertical = screenSize.height > screenSize.width;
+  const vertical_styles = {
+    ...base_styles,
+    height: 50,
+    width: screenSize.width / 3,
+  };
+  const horizontal_styles = {
+    ...base_styles,
+    width: 50,
+    height: screenSize.height / 3,
+  };
 
   const cameraView = frontCamera ? 'Front' : 'Back';
 
