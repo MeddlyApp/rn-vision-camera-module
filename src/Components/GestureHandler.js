@@ -82,7 +82,11 @@ export default function GestureHandler(props) {
             <View
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
-              style={showTakePicIndicator ? styles.take_pic_indicator : null}>
+              style={
+                showTakePicIndicator
+                  ? styles.take_pic_indicator
+                  : styles.main_view
+              }>
               {children}
             </View>
           </TapGestureHandler>

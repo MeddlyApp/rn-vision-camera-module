@@ -155,6 +155,13 @@ const styles = StyleSheet.create({
   // Photo Indicator
   take_pic_indicator: {
     borderColor: '#FFFFFF',
+    backgroundColor: 'rgba(255, 255, 255, 0.72)',
+    borderWidth: 2,
+    height: '100%',
+    width: '100%',
+  },
+  main_view: {
+    borderColor: '#000',
     borderWidth: 2,
     height: '100%',
     width: '100%',
