@@ -2,11 +2,13 @@ import React from 'react';
 import {View, Platform, Text} from 'react-native';
 import CameraSettings from './CameraSettings';
 import styles from '../styles';
+import formatElapsedTime from '../../utilities/FormatElapsedTime';
 
 export default function CameraControlsHorizontal(props) {
   const {children, state, cameraState} = props;
   const {flash, isVideo, frontCamera} = cameraState;
-  const {screen_size, orientation, is_recording} = state;
+  const {screen_size, orientation, is_recording, recording_elapsed_time} =
+    state;
 
   const {cameraTop, cameraMiddle, cameraBottom, icons} = children.children;
 
@@ -91,7 +93,11 @@ export default function CameraControlsHorizontal(props) {
             toggleFlash={props.toggleFlash}
             icons={icons ? icons : null}
           />
-        ) : null}
+        ) : (
+          <Text style={styles.recording_elapsed_time}>
+            {formatElapsedTime(recording_elapsed_time)}
+          </Text>
+        )}
       </View>
 
       <View style={recording_controls}>

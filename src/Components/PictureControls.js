@@ -21,7 +21,6 @@ export default function PictureControls(props) {
     height: 120,
     minWidth: screenSize.width / 3,
     maxWidth: screenSize.width / 3,
-    backgroundColor: 'blue',
   };
   const horizontal_styles = {
     ...styles.camera_action,
@@ -29,7 +28,6 @@ export default function PictureControls(props) {
     width: 120,
     minHeight: screenSize.height / 3,
     maxHeight: screenSize.height / 3,
-    backgroundColor: 'blue',
   };
 
   const cameraView = frontCamera ? 'Front' : 'Back';

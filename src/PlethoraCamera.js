@@ -48,6 +48,7 @@ export default class PlethoraCamera extends Component {
       orientation: 'PORTRAIT',
       // Camera Settings
       is_recording: false,
+      recording_elapsed_time: 0,
       camera_active: false,
       zoom: 0,
       video_start_time: null,
@@ -214,6 +215,12 @@ export default class PlethoraCamera extends Component {
     if (toggleFlash) toggleFlash();
   };
 
+  updateTimer = () => {
+    const {recording_elapsed_time} = this.state;
+    // Update time...
+    this.setState({recording_elapsed_time: 10});
+  };
+
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
   startVideo = async () => {
@@ -223,7 +230,9 @@ export default class PlethoraCamera extends Component {
 
     const timestamp1 = new Date().getTime();
 
+    // TEMP
     this.setState({is_recording: true});
+    this.startVideoTimer();
 
     /*
     await this.camera.current.startRecording({
@@ -275,6 +284,9 @@ export default class PlethoraCamera extends Component {
 
     const timestamp2 = new Date().getTime();
     this.setState({is_recording: true});
+    this.startVideoTimer();
+
+    // Set Elapsed Time here... 
     if (this.props.onRecordingStart) this.props.onRecordingStart();
     */
   };
@@ -282,7 +294,22 @@ export default class PlethoraCamera extends Component {
   endVideo = async () => {
     // await this.camera.current.stopRecording();
     this.setState({is_recording: false});
-    Orientation.unlockAllOrientations(); // Remove
+    this.endVideoTimer();
+
+    // Remove On Push Live..
+    Orientation.unlockAllOrientations();
+  };
+
+  startVideoTimer = () => {
+    this.intervalID = setInterval(this.updateElapsedTime, 1000);
+  };
+  endVideoTimer = () => {
+    clearInterval(this.intervalID);
+    this.setState({recording_elapsed_time: 0});
+  };
+  updateElapsedTime = () => {
+    const {recording_elapsed_time} = this.state;
+    this.setState({recording_elapsed_time: recording_elapsed_time + 1});
   };
 
   /******************** PICTURE LIFECYCLE ********************/

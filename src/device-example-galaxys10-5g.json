@@ -14,12 +14,12 @@
         "videoHeight": 3024,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 3024,
         "supportsVideoHDR": false,
@@ -39,12 +39,12 @@
         "videoHeight": 3024,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 3024,
         "supportsVideoHDR": false,
@@ -64,12 +64,12 @@
         "videoHeight": 2268,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2268,
         "supportsVideoHDR": false,
@@ -89,12 +89,12 @@
         "videoHeight": 1908,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1908,
         "supportsVideoHDR": false,
@@ -114,12 +114,12 @@
         "videoHeight": 3024,
         "photoWidth": 3024,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 3024,
         "supportsVideoHDR": false,
@@ -139,12 +139,12 @@
         "videoHeight": 2160,
         "photoWidth": 3840,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2160,
         "supportsVideoHDR": false,
@@ -164,12 +164,12 @@
         "videoHeight": 1080,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -189,12 +189,12 @@
         "videoHeight": 720,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -214,12 +214,12 @@
         "videoHeight": 1080,
         "photoWidth": 2288,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -239,12 +239,12 @@
         "videoHeight": 910,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 910,
         "supportsVideoHDR": false,
@@ -264,12 +264,12 @@
         "videoHeight": 540,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 540,
         "supportsVideoHDR": false,
@@ -289,12 +289,12 @@
         "videoHeight": 1080,
         "photoWidth": 1440,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -314,12 +314,12 @@
         "videoHeight": 960,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 960,
         "supportsVideoHDR": false,
@@ -339,12 +339,12 @@
         "videoHeight": 1088,
         "photoWidth": 1088,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1088,
         "supportsVideoHDR": false,
@@ -364,12 +364,12 @@
         "videoHeight": 720,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -389,12 +389,12 @@
         "videoHeight": 480,
         "photoWidth": 720,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -414,12 +414,12 @@
         "videoHeight": 480,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -439,12 +439,12 @@
         "videoHeight": 360,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 360,
         "supportsVideoHDR": false,
@@ -464,12 +464,12 @@
         "videoHeight": 240,
         "photoWidth": 320,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 240,
         "supportsVideoHDR": false,
@@ -489,12 +489,12 @@
         "videoHeight": 144,
         "photoWidth": 176,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 144,
         "supportsVideoHDR": false,
@@ -514,12 +514,12 @@
         "videoHeight": 3024,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 3024,
         "supportsVideoHDR": false,
@@ -539,12 +539,12 @@
         "videoHeight": 2268,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2268,
         "supportsVideoHDR": false,
@@ -564,12 +564,12 @@
         "videoHeight": 1908,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1908,
         "supportsVideoHDR": false,
@@ -589,12 +589,12 @@
         "videoHeight": 3024,
         "photoWidth": 3024,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 3024,
         "supportsVideoHDR": false,
@@ -614,12 +614,12 @@
         "videoHeight": 2160,
         "photoWidth": 3840,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2160,
         "supportsVideoHDR": false,
@@ -639,12 +639,12 @@
         "videoHeight": 1080,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -664,12 +664,12 @@
         "videoHeight": 720,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -689,12 +689,12 @@
         "videoHeight": 1080,
         "photoWidth": 2288,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -714,12 +714,12 @@
         "videoHeight": 910,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 910,
         "supportsVideoHDR": false,
@@ -739,12 +739,12 @@
         "videoHeight": 540,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 540,
         "supportsVideoHDR": false,
@@ -764,12 +764,12 @@
         "videoHeight": 1080,
         "photoWidth": 1440,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -789,12 +789,12 @@
         "videoHeight": 960,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 960,
         "supportsVideoHDR": false,
@@ -814,12 +814,12 @@
         "videoHeight": 1088,
         "photoWidth": 1088,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1088,
         "supportsVideoHDR": false,
@@ -839,12 +839,12 @@
         "videoHeight": 720,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -864,12 +864,12 @@
         "videoHeight": 480,
         "photoWidth": 720,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -889,12 +889,12 @@
         "videoHeight": 480,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -914,12 +914,12 @@
         "videoHeight": 360,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 360,
         "supportsVideoHDR": false,
@@ -939,12 +939,12 @@
         "videoHeight": 240,
         "photoWidth": 320,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 240,
         "supportsVideoHDR": false,
@@ -964,12 +964,12 @@
         "videoHeight": 144,
         "photoWidth": 176,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 144,
         "supportsVideoHDR": false,
@@ -989,12 +989,12 @@
         "videoHeight": 3024,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 3024,
         "supportsVideoHDR": false,
@@ -1014,12 +1014,12 @@
         "videoHeight": 2268,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2268,
         "supportsVideoHDR": false,
@@ -1039,12 +1039,12 @@
         "videoHeight": 1908,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1908,
         "supportsVideoHDR": false,
@@ -1064,12 +1064,12 @@
         "videoHeight": 3024,
         "photoWidth": 3024,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 3024,
         "supportsVideoHDR": false,
@@ -1089,12 +1089,12 @@
         "videoHeight": 2160,
         "photoWidth": 3840,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2160,
         "supportsVideoHDR": false,
@@ -1114,12 +1114,12 @@
         "videoHeight": 1080,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -1139,12 +1139,12 @@
         "videoHeight": 720,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -1164,12 +1164,12 @@
         "videoHeight": 1080,
         "photoWidth": 2288,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -1189,12 +1189,12 @@
         "videoHeight": 910,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 910,
         "supportsVideoHDR": false,
@@ -1214,12 +1214,12 @@
         "videoHeight": 540,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 540,
         "supportsVideoHDR": false,
@@ -1239,12 +1239,12 @@
         "videoHeight": 1080,
         "photoWidth": 1440,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -1264,12 +1264,12 @@
         "videoHeight": 960,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 960,
         "supportsVideoHDR": false,
@@ -1289,12 +1289,12 @@
         "videoHeight": 1088,
         "photoWidth": 1088,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1088,
         "supportsVideoHDR": false,
@@ -1314,12 +1314,12 @@
         "videoHeight": 720,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -1339,12 +1339,12 @@
         "videoHeight": 480,
         "photoWidth": 720,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -1364,12 +1364,12 @@
         "videoHeight": 480,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -1389,12 +1389,12 @@
         "videoHeight": 360,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 360,
         "supportsVideoHDR": false,
@@ -1414,12 +1414,12 @@
         "videoHeight": 240,
         "photoWidth": 320,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 240,
         "supportsVideoHDR": false,
@@ -1439,12 +1439,12 @@
         "videoHeight": 144,
         "photoWidth": 176,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 144,
         "supportsVideoHDR": false,
@@ -1464,12 +1464,12 @@
         "videoHeight": 3024,
         "photoWidth": 4032,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 7 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 7},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 3024,
         "supportsVideoHDR": false,
@@ -1508,11 +1508,11 @@
         "videoHeight": 2736,
         "photoWidth": 3648,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2736,
         "supportsVideoHDR": false,
@@ -1532,11 +1532,11 @@
         "videoHeight": 2048,
         "photoWidth": 3648,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2048,
         "supportsVideoHDR": false,
@@ -1556,11 +1556,11 @@
         "videoHeight": 1728,
         "photoWidth": 3648,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1728,
         "supportsVideoHDR": false,
@@ -1580,11 +1580,11 @@
         "videoHeight": 2736,
         "photoWidth": 2736,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2736,
         "supportsVideoHDR": false,
@@ -1604,11 +1604,11 @@
         "videoHeight": 1080,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -1628,11 +1628,11 @@
         "videoHeight": 720,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -1652,11 +1652,11 @@
         "videoHeight": 1080,
         "photoWidth": 2288,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -1676,11 +1676,11 @@
         "videoHeight": 910,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 910,
         "supportsVideoHDR": false,
@@ -1700,11 +1700,11 @@
         "videoHeight": 540,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 540,
         "supportsVideoHDR": false,
@@ -1724,11 +1724,11 @@
         "videoHeight": 1080,
         "photoWidth": 1440,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -1748,11 +1748,11 @@
         "videoHeight": 960,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 960,
         "supportsVideoHDR": false,
@@ -1772,11 +1772,11 @@
         "videoHeight": 1088,
         "photoWidth": 1088,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1088,
         "supportsVideoHDR": false,
@@ -1796,11 +1796,11 @@
         "videoHeight": 720,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -1820,11 +1820,11 @@
         "videoHeight": 480,
         "photoWidth": 720,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -1844,11 +1844,11 @@
         "videoHeight": 480,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -1868,11 +1868,11 @@
         "videoHeight": 360,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 360,
         "supportsVideoHDR": false,
@@ -1892,11 +1892,11 @@
         "videoHeight": 240,
         "photoWidth": 320,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 240,
         "supportsVideoHDR": false,
@@ -1916,11 +1916,11 @@
         "videoHeight": 144,
         "photoWidth": 176,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 144,
         "supportsVideoHDR": false,
@@ -1940,11 +1940,11 @@
         "videoHeight": 2736,
         "photoWidth": 3648,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2736,
         "supportsVideoHDR": false,
@@ -1964,11 +1964,11 @@
         "videoHeight": 2048,
         "photoWidth": 3648,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2048,
         "supportsVideoHDR": false,
@@ -1988,11 +1988,11 @@
         "videoHeight": 1728,
         "photoWidth": 3648,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1728,
         "supportsVideoHDR": false,
@@ -2012,11 +2012,11 @@
         "videoHeight": 2736,
         "photoWidth": 2736,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2736,
         "supportsVideoHDR": false,
@@ -2036,11 +2036,11 @@
         "videoHeight": 1080,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -2060,11 +2060,11 @@
         "videoHeight": 720,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -2084,11 +2084,11 @@
         "videoHeight": 1080,
         "photoWidth": 2288,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -2108,11 +2108,11 @@
         "videoHeight": 910,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 910,
         "supportsVideoHDR": false,
@@ -2132,11 +2132,11 @@
         "videoHeight": 540,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 540,
         "supportsVideoHDR": false,
@@ -2156,11 +2156,11 @@
         "videoHeight": 1080,
         "photoWidth": 1440,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -2180,11 +2180,11 @@
         "videoHeight": 960,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 960,
         "supportsVideoHDR": false,
@@ -2204,11 +2204,11 @@
         "videoHeight": 1088,
         "photoWidth": 1088,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1088,
         "supportsVideoHDR": false,
@@ -2228,11 +2228,11 @@
         "videoHeight": 720,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -2252,11 +2252,11 @@
         "videoHeight": 480,
         "photoWidth": 720,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -2276,11 +2276,11 @@
         "videoHeight": 480,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -2300,11 +2300,11 @@
         "videoHeight": 360,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 360,
         "supportsVideoHDR": false,
@@ -2324,11 +2324,11 @@
         "videoHeight": 240,
         "photoWidth": 320,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 240,
         "supportsVideoHDR": false,
@@ -2348,11 +2348,11 @@
         "videoHeight": 144,
         "photoWidth": 176,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 144,
         "supportsVideoHDR": false,
@@ -2372,11 +2372,11 @@
         "videoHeight": 2736,
         "photoWidth": 3648,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2736,
         "supportsVideoHDR": false,
@@ -2396,11 +2396,11 @@
         "videoHeight": 2048,
         "photoWidth": 3648,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2048,
         "supportsVideoHDR": false,
@@ -2420,11 +2420,11 @@
         "videoHeight": 1728,
         "photoWidth": 3648,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1728,
         "supportsVideoHDR": false,
@@ -2444,11 +2444,11 @@
         "videoHeight": 2736,
         "photoWidth": 2736,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 2736,
         "supportsVideoHDR": false,
@@ -2468,11 +2468,11 @@
         "videoHeight": 1080,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -2492,11 +2492,11 @@
         "videoHeight": 720,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -2516,11 +2516,11 @@
         "videoHeight": 1080,
         "photoWidth": 2288,
         "frameRateRanges": [
-          { "maxFrameRate": 30, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 30, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -2540,11 +2540,11 @@
         "videoHeight": 910,
         "photoWidth": 1920,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 910,
         "supportsVideoHDR": false,
@@ -2564,11 +2564,11 @@
         "videoHeight": 540,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 540,
         "supportsVideoHDR": false,
@@ -2588,11 +2588,11 @@
         "videoHeight": 1080,
         "photoWidth": 1440,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1080,
         "supportsVideoHDR": false,
@@ -2612,11 +2612,11 @@
         "videoHeight": 960,
         "photoWidth": 1280,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 960,
         "supportsVideoHDR": false,
@@ -2636,11 +2636,11 @@
         "videoHeight": 1088,
         "photoWidth": 1088,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 1088,
         "supportsVideoHDR": false,
@@ -2660,11 +2660,11 @@
         "videoHeight": 720,
         "photoWidth": 960,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 720,
         "supportsVideoHDR": false,
@@ -2684,11 +2684,11 @@
         "videoHeight": 480,
         "photoWidth": 720,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -2708,11 +2708,11 @@
         "videoHeight": 480,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 480,
         "supportsVideoHDR": false,
@@ -2732,11 +2732,11 @@
         "videoHeight": 360,
         "photoWidth": 640,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 360,
         "supportsVideoHDR": false,
@@ -2756,11 +2756,11 @@
         "videoHeight": 240,
         "photoWidth": 320,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 240,
         "supportsVideoHDR": false,
@@ -2780,11 +2780,11 @@
         "videoHeight": 144,
         "photoWidth": 176,
         "frameRateRanges": [
-          { "maxFrameRate": 60, "minFrameRate": 1 },
-          { "maxFrameRate": 15, "minFrameRate": 15 },
-          { "maxFrameRate": 24, "minFrameRate": 24 },
-          { "maxFrameRate": 30, "minFrameRate": 8 },
-          { "maxFrameRate": 30, "minFrameRate": 30 }
+          {"maxFrameRate": 60, "minFrameRate": 1},
+          {"maxFrameRate": 15, "minFrameRate": 15},
+          {"maxFrameRate": 24, "minFrameRate": 24},
+          {"maxFrameRate": 30, "minFrameRate": 8},
+          {"maxFrameRate": 30, "minFrameRate": 30}
         ],
         "photoHeight": 144,
         "supportsVideoHDR": false,

@@ -159,6 +159,12 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
+
+  // Recording Time Elapsed
+  recording_elapsed_time: {
+    fontSize: 16,
+    color: '#FFF',
+  },
 });
 
 export default styles;

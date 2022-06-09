@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import CameraSettings from './CameraSettings';
 import styles from '../styles';
+import formatElapsedTime from '../../utilities/FormatElapsedTime';
 
 export default function CameraControlsVertical(props) {
   let {children, state, cameraState} = props;
@@ -9,7 +10,7 @@ export default function CameraControlsVertical(props) {
   const {flash, isVideo, frontCamera} = cameraState;
 
   const {cameraTop, cameraMiddle, cameraBottom, icons} = children.children;
-  const {screen_size, is_recording} = state;
+  const {screen_size, is_recording, recording_elapsed_time} = state;
 
   const camera_controls_container_styles = {
     height: 60,
@@ -67,7 +68,11 @@ export default function CameraControlsVertical(props) {
             toggleFlash={props.toggleFlash}
             icons={icons ? icons : null}
           />
-        ) : null}
+        ) : (
+          <Text style={styles.recording_elapsed_time}>
+            {formatElapsedTime(recording_elapsed_time)}
+          </Text>
+        )}
       </View>
 
       <View style={recording_controls}>
