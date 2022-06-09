@@ -228,13 +228,8 @@ export default class PlethoraCamera extends Component {
     const {flash, frontCamera} = cameraState;
     await this.lockOrientation();
 
-    const timestamp1 = new Date().getTime();
+    // const timestampStart = new Date().getTime();
 
-    // TEMP
-    this.setState({is_recording: true});
-    this.startVideoTimer();
-
-    /*
     await this.camera.current.startRecording({
       flash: frontCamera ? 'off' : flash,
       fileType: 'mp4',
@@ -250,7 +245,7 @@ export default class PlethoraCamera extends Component {
           : null;
         const file_name = nameConvention ? `${nameConvention}_TS` : null;
 
-        const newName = `${file_name}${timestamp2}`;
+        const newName = `${file_name}${timestamp}`;
         const finalFile = await renameFile(video, newName);
         video.path = finalFile;
 
@@ -266,7 +261,7 @@ export default class PlethoraCamera extends Component {
 
         const payload = {
           data: video.path,
-          timestamp_start: timestamp2,
+          timestamp_start: timestamp,
         };
 
         Orientation.unlockAllOrientations();
@@ -282,22 +277,18 @@ export default class PlethoraCamera extends Component {
       },
     });
 
-    const timestamp2 = new Date().getTime();
+    const timestamp = new Date().getTime();
     this.setState({is_recording: true});
     this.startVideoTimer();
 
-    // Set Elapsed Time here... 
-    if (this.props.onRecordingStart) this.props.onRecordingStart();
-    */
+    // Set Elapsed Time here...
+    if (this.props.onRecordingStart) this.props.onRecordingStart(timestamp);
   };
 
   endVideo = async () => {
-    // await this.camera.current.stopRecording();
+    await this.camera.current.stopRecording();
     this.setState({is_recording: false});
     this.endVideoTimer();
-
-    // Remove On Push Live..
-    Orientation.unlockAllOrientations();
   };
 
   startVideoTimer = () => {

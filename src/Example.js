@@ -102,7 +102,7 @@ export default function App() {
       saveToCameraRoll={true}
       // Lifecycle Events
       onTakePicture={p => console.log('onTakePicture', p)}
-      onRecordingStart={() => console.log('onRecordingStart')}
+      onRecordingStart={ts => console.log('onRecordingStart', ts)}
       onRecordingFinished={r => console.log('onRecordingFinished', r)}
       onRecordingError={e => console.log('onRecordingError', e)}
       onOrientationChange={o => console.log('onOrientationChange', o)}
