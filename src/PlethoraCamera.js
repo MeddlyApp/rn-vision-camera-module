@@ -239,6 +239,9 @@ export default class PlethoraCamera extends Component {
         // ...
         // ...
 
+        // End Timestamp
+        const timestampEnd = new Date().getTime();
+
         // Rename File
         const nameConvention = config.nameConvention
           ? config.nameConvention
@@ -262,6 +265,7 @@ export default class PlethoraCamera extends Component {
         const payload = {
           data: video.path,
           timestamp_start: timestamp,
+          timestamp_end: timestampEnd,
         };
 
         Orientation.unlockAllOrientations();
