@@ -1,4 +1,4 @@
-// // SET_IS_RECORDING
+// SET_IS_RECORDING
 
 /*/
  * COMPONENT LIFECYCLE
@@ -47,7 +47,6 @@ export default class PlethoraCamera extends Component {
       screen_size: Dimensions.get('window'),
       orientation: 'PORTRAIT',
       // Camera Settings
-      is_recording: false,
       recording_elapsed_time: 0,
       camera_active: false,
       zoom: 0,
@@ -215,84 +214,86 @@ export default class PlethoraCamera extends Component {
     if (toggleFlash) toggleFlash();
   };
 
-  updateTimer = () => {
-    const {recording_elapsed_time} = this.state;
-    // Update time...
-    this.setState({recording_elapsed_time: 10});
-  };
-
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
   startVideo = async () => {
-    const {saveToCameraRoll, cameraState, config} = this.props;
-    const {flash, frontCamera} = cameraState;
-    await this.lockOrientation();
+    const {saveToCameraRoll, cameraState, config, stateActions} = this.props;
+    const {flash, frontCamera, isRecording} = cameraState;
+    const {startRecoring, stopRecording} = stateActions;
 
-    // const timestampStart = new Date().getTime();
+    if (startRecoring && stopRecording) {
+      await this.lockOrientation();
+      await this.camera.current.startRecording({
+        flash: frontCamera ? 'off' : flash,
+        fileType: 'mp4',
+        onRecordingFinished: async video => {
+          // Write additional metadata here...
+          // ...
+          // ...
+          // ...
 
-    await this.camera.current.startRecording({
-      flash: frontCamera ? 'off' : flash,
-      fileType: 'mp4',
-      onRecordingFinished: async video => {
-        // Write additional metadata here...
-        // ...
-        // ...
-        // ...
+          // End Timestamp
+          const timestampEnd = new Date().getTime();
 
-        // End Timestamp
-        const timestampEnd = new Date().getTime();
+          // Rename File
+          const nameConvention = config.nameConvention
+            ? config.nameConvention
+            : null;
+          const file_name = nameConvention ? `${nameConvention}_TS` : null;
 
-        // Rename File
-        const nameConvention = config.nameConvention
-          ? config.nameConvention
-          : null;
-        const file_name = nameConvention ? `${nameConvention}_TS` : null;
+          const newName = `${file_name}${timestamp}`;
+          const finalFile = await renameFile(video, newName);
+          video.path = finalFile;
 
-        const newName = `${file_name}${timestamp}`;
-        const finalFile = await renameFile(video, newName);
-        video.path = finalFile;
-
-        if (saveToCameraRoll) {
-          if (
-            Platform.OS === 'android' &&
-            !(await this.getCameraRollPermissions())
-          ) {
-            return alert('Camera Roll not permitted');
+          if (saveToCameraRoll) {
+            if (
+              Platform.OS === 'android' &&
+              !(await this.getCameraRollPermissions())
+            ) {
+              return alert('Camera Roll not permitted');
+            }
+            CameraRoll.save(finalFile);
           }
-          CameraRoll.save(finalFile);
-        }
 
-        const payload = {
-          data: video.path,
-          timestamp_start: timestamp,
-          timestamp_end: timestampEnd,
-        };
+          const payload = {
+            data: video.path,
+            timestamp_start: timestamp,
+            timestamp_end: timestampEnd,
+          };
 
-        Orientation.unlockAllOrientations();
+          Orientation.unlockAllOrientations();
 
-        if (this.props.onRecordingFinished) {
-          this.props.onRecordingFinished(payload);
-        }
-      },
-      onRecordingError: error => {
-        if (this.props.onRecordingError) {
-          this.props.onRecordingError(error);
-        } else console.error('Recording Error', error);
-      },
-    });
+          if (this.props.onRecordingFinished) {
+            this.props.onRecordingFinished(payload);
+          }
+        },
+        onRecordingError: error => {
+          if (this.props.onRecordingError) {
+            this.props.onRecordingError(error);
+          } else console.error('Recording Error', error);
+        },
+      });
 
-    const timestamp = new Date().getTime();
-    this.setState({is_recording: true});
-    this.startVideoTimer();
+      const timestamp = new Date().getTime();
+      startRecoring();
+      this.startVideoTimer();
 
-    // Set Elapsed Time here...
-    if (this.props.onRecordingStart) this.props.onRecordingStart(timestamp);
+      // Set Elapsed Time here...
+      if (this.props.onRecordingStart) this.props.onRecordingStart(timestamp);
+    } else if (!startRecoring && stopRecording) {
+      return alert('Missing prop: startRecoring()');
+    } else if (startRecoring && !stopRecording) {
+      return alert('Missing prop: endVideo()');
+    } else return;
   };
 
   endVideo = async () => {
-    await this.camera.current.stopRecording();
-    this.setState({is_recording: false});
-    this.endVideoTimer();
+    const {stopRecording} = this.props.stateActions;
+    if (stopRecording) {
+      await this.camera.current.stopRecording();
+      stopRecording();
+      this.endVideoTimer();
+    } else alert('Please add endVideo() prop');
   };
 
   startVideoTimer = () => {
@@ -311,7 +312,7 @@ export default class PlethoraCamera extends Component {
 
   takePicture = async () => {
     const {saveToCameraRoll, cameraState, config} = this.props;
-    const {flash, frontCamera} = cameraState;
+    const {flash, frontCamera, isRecording} = cameraState;
 
     this.setState({showTakePicIndicator: true});
     const photo = await this.camera.current.takePhoto({
@@ -344,13 +345,12 @@ export default class PlethoraCamera extends Component {
 
   render() {
     const {config, children, cameraState} = this.props;
-    const {isVideo, frontCamera} = cameraState;
+    const {isVideo, frontCamera, isRecording} = cameraState;
     const {
       has_camera_permission,
       has_microphone_permission,
       screen_size,
       camera_active,
-      is_recording,
       zoom,
       showTakePicIndicator,
     } = this.state;
@@ -415,7 +415,7 @@ export default class PlethoraCamera extends Component {
                         children,
                         videoControls: (
                           <VideoControls
-                            is_recording={is_recording}
+                            isRecording={isRecording}
                             startVideo={this.startVideo}
                             endVideo={this.endVideo}
                             toggleCamera={this.toggleCamera}
@@ -451,7 +451,7 @@ export default class PlethoraCamera extends Component {
                         children,
                         videoControls: (
                           <VideoControls
-                            is_recording={is_recording}
+                            isRecording={isRecording}
                             startVideo={this.startVideo}
                             endVideo={this.endVideo}
                             toggleCamera={this.toggleCamera}

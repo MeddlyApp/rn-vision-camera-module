@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function VideoControls(props) {
-  const {icons, cameraState, is_recording, screenSize} = props;
+  const {icons, cameraState, isRecording, screenSize} = props;
   const {frontCamera} = cameraState;
 
   let startRecordingIcon,
@@ -38,17 +38,15 @@ export default function VideoControls(props) {
     <>
       <View style={is_vertical ? vertical_styles : horizontal_styles}>
         {/* cameraSecondary.showWhileRecording */}
-        {!is_recording || cameraSecondary.showWhileRecording ? (
-          <>
-            {cameraSecondary && cameraSecondary.component
-              ? cameraSecondary.component
-              : null}
-          </>
-        ) : null}
+        {!isRecording || cameraSecondary.showWhileRecording
+          ? cameraSecondary && cameraSecondary.component
+            ? cameraSecondary.component
+            : null
+          : null}
       </View>
 
       <View style={is_vertical ? vertical_styles : horizontal_styles}>
-        {!is_recording ? (
+        {!isRecording ? (
           <TouchableOpacity
             onPress={props.startVideo}
             style={
@@ -76,34 +74,32 @@ export default function VideoControls(props) {
       </View>
 
       <View style={is_vertical ? vertical_styles : horizontal_styles}>
-        {!is_recording ? (
-          <>
-            {cameraView === 'Front' ? (
-              <TouchableOpacity
-                onPress={props.toggleCamera}
-                style={styles.camera_action_btn}>
-                {viewportIcon && viewportIcon.frontCamera ? (
-                  viewportIcon.frontCamera
-                ) : (
-                  <View>
-                    <Text style={styles.txt_white}>Front</Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                onPress={props.toggleCamera}
-                style={styles.camera_action_btn}>
-                {viewportIcon && viewportIcon.backCamera ? (
-                  viewportIcon.backCamera
-                ) : (
-                  <View>
-                    <Text style={styles.txt_white}>Back</Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-            )}
-          </>
+        {!isRecording ? (
+          cameraView === 'Front' ? (
+            <TouchableOpacity
+              onPress={props.toggleCamera}
+              style={styles.camera_action_btn}>
+              {viewportIcon && viewportIcon.frontCamera ? (
+                viewportIcon.frontCamera
+              ) : (
+                <View>
+                  <Text style={styles.txt_white}>Front</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={props.toggleCamera}
+              style={styles.camera_action_btn}>
+              {viewportIcon && viewportIcon.backCamera ? (
+                viewportIcon.backCamera
+              ) : (
+                <View>
+                  <Text style={styles.txt_white}>Back</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          )
         ) : null}
       </View>
     </>

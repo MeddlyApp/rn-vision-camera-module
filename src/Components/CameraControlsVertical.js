@@ -6,11 +6,9 @@ import formatElapsedTime from '../../utilities/FormatElapsedTime';
 
 export default function CameraControlsVertical(props) {
   let {children, state, cameraState} = props;
-
-  const {flash, isVideo, frontCamera} = cameraState;
-
+  const {flash, isVideo, frontCamera, isRecording} = cameraState;
   const {cameraTop, cameraMiddle, cameraBottom, icons} = children.children;
-  const {screen_size, is_recording, recording_elapsed_time} = state;
+  const {screen_size, recording_elapsed_time} = state;
 
   const camera_controls_container_styles = {
     height: 60,
@@ -18,7 +16,6 @@ export default function CameraControlsVertical(props) {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'rgba(0, 255, 0, 0.15)',
   };
   const bottom_controls_container_styles = {
     height: 60,
@@ -26,7 +23,6 @@ export default function CameraControlsVertical(props) {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'rgba(255, 0, 255, 0.15)',
   };
   const vertical_content_container = {
     height: screen_size.height,
@@ -42,22 +38,22 @@ export default function CameraControlsVertical(props) {
   return (
     <View style={vertical_content_container}>
       <View style={styles.vertical_row_select_event}>
-        {!is_recording || cameraTop.showWhileRecording ? (
-          <>{cameraTop && cameraTop.component ? cameraTop.component : null}</>
-        ) : null}
+        {!isRecording || cameraTop.showWhileRecording
+          ? cameraTop && cameraTop.component
+            ? cameraTop.component
+            : null
+          : null}
       </View>
       <View style={styles.vertical_gesture_controls}>
-        {!is_recording || cameraMiddle.showWhileRecording ? (
-          <>
-            {cameraMiddle && cameraMiddle.component
-              ? cameraMiddle.component
-              : null}
-          </>
-        ) : null}
+        {!isRecording || cameraMiddle.showWhileRecording
+          ? cameraMiddle && cameraMiddle.component
+            ? cameraMiddle.component
+            : null
+          : null}
       </View>
 
       <View style={camera_controls_container_styles}>
-        {!is_recording ? (
+        {!isRecording ? (
           <CameraSettings
             screen_size={screen_size}
             frontCamera={frontCamera}
@@ -81,13 +77,11 @@ export default function CameraControlsVertical(props) {
 
       <View style={bottom_controls_container_styles}>
         <View style={styles.camera_bottom_container}>
-          {!is_recording || cameraBottom.showWhileRecording ? (
-            <>
-              {cameraBottom && cameraBottom.component
-                ? cameraBottom.component
-                : null}
-            </>
-          ) : null}
+          {!isRecording || cameraBottom.showWhileRecording
+            ? cameraBottom && cameraBottom.component
+              ? cameraBottom.component
+              : null
+            : null}
         </View>
       </View>
 

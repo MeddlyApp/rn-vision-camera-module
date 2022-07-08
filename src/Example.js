@@ -20,11 +20,15 @@ export default function App() {
     }
   };
 
-  const cameraState = {isVideo, frontCamera, flash};
+  const [isRecording, setIsRecording] = useState(false); // New
+  const cameraState = {isVideo, frontCamera, flash, isRecording}; // New cameraState.isRecording
+
   const stateActions = {
     toggleFlash: toggleFlash,
     toggleFrontCamera: () => setFrontCamera(!frontCamera),
     setIsVideo: () => setIsVideo(!isVideo),
+    startRecoring: () => setIsRecording(true), // New
+    stopRecording: () => setIsRecording(false), // New
   };
 
   /*/ Config takes all arguments from Vision Camera
@@ -102,9 +106,18 @@ export default function App() {
       saveToCameraRoll={true}
       // Lifecycle Events
       onTakePicture={p => console.log('onTakePicture', p)}
-      onRecordingStart={ts => console.log('onRecordingStart', ts)}
-      onRecordingFinished={r => console.log('onRecordingFinished', r)}
-      onRecordingError={e => console.log('onRecordingError', e)}
+      onRecordingStart={ts => {
+        console.log('onRecordingStart', ts);
+        setIsRecording(true);
+      }}
+      onRecordingFinished={r => {
+        console.log('onRecordingFinished', r);
+        setIsRecording(false);
+      }}
+      onRecordingError={e => {
+        console.log('onRecordingError', e);
+        setIsRecording(false);
+      }}
       onOrientationChange={o => console.log('onOrientationChange', o)}
       // Custom Gesture Controls
       onTapFocus={t => console.log('onTapFocus', t)}

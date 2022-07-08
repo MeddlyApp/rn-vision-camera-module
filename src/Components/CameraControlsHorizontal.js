@@ -6,20 +6,17 @@ import formatElapsedTime from '../../utilities/FormatElapsedTime';
 
 export default function CameraControlsHorizontal(props) {
   const {children, state, cameraState} = props;
-  const {flash, isVideo, frontCamera} = cameraState;
-  const {screen_size, orientation, is_recording, recording_elapsed_time} =
-    state;
-
+  const {flash, isVideo, frontCamera, isRecording} = cameraState;
+  const {screen_size, orientation, recording_elapsed_time} = state;
   const {cameraTop, cameraMiddle, cameraBottom, icons} = children.children;
-
   const landscape_right = orientation === 'LANDSCAPE-RIGHT';
+
   const camera_controls_container_styles = {
     width: 60,
     height: screen_size.height,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'rgba(0, 255, 0, 0.15)',
   };
   const bottom_controls_container_styles = {
     width: 60,
@@ -27,7 +24,6 @@ export default function CameraControlsHorizontal(props) {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'rgba(255, 0, 255, 0.15)',
   };
   let horizontal_content_container = {
     height: screen_size.height,
@@ -66,23 +62,23 @@ export default function CameraControlsHorizontal(props) {
       <View style={topVoid} />
 
       <View style={styles.horizontal_row_select_event}>
-        {!is_recording || cameraTop.showWhileRecording ? (
-          <>{cameraTop && cameraTop.component ? cameraTop.component : null}</>
-        ) : null}
+        {!isRecording || cameraTop.showWhileRecording
+          ? cameraTop && cameraTop.component
+            ? cameraTop.component
+            : null
+          : null}
       </View>
 
       <View style={styles.horizontal_gesture_controls}>
-        {!is_recording || cameraMiddle.showWhileRecording ? (
-          <>
-            {cameraMiddle && cameraMiddle.component
-              ? cameraMiddle.component
-              : null}
-          </>
-        ) : null}
+        {!isRecording || cameraMiddle.showWhileRecording
+          ? cameraMiddle && cameraMiddle.component
+            ? cameraMiddle.component
+            : null
+          : null}
       </View>
 
       <View style={camera_controls_container_styles}>
-        {!is_recording ? (
+        {!isRecording ? (
           <CameraSettings
             screen_size={screen_size}
             frontCamera={frontCamera}
@@ -106,13 +102,14 @@ export default function CameraControlsHorizontal(props) {
 
       <View style={bottom_controls_container_styles}>
         <View style={styles.camera_bottom_container}>
-          {!is_recording || cameraBottom.showWhileRecording ? (
-            <>
-              {cameraBottom && cameraBottom.component
+          {!isRecording
+            ? cameraBottom && cameraBottom.component
+              ? cameraBottom.component
+              : null
+            : cameraBottom &&
+              (cameraBottom.component && cameraBottom.showWhileRecording
                 ? cameraBottom.component
-                : null}
-            </>
-          ) : null}
+                : null)}
         </View>
       </View>
 

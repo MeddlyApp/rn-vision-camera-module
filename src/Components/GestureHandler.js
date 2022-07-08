@@ -22,7 +22,6 @@ export default function GestureHandler(props) {
     onSwipeDown,
     onSwipeLeft,
     onSwipeRight,
-    // Other
     children,
   } = props;
 

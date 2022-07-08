@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles';
 
 export default function PictureControls(props) {
-  const {icons, cameraState, is_recording, screenSize} = props;
+  const {icons, cameraState, isRecording, screenSize} = props;
   const {frontCamera} = cameraState;
 
   let takePictureIcon,
@@ -35,13 +35,11 @@ export default function PictureControls(props) {
   return (
     <>
       <View style={is_vertical ? vertical_styles : horizontal_styles}>
-        {!is_recording || cameraSecondary.showWhileRecording ? (
-          <>
-            {cameraSecondary && cameraSecondary.component
-              ? cameraSecondary.component
-              : null}
-          </>
-        ) : null}
+        {!isRecording || cameraSecondary.showWhileRecording
+          ? cameraSecondary && cameraSecondary.component
+            ? cameraSecondary.component
+            : null
+          : null}
       </View>
 
       <View style={is_vertical ? vertical_styles : horizontal_styles}>

@@ -43,39 +43,33 @@ export default function CameraSettings(props) {
             style={styles.camera_action_btn}>
             <>
               {flash === 'on' ? (
-                <>
-                  {flashIcons && flashIcons.flashOn ? (
-                    flashIcons.flashOn
-                  ) : (
-                    <View>
-                      <Text style={styles.txt_white}>On</Text>
-                    </View>
-                  )}
-                </>
+                flashIcons && flashIcons.flashOn ? (
+                  flashIcons.flashOn
+                ) : (
+                  <View>
+                    <Text style={styles.txt_white}>On</Text>
+                  </View>
+                )
               ) : null}
 
               {flash === 'off' ? (
-                <>
-                  {flashIcons && flashIcons.flashOff ? (
-                    flashIcons.flashOff
-                  ) : (
-                    <View>
-                      <Text style={styles.txt_white}>Off</Text>
-                    </View>
-                  )}
-                </>
+                flashIcons && flashIcons.flashOff ? (
+                  flashIcons.flashOff
+                ) : (
+                  <View>
+                    <Text style={styles.txt_white}>Off</Text>
+                  </View>
+                )
               ) : null}
 
               {flash === 'auto' ? (
-                <>
-                  {flashIcons && flashIcons.flashAuto ? (
-                    flashIcons.flashAuto
-                  ) : (
-                    <View>
-                      <Text style={styles.txt_white}>Auto</Text>
-                    </View>
-                  )}
-                </>
+                flashIcons && flashIcons.flashAuto ? (
+                  flashIcons.flashAuto
+                ) : (
+                  <View>
+                    <Text style={styles.txt_white}>Auto</Text>
+                  </View>
+                )
               ) : null}
             </>
           </TouchableOpacity>
@@ -88,25 +82,19 @@ export default function CameraSettings(props) {
           onPress={props.toggleVideoOrPicture}
           style={styles.camera_action_btn}>
           {isVideo ? (
-            <>
-              {toggleVideoIcon ? (
-                toggleVideoIcon
-              ) : (
-                <View>
-                  <Text style={styles.txt_white}>Video</Text>
-                </View>
-              )}
-            </>
+            toggleVideoIcon ? (
+              toggleVideoIcon
+            ) : (
+              <View>
+                <Text style={styles.txt_white}>Video</Text>
+              </View>
+            )
+          ) : togglePictureIcon ? (
+            togglePictureIcon
           ) : (
-            <>
-              {togglePictureIcon ? (
-                togglePictureIcon
-              ) : (
-                <View>
-                  <Text style={styles.txt_white}>Picture</Text>
-                </View>
-              )}
-            </>
+            <View>
+              <Text style={styles.txt_white}>Picture</Text>
+            </View>
           )}
         </TouchableOpacity>
       </View>
