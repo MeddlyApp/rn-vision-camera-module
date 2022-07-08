@@ -27,7 +27,7 @@ export default function App() {
     toggleFlash: toggleFlash,
     toggleFrontCamera: () => setFrontCamera(!frontCamera),
     setIsVideo: () => setIsVideo(!isVideo),
-    startRecoring: () => setIsRecording(true), // New
+    startRecording: () => setIsRecording(true), // New
     stopRecording: () => setIsRecording(false), // New
   };
 

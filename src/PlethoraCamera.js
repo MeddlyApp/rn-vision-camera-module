@@ -219,9 +219,9 @@ export default class PlethoraCamera extends Component {
   startVideo = async () => {
     const {saveToCameraRoll, cameraState, config, stateActions} = this.props;
     const {flash, frontCamera, isRecording} = cameraState;
-    const {startRecoring, stopRecording} = stateActions;
+    const {startRecording, stopRecording} = stateActions;
 
-    if (startRecoring && stopRecording) {
+    if (startRecording && stopRecording) {
       await this.lockOrientation();
       await this.camera.current.startRecording({
         flash: frontCamera ? 'off' : flash,
@@ -275,14 +275,14 @@ export default class PlethoraCamera extends Component {
       });
 
       const timestamp = new Date().getTime();
-      startRecoring();
+      startRecording();
       this.startVideoTimer();
 
       // Set Elapsed Time here...
       if (this.props.onRecordingStart) this.props.onRecordingStart(timestamp);
-    } else if (!startRecoring && stopRecording) {
-      return alert('Missing prop: startRecoring()');
-    } else if (startRecoring && !stopRecording) {
+    } else if (!startRecording && stopRecording) {
+      return alert('Missing prop: startRecording()');
+    } else if (startRecording && !stopRecording) {
       return alert('Missing prop: endVideo()');
     } else return;
   };
