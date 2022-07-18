@@ -290,8 +290,8 @@ export default class PlethoraCamera extends Component {
   endVideo = async () => {
     const {stopRecording} = this.props.stateActions;
     if (stopRecording) {
+      await stopRecording();
       await this.camera.current.stopRecording();
-      stopRecording();
       this.endVideoTimer();
     } else alert('Please add endVideo() prop');
   };
