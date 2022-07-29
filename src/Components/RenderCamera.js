@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, Platform} from 'react-native';
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import styles from '../styles';
 
 export default function RenderCamera(props) {
   const {camera, config, camera_active, frontCamera, zoom} = props;
+
   const devices = useCameraDevices();
   const device = frontCamera ? devices.front : devices.back;
 

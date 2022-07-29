@@ -79,7 +79,8 @@ export default class PlethoraCamera extends Component {
       has_microphone_permission &&
       has_camera_roll_permission;
 
-    if (has_permission) this.setState({camera_active: true});
+    const isIos = Platform.OS === 'ios';
+    if (has_permission || isIos) this.setState({camera_active: true});
 
     Orientation.unlockAllOrientations();
     Orientation.addOrientationListener(this.onOrientationDidChange);
