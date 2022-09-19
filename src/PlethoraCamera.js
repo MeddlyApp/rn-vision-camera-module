@@ -1,9 +1,7 @@
-// SET_IS_RECORDING
-
 /*/
  * COMPONENT LIFECYCLE
  * PERMISSIONS
- * GESTURE CONTROLS
+ * ORIENTATION CONTROLS
  * CAMERA ACTIONS
  * VIDEO CAMERA LIFECYCLE
  * PICTURE LIFECYCLE
@@ -17,15 +15,13 @@ import {
   Platform,
   SafeAreaView,
   Linking,
-  View,
   Dimensions,
   StatusBar,
 } from 'react-native';
 import {Camera} from 'react-native-vision-camera';
-import CameraRoll from '@react-native-community/cameraroll';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import Orientation from 'react-native-orientation-locker';
 import styles from './styles';
-import GestureHandler from './Components/GestureHandler';
 import RenderCamera from './Components/RenderCamera';
 import MissingPermissions from './Components/MissingPermissions';
 import CameraControlsHorizontal from './Components/CameraControlsHorizontal';
@@ -48,8 +44,7 @@ export default class PlethoraCamera extends Component {
       orientation: 'PORTRAIT',
       // Camera Settings
       recording_elapsed_time: 0,
-      camera_active: false,
-      zoom: 0,
+      zoomValue: 0,
       video_start_time: null,
       showTakePicIndicator: false,
       // Permissions
@@ -58,29 +53,13 @@ export default class PlethoraCamera extends Component {
       has_camera_roll_permission: false,
     };
 
-    this.camera = React.createRef();
-    this.pinchRef = React.createRef();
-    this.doubleTapRef = React.createRef();
+    this.cameraRef = React.createRef();
   }
 
-  /******************** COMPONENT LIFECYCLE ********************/
+  // ******************** COMPONENT LIFECYCLE ******************** //
 
   componentDidMount = async () => {
     await this.checkPermissions();
-
-    const {
-      has_camera_permission,
-      has_microphone_permission,
-      has_camera_roll_permission,
-    } = this.state;
-
-    const has_permission =
-      has_camera_permission &&
-      has_microphone_permission &&
-      has_camera_roll_permission;
-
-    const isIos = Platform.OS === 'ios';
-    if (has_permission || isIos) this.setState({camera_active: true});
 
     Orientation.unlockAllOrientations();
     Orientation.addOrientationListener(this.onOrientationDidChange);
@@ -88,10 +67,9 @@ export default class PlethoraCamera extends Component {
 
   componentWillUnmount() {
     Orientation.removeOrientationListener(this.onOrientationDidChange);
-    this.setState({camera_active: false});
   }
 
-  /******************** PERMISSIONS ********************/
+  // ******************** PERMISSIONS ******************** //
 
   checkPermissions = async () => {
     const has_cam_roll = await this.getCameraRollPermissions();
@@ -145,7 +123,7 @@ export default class PlethoraCamera extends Component {
   };
   openSettings = async () => await Linking.openSettings();
 
-  /******************** GESTURE CONTROLS ********************/
+  // ******************** ORIENTATION CONTROLS ******************** //
 
   onOrientationDidChange = orientation => {
     this.setState({orientation});
@@ -173,33 +151,7 @@ export default class PlethoraCamera extends Component {
     });
   };
 
-  tapToFocus = async ({nativeEvent}) => {
-    const {camera} = this;
-    if (camera && camera.current) {
-      if (this.props.onTapFocus) this.props.onTapFocus(nativeEvent);
-      return await this.camera.current
-        .focus({x: nativeEvent.absoluteX, y: nativeEvent.absoluteY})
-        .catch(e => null);
-    }
-  };
-
-  onPinchStart = () => (this._prevPinch = 1);
-  onPinchEnd = () => (this._prevPinch = 1);
-  onPinchProgress = p => {
-    const {zoom} = this.state;
-    const zoom_value = 0.01;
-    const p2 = p - this._prevPinch;
-
-    if (p2 > 0 && p2 > zoom_value) {
-      this._prevPinch = p;
-      this.setState({zoom: Math.min(zoom + zoom_value, 1)}, () => {});
-    } else if (p2 < 0 && p2 < -zoom_value) {
-      this._prevPinch = p;
-      this.setState({zoom: Math.max(zoom - zoom_value * 1.5, 0)}, () => {});
-    }
-  };
-
-  /******************** CAMERA ACTIONS ********************/
+  // ******************** CAMERA ACTIONS ******************** //
 
   toggleVideoOrPicture = () => {
     const {setIsVideo} = this.props.stateActions;
@@ -208,7 +160,7 @@ export default class PlethoraCamera extends Component {
   toggleCamera = () => {
     const {toggleFrontCamera} = this.props.stateActions;
     if (toggleFrontCamera) toggleFrontCamera();
-    this.setState({zoom: 0});
+    this.setState({zoomValue: 0});
   };
   toggleFlash = () => {
     const {toggleFlash} = this.props.stateActions;
@@ -224,14 +176,11 @@ export default class PlethoraCamera extends Component {
 
     if (startRecording && stopRecording) {
       await this.lockOrientation();
-      await this.camera.current.startRecording({
+      await this.cameraRef.current.startRecording({
         flash: frontCamera ? 'off' : flash,
         fileType: 'mp4',
         onRecordingFinished: async video => {
           // Write additional metadata here...
-          // ...
-          // ...
-          // ...
 
           // End Timestamp
           const timestampEnd = new Date().getTime();
@@ -258,6 +207,7 @@ export default class PlethoraCamera extends Component {
 
           const payload = {
             data: video.path,
+            duration: video.duration,
             timestamp_start: timestamp,
             timestamp_end: timestampEnd,
           };
@@ -292,7 +242,7 @@ export default class PlethoraCamera extends Component {
     const {stopRecording} = this.props.stateActions;
     if (stopRecording) {
       await stopRecording();
-      await this.camera.current.stopRecording();
+      await this.cameraRef.current.stopRecording();
       this.endVideoTimer();
     } else alert('Please add endVideo() prop');
   };
@@ -316,7 +266,7 @@ export default class PlethoraCamera extends Component {
     const {flash, frontCamera, isRecording} = cameraState;
 
     this.setState({showTakePicIndicator: true});
-    const photo = await this.camera.current.takePhoto({
+    const photo = await this.cameraRef.current.takePhoto({
       flash: frontCamera ? 'off' : flash,
       // enableAutoRedEyeReduction: true,
       // enableAutoStabilization: true,
@@ -336,7 +286,6 @@ export default class PlethoraCamera extends Component {
     photo.path = finalFile;
 
     // Write additional metadata here...
-    // console.log('FINAL', finalFile);
 
     if (saveToCameraRoll) CameraRoll.save(finalFile);
     if (this.props.onTakePicture) this.props.onTakePicture(photo);
@@ -346,13 +295,12 @@ export default class PlethoraCamera extends Component {
 
   render() {
     const {config, children, cameraState} = this.props;
-    const {isVideo, frontCamera, isRecording} = cameraState;
+    const {isVideo, frontCamera, flash, isRecording} = cameraState;
     const {
       has_camera_permission,
       has_microphone_permission,
       screen_size,
-      camera_active,
-      zoom,
+      zoomValue,
       showTakePicIndicator,
     } = this.state;
     const has_permissions = has_camera_permission && has_microphone_permission;
@@ -378,106 +326,96 @@ export default class PlethoraCamera extends Component {
         <StatusBar hidden={true} />
 
         <RenderCamera
-          camera={this.camera}
-          camera_active={camera_active}
+          cameraRef={this.cameraRef}
           frontCamera={frontCamera}
-          zoom={zoom}
+          zoomValue={zoomValue}
+          setZoomValue={x => this.setState(x)}
           config={config}
+          showTakePicIndicator={showTakePicIndicator}
+          onDoubleTap={
+            this.props.onDoubleTap ? this.props.onDoubleTap : () => null
+          }
+          swipeDistance={this.props.swipeDistance}
+          onSwipeUp={this.props.onSwipeUp}
+          onSwipeDown={this.props.onSwipeDown}
+          onSwipeLeft={this.props.onSwipeLeft}
+          onSwipeRight={this.props.onSwipeRight}
         />
 
         {this.props.showCameraControls ? (
-          <GestureHandler
-            showTakePicIndicator={showTakePicIndicator}
-            pinchRef={this.pinchRef}
-            doubleTapRef={this.doubleTapRef}
-            onSingleTap={this.tapToFocus}
-            onDoubleTap={
-              this.props.onDoubleTap ? this.props.onDoubleTap : () => null
-            }
-            onPinchProgress={this.onPinchProgress}
-            onPinchStart={this.onPinchStart}
-            onPinchEnd={this.onPinchEnd}
-            swipeDistance={this.props.swipeDistance}
-            onSwipeUp={this.props.onSwipeUp}
-            onSwipeDown={this.props.onSwipeDown}
-            onSwipeLeft={this.props.onSwipeLeft}
-            onSwipeRight={this.props.onSwipeRight}>
-            <View>
-              {is_vertical ? (
-                <CameraControlsVertical
-                  state={this.state}
-                  cameraState={cameraState}
-                  children={children}
-                  toggleCamera={this.toggleCamera}
-                  toggleFlash={this.toggleFlash}
-                  toggleVideoOrPicture={this.toggleVideoOrPicture}>
-                  {isVideo
-                    ? {
-                        children,
-                        videoControls: (
-                          <VideoControls
-                            isRecording={isRecording}
-                            startVideo={this.startVideo}
-                            endVideo={this.endVideo}
-                            toggleCamera={this.toggleCamera}
-                            cameraState={cameraState}
-                            icons={children.icons ? children.icons : null}
-                            screenSize={screen_size}
-                          />
-                        ),
-                      }
-                    : {
-                        children,
-                        pictureControls: (
-                          <PictureControls
-                            takePicture={this.takePicture}
-                            toggleCamera={this.toggleCamera}
-                            cameraState={cameraState}
-                            icons={children.icons ? children.icons : null}
-                            screenSize={screen_size}
-                          />
-                        ),
-                      }}
-                </CameraControlsVertical>
-              ) : (
-                <CameraControlsHorizontal
-                  state={this.state}
-                  cameraState={cameraState}
-                  children={children}
-                  toggleCamera={this.toggleCamera}
-                  toggleFlash={this.toggleFlash}
-                  toggleVideoOrPicture={this.toggleVideoOrPicture}>
-                  {isVideo
-                    ? {
-                        children,
-                        videoControls: (
-                          <VideoControls
-                            isRecording={isRecording}
-                            startVideo={this.startVideo}
-                            endVideo={this.endVideo}
-                            toggleCamera={this.toggleCamera}
-                            cameraState={cameraState}
-                            icons={children.icons ? children.icons : null}
-                            screenSize={screen_size}
-                          />
-                        ),
-                      }
-                    : {
-                        children,
-                        pictureControls: (
-                          <PictureControls
-                            takePicture={this.takePicture}
-                            toggleCamera={this.toggleCamera}
-                            cameraState={cameraState}
-                            icons={children.icons ? children.icons : null}
-                            screenSize={screen_size}
-                          />
-                        ),
-                      }}
-                </CameraControlsHorizontal>
-              )}
-            </View>
-          </GestureHandler>
+          is_vertical ? (
+            <CameraControlsVertical
+              state={this.state}
+              cameraState={cameraState}
+              children={children}
+              toggleCamera={this.toggleCamera}
+              toggleFlash={this.toggleFlash}
+              toggleVideoOrPicture={this.toggleVideoOrPicture}>
+              {isVideo
+                ? {
+                    children,
+                    videoControls: (
+                      <VideoControls
+                        isRecording={isRecording}
+                        startVideo={this.startVideo}
+                        endVideo={this.endVideo}
+                        toggleCamera={this.toggleCamera}
+                        cameraState={cameraState}
+                        icons={children.icons ? children.icons : null}
+                        screenSize={screen_size}
+                      />
+                    ),
+                  }
+                : {
+                    children,
+                    pictureControls: (
+                      <PictureControls
+                        takePicture={this.takePicture}
+                        toggleCamera={this.toggleCamera}
+                        cameraState={cameraState}
+                        icons={children.icons ? children.icons : null}
+                        screenSize={screen_size}
+                      />
+                    ),
+                  }}
+            </CameraControlsVertical>
+          ) : (
+            <CameraControlsHorizontal
+              state={this.state}
+              cameraState={cameraState}
+              children={children}
+              toggleCamera={this.toggleCamera}
+              toggleFlash={this.toggleFlash}
+              toggleVideoOrPicture={this.toggleVideoOrPicture}>
+              {isVideo
+                ? {
+                    children,
+                    videoControls: (
+                      <VideoControls
+                        isRecording={isRecording}
+                        startVideo={this.startVideo}
+                        endVideo={this.endVideo}
+                        toggleCamera={this.toggleCamera}
+                        cameraState={cameraState}
+                        icons={children.icons ? children.icons : null}
+                        screenSize={screen_size}
+                      />
+                    ),
+                  }
+                : {
+                    children,
+                    pictureControls: (
+                      <PictureControls
+                        takePicture={this.takePicture}
+                        toggleCamera={this.toggleCamera}
+                        cameraState={cameraState}
+                        icons={children.icons ? children.icons : null}
+                        screenSize={screen_size}
+                      />
+                    ),
+                  }}
+            </CameraControlsHorizontal>
+          )
         ) : null}
       </SafeAreaView>
     );

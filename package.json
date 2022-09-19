@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "peerDependencies": {
-    "@react-native-community/cameraroll": "*",
+    "@react-native-camera-roll/camera-roll": "*",
     "fbjs": "*",
     "react": "*",
     "react-native": "*",
@@ -23,7 +23,7 @@
   "devDependencies": {
     "@babel/core": "^7.18.6",
     "@babel/runtime": "^7.18.6",
-    "@react-native-community/cameraroll": "^4.1.2",
+    "@react-native-camera-roll/camera-roll": "^5.0.2",
     "@react-native-community/eslint-config": "^3.0.3",
     "babel-jest": "^28.1.2",
     "eslint": "^8.19.0",

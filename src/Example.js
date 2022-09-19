@@ -52,7 +52,7 @@ export default function App() {
     // hdr: true,
     // supportsVideoHDR: true,
     // supportsPhotoHDR: true,
-    fps: 60,
+    fps: 30,
     // Name
     nameConvention: `Plethora`,
   };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {View} from 'react-native';
 import {
   GestureHandlerRootView,
@@ -10,20 +10,22 @@ import styles from '../styles';
 
 export default function GestureHandler(props) {
   const {
+    isActive,
     showTakePicIndicator,
-    pinchRef,
-    doubleTapRef,
     onSingleTap,
     onDoubleTap,
     onPinchStart,
-    onPinchProgress,
     onPinchEnd,
+    onPinchProgress,
     onSwipeUp,
     onSwipeDown,
     onSwipeLeft,
     onSwipeRight,
     children,
   } = props;
+
+  const pinchRef = useRef();
+  const doubleTapRef = useRef();
 
   const onGesturePinch = ({nativeEvent}) => {
     onPinchProgress(nativeEvent.scale);
@@ -64,20 +66,28 @@ export default function GestureHandler(props) {
     }
   };
 
+  const msDelay = 175;
+
   return (
     <GestureHandlerRootView>
       <PinchGestureHandler
         ref={pinchRef}
+        // onGestureEvent={onPinchGesture}
         onGestureEvent={onGesturePinch}
+        enabled={isActive}
         onHandlerStateChange={onPinchHandlerStateChange}
-        maxDelayMs={175}>
-        <TapGestureHandler waitFor={doubleTapRef} onActivated={onSingleTap}>
+        maxDelayMs={msDelay}>
+        <TapGestureHandler
+          waitFor={doubleTapRef}
+          onActivated={onSingleTap}
+          enabled={isActive}>
           <TapGestureHandler
             ref={doubleTapRef}
             onActivated={({nativeEvent}) => onDoubleTap(nativeEvent)}
             waitFor={pinchRef}
             numberOfTaps={2}
-            maxDelayMs={175}>
+            maxDelayMs={msDelay}
+            enabled={isActive}>
             <View
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}

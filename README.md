@@ -9,6 +9,7 @@
   - [react-native-orientation-locker](https://github.com/wonday/react-native-orientation-locker)
   - [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
   - [react-native-vision-camera](https://github.com/mrousavy/react-native-vision-camera)
+  - [ffmpeg-kit-react-native](https://github.com/tanersener/ffmpeg-kit/tree/main/react-native)
 
 # Overview
 
@@ -115,6 +116,11 @@ const custom = {
   {custom}
 </PlethoraCamera>;
 ```
+
+# Notes
+
+- Right now all videos will default to 30 FPS because config is not setup properly
+  - To fix, use example's CameraPage
 
 # Roadmap
 
