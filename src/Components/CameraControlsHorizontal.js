@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, Platform, Text} from 'react-native';
+import {View, Platform} from 'react-native';
 import CameraSettings from './CameraSettings';
 import styles from '../styles';
-import formatElapsedTime from '../../utilities/FormatElapsedTime';
+import RecordingTimer from './RecordingTimer';
 
 export default function CameraControlsHorizontal(props) {
-  const {children, cameraState, screenSize, orientation, recordingElapsedTime} =
-    props;
+  const {children, cameraState, screenSize, orientation} = props;
   const {isVideo, frontCamera, flash, isRecording} = cameraState;
   const {cameraTop, cameraMiddle, cameraBottom, icons} = children.children;
   const orientationLandscapeRight = orientation === 'LANDSCAPE-RIGHT';
@@ -90,9 +89,7 @@ export default function CameraControlsHorizontal(props) {
             icons={icons ? icons : null}
           />
         ) : (
-          <Text style={styles.recordingElapsedTime}>
-            {formatElapsedTime(recordingElapsedTime)}
-          </Text>
+          <RecordingTimer />
         )}
       </View>
 

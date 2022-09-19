@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import CameraSettings from './CameraSettings';
 import styles from '../styles';
-import formatElapsedTime from '../../utilities/FormatElapsedTime';
+import RecordingTimer from './RecordingTimer';
 
 export default function CameraControlsVertical(props) {
-  const {children, cameraState, screenSize, orientation, recordingElapsedTime} =
-    props;
+  const {children, cameraState, screenSize, orientation} = props;
 
   const {isVideo, frontCamera, flash, isRecording} = cameraState;
   const {cameraTop, cameraMiddle, cameraBottom, icons} = children.children;
@@ -66,9 +65,7 @@ export default function CameraControlsVertical(props) {
             icons={icons ? icons : null}
           />
         ) : (
-          <Text style={styles.recordingElapsedTime}>
-            {formatElapsedTime(recordingElapsedTime)}
-          </Text>
+          <RecordingTimer />
         )}
       </View>
 

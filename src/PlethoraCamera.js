@@ -225,7 +225,6 @@ export default function PlethoraCamera(props) {
 
       const timestamp = new Date().getTime();
       startRecording();
-      startVideoTimer();
 
       // Set Elapsed Time here...
       if (onRecordingStart) onRecordingStart(timestamp);
@@ -240,21 +239,8 @@ export default function PlethoraCamera(props) {
     if (stopRecording) {
       await stopRecording();
       await cameraRef.current.stopRecording();
-      endVideoTimer();
     } else alert('Please add endVideo() prop');
   };
-
-  const startVideoTimer = () => {
-    intervalID = setInterval(updateElapsedTime, 1000);
-  };
-
-  const [recordingElapsedTime, setRecordingElapsedTime] = useState(0);
-  const endVideoTimer = () => {
-    clearInterval(intervalID);
-    setRecordingElapsedTime(0);
-  };
-  const updateElapsedTime = () =>
-    setRecordingElapsedTime(recordingElapsedTime + 1);
 
   /******************** PICTURE LIFECYCLE ********************/
 
@@ -328,7 +314,6 @@ export default function PlethoraCamera(props) {
           <CameraControlsVertical
             screenSize={screenSize}
             orientation={orientation}
-            recordingElapsedTime={recordingElapsedTime}
             cameraState={cameraState}
             children={children}
             toggleCamera={toggleCamera}
@@ -366,7 +351,6 @@ export default function PlethoraCamera(props) {
           <CameraControlsHorizontal
             screenSize={screenSize}
             orientation={orientation}
-            recordingElapsedTime={recordingElapsedTime}
             cameraState={cameraState}
             children={children}
             toggleCamera={toggleCamera}
