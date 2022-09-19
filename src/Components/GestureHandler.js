@@ -10,7 +10,6 @@ import styles from '../styles';
 
 export default function GestureHandler(props) {
   const {
-    isActive,
     showTakePicIndicator,
     onSingleTap,
     onDoubleTap,
@@ -72,22 +71,16 @@ export default function GestureHandler(props) {
     <GestureHandlerRootView>
       <PinchGestureHandler
         ref={pinchRef}
-        // onGestureEvent={onPinchGesture}
         onGestureEvent={onGesturePinch}
-        enabled={isActive}
         onHandlerStateChange={onPinchHandlerStateChange}
         maxDelayMs={msDelay}>
-        <TapGestureHandler
-          waitFor={doubleTapRef}
-          onActivated={onSingleTap}
-          enabled={isActive}>
+        <TapGestureHandler waitFor={doubleTapRef} onActivated={onSingleTap}>
           <TapGestureHandler
             ref={doubleTapRef}
             onActivated={({nativeEvent}) => onDoubleTap(nativeEvent)}
             waitFor={pinchRef}
             numberOfTaps={2}
-            maxDelayMs={msDelay}
-            enabled={isActive}>
+            maxDelayMs={msDelay}>
             <View
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}

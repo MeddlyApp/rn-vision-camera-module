@@ -1,17 +1,10 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {sortFormats, useCameraDevices} from 'react-native-vision-camera';
 import {Camera, frameRateIncluded} from 'react-native-vision-camera';
-import Reanimated, {useSharedValue} from 'react-native-reanimated';
-import {useEffect} from 'react';
 import {useIsForeground} from '../hooks/useIsForeground';
 import GestureHandler from './GestureHandler';
 import styles from '../styles';
-
-const ReanimatedCamera = Reanimated.createAnimatedComponent(Camera);
-Reanimated.addWhitelistedNativeProps({
-  zoom: true,
-});
 
 export default function RenderCamera(props) {
   const {cameraRef, frontCamera, zoomValue, setZoomValue, config} = props;
@@ -33,17 +26,16 @@ export default function RenderCamera(props) {
     if (p2 > 0 && p2 > increment) {
       _prevPinch = p;
       const newZoom = Math.min(zoomValue + increment, 1);
-      setZoomValue({zoomValue: newZoom}, () => {});
+      setZoomValue(newZoom);
     } else if (p2 < 0 && p2 < -increment) {
       _prevPinch = p;
       const newZoom = Math.max(zoomValue - increment * 1.5, 0);
-      setZoomValue({zoomValue: newZoom}, () => {});
+      setZoomValue(newZoom);
     }
   };
 
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
-  const isPressingButton = useSharedValue(false);
 
   // check if camera page is active
   // const isFocussed = useIsFocused();
@@ -68,31 +60,25 @@ export default function RenderCamera(props) {
   const fps = useMemo(() => {
     if (!is60Fps) return 30;
 
-    if (enableNightMode && !device.supportsLowLightBoost) {
-      // User has enabled Night Mode, but Night Mode is not natively supported, so we simulate it by lowering the frame rate.
-      return 30;
-    }
+    // User has enabled Night Mode, but Night Mode is not natively supported, so we simulate it by lowering the frame rate.
+    if (enableNightMode && !device.supportsLowLightBoost) return 30;
 
     const supportsHdrAt60Fps = formats.some(
       f =>
         f.supportsVideoHDR &&
         f.frameRateRanges.some(r => frameRateIncluded(r, 60)),
     );
-    if (enableHdr && !supportsHdrAt60Fps) {
-      // User has enabled HDR, but HDR is not supported at 60 FPS.
-      return 30;
-    }
+
+    // User has enabled HDR, but HDR is not supported at 60 FPS.
+    if (enableHdr && !supportsHdrAt60Fps) return 30;
 
     const supports60Fps = formats.some(f =>
       f.frameRateRanges.some(r => frameRateIncluded(r, 60)),
     );
-    if (!supports60Fps) {
-      // 60 FPS is not supported by any format.
-      return 30;
-    }
-    // If nothing blocks us from using it, we default to 60 FPS.
-    // return 60;
+    // 60 FPS is not supported by any format.
+    if (!supports60Fps) return 30;
 
+    // If nothing blocks us from using it, we default to 60 FPS... return 60;
     // If nothing blocks us from using it, return default setting
     return config && config.fps ? config.fps : 30;
   }, [
@@ -105,6 +91,7 @@ export default function RenderCamera(props) {
     is60Fps,
   ]);
 
+  /*
   // Additional stuff for testing if device supports features...
   const supportsCameraFlipping = useMemo(
     () => devices.back != null && devices.front != null,
@@ -125,6 +112,7 @@ export default function RenderCamera(props) {
   const canToggleNightMode = enableNightMode
     ? true // it's enabled so you have to be able to turn it off again
     : ((device && device?.supportsLowLightBoost) ?? false) || fps > 30; // either we have native support, or we can lower the FPS
+  */
 
   const format = useMemo(() => {
     let result = formats;
@@ -163,11 +151,12 @@ export default function RenderCamera(props) {
   }
   */
 
+  const zoom = zoomValue * 10; // multiplied by 10 because 1 is minimum
+
   return (
     <View style={StyleSheet.absoluteFill}>
       {device != null && (
         <GestureHandler
-          isActive={isActive}
           showTakePicIndicator={props.showTakePicIndicator}
           onSingleTap={tapToFocus}
           onDoubleTap={props.onDoubleTap}
@@ -179,7 +168,7 @@ export default function RenderCamera(props) {
           onSwipeDown={props.onSwipeDown}
           onSwipeLeft={props.onSwipeLeft}
           onSwipeRight={props.onSwipeRight}>
-          <ReanimatedCamera // Camera
+          <Camera
             ref={cameraRef}
             style={StyleSheet.absoluteFill}
             device={device}
@@ -191,11 +180,11 @@ export default function RenderCamera(props) {
             onInitialized={onInitialized}
             onError={onError}
             enableZoomGesture={false}
-            zoom={zoomValue * 10} // NOTE: multiplied by 10 because 1 is minimum
+            zoom={zoom}
             photo={config.photo}
             video={config.video}
             audio={hasMicrophonePermission}
-            orientation="portrait"
+            // orientation="portrait"
           />
         </GestureHandler>
       )}

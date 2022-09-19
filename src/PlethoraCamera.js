@@ -22,12 +22,12 @@ import {Camera} from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import Orientation from 'react-native-orientation-locker';
 import styles from './styles';
-import RenderCamera from './Components/RenderCamera';
-import MissingPermissions from './Components/MissingPermissions';
-import CameraControlsHorizontal from './Components/CameraControlsHorizontal';
-import CameraControlsVertical from './Components/CameraControlsVertical';
-import VideoControls from './Components/VideoControls';
-import PictureControls from './Components/PictureControls';
+import RenderCamera from './components/RenderCamera';
+import MissingPermissions from './components/MissingPermissions';
+import CameraControlsHorizontal from './components/CameraControlsHorizontal';
+import CameraControlsVertical from './components/CameraControlsVertical';
+import VideoControls from './components/VideoControls';
+import PictureControls from './components/PictureControls';
 import renameFile from '../utilities/RenameFile';
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
