@@ -14,7 +14,7 @@ Reanimated.addWhitelistedNativeProps({
 });
 
 export default function RenderCamera(props) {
-  const {cameraRef, frontCamera, zoomValue, setZoomValue} = props;
+  const {cameraRef, frontCamera, zoomValue, setZoomValue, config} = props;
 
   const tapToFocus = async ({nativeEvent}) => {
     if (cameraRef && cameraRef.current) {
@@ -91,7 +91,10 @@ export default function RenderCamera(props) {
       return 30;
     }
     // If nothing blocks us from using it, we default to 60 FPS.
-    return 60;
+    // return 60;
+
+    // If nothing blocks us from using it, return default setting
+    return config && config.fps ? config.fps : 30;
   }, [
     device && device.supportsLowLightBoost
       ? device.supportsLowLightBoost
@@ -189,8 +192,8 @@ export default function RenderCamera(props) {
             onError={onError}
             enableZoomGesture={false}
             zoom={zoomValue * 10} // NOTE: multiplied by 10 because 1 is minimum
-            photo={true}
-            video={true}
+            photo={config.photo}
+            video={config.video}
             audio={hasMicrophonePermission}
             orientation="portrait"
           />
@@ -205,60 +208,3 @@ export default function RenderCamera(props) {
     </View>
   );
 }
-
-/*
-export function OldCamera(props) {
-  const {camera, config, frontCamera, zoom} = props;
-
-  const devices = useCameraDevices();
-  const device = frontCamera ? devices.front : devices.back;
-
-  const {
-    photo,
-    video,
-    audio,
-    fps,
-    enableHighQualityPhotos,
-    lowLightBoost,
-    videoStabilizationMode,
-    autoFocusSystem,
-  } = config;
-
-  const hghqlphto = enableHighQualityPhotos ? enableHighQualityPhotos : null;
-  const lwLghtBst = lowLightBoost ? lowLightBoost : false;
-  const vidStblMd = videoStabilizationMode ? videoStabilizationMode : null;
-  const autoFcsSys = autoFocusSystem ? autoFocusSystem : null;
-  const framesPerSec = fps ? fps : 25;
-
-  if (device == null) {
-    return (
-      <View style={styles.no_device_container}>
-        <Text style={styles.txt_white}>No Device Found</Text>
-      </View>
-    );
-  } else {
-    return (
-      <Camera
-        // Root
-        ref={camera}
-        device={device}
-        // Custom Config - Required
-        photo={photo}
-        video={video}
-        audio={audio}
-        // Custom Config - Optional
-        enableHighQualityPhotos={hghqlphto}
-        lowLightBoost={lwLghtBst}
-        autoFocusSystem={autoFcsSys}
-        videoStabilizationMode={vidStblMd}
-        fps={framesPerSec} // format is required for this to work - see docs
-        // Lib Decisions
-        zoom={zoom * 10}
-        minZoom={device.minZoom}
-        maxZoom={device.maxZoom}
-        style={StyleSheet.absoluteFill}
-      />
-    );
-  }
-}
-*/

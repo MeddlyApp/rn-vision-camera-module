@@ -43,17 +43,7 @@ export default function App() {
   const config = {
     photo: true, // Required
     video: true, // Required
-    audio: true, // Required
-    // Optional
-    enableHighQualityPhotos: true,
-    lowLightBoost: true,
-    autoFocusSystem: 'contrast-detection',
-    videoStabilizationMode: 'cinematic-extended',
-    // hdr: true,
-    // supportsVideoHDR: true,
-    // supportsPhotoHDR: true,
     fps: 30,
-    // Name
     nameConvention: `Plethora`,
   };
 

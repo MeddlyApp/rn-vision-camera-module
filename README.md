@@ -31,7 +31,6 @@
 - Custom icons, custom top bar, custom middle section, and custom bottom bar
 - Component Example (includes all props)
 - Camera settings: control state and hook into component
-
   - Flash:
   - Viewport:
   - Video / Photo Mode:
@@ -39,29 +38,10 @@
 ```javascript
 // import Camera from '@plethora_co/rn-vision-camera';
 
-/*/ Config takes all arguments from Vision Camera
-   *  https://mrousavy.com/react-native-vision-camera/docs/api/interfaces/CameraProps
-   * 
-   *    Config Requires...
-   *    - photo: boolean
-   *    - video: boolean
-   *    - audio: boolean
-  /*/
-
 const cameraConfig = {
   photo: true, // Required
   video: true, // Required
-  audio: true, // Required
-  // Optional
-  enableHighQualityPhotos: true,
-  lowLightBoost: true,
-  autoFocusSystem: 'contrast-detection',
-  videoStabilizationMode: 'cinematic-extended',
-  // hdr: true,
-  // supportsVideoHDR: true,
-  // supportsPhotoHDR: true,
-  // fps: 60,
-  // Name
+  fps: 60,
   nameConvention: 'Plethora',
 };
 
@@ -94,20 +74,21 @@ const custom = {
 // Render
 <PlethoraCamera
   // Camera Config
-  cameraConfig={cameraConfig}
+  config={config}
   cameraState={cameraState}
   stateActions={stateActions}
   // Pre-Built Actions
+  showCameraControls={true}
   saveToCameraRoll={true}
   // Lifecycle Events
-  onRecordingStart={r => console.log('onRecordingStart', r)}
+  onTakePicture={p => console.log('onTakePicture', p)}
+  onRecordingStart={ts => console.log('onRecordingStart', ts)}
   onRecordingFinished={r => console.log('onRecordingFinished', r)}
   onRecordingError={e => console.log('onRecordingError', e)}
-  onTakePicture={p => console.log('onTakePicture', p)}
   onOrientationChange={o => console.log('onOrientationChange', o)}
   // Custom Gesture Controls
-  onTapFocus={t => alert('onTapFocus', t)}
-  onDoubleTap={t => alert('onDoubleTap', t)}
+  onTapFocus={t => console.log('onTapFocus', t)}
+  onDoubleTap={t => console.log('onDoubleTap', t)}
   swipeDistance={200}
   onSwipeLeft={t => console.log('onSwipeLeft', t)}
   onSwipeRight={t => console.log('onSwipeRight', t)}
@@ -116,11 +97,6 @@ const custom = {
   {custom}
 </PlethoraCamera>;
 ```
-
-# Notes
-
-- Right now all videos will default to 30 FPS because config is not setup properly
-  - To fix, use example's CameraPage
 
 # Roadmap
 
