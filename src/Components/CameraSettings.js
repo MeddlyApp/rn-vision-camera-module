@@ -3,9 +3,9 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import styles from '../styles';
 
 export default function CameraSettings(props) {
-  const {screen_size, frontCamera, flash, isVideo, icons} = props;
+  const {screenSize, frontCamera, flash, isVideo, icons} = props;
   const cameraView = frontCamera ? 'Front' : 'Back';
-  const is_vertical = screen_size.height > screen_size.width;
+  const is_vertical = screenSize.height > screenSize.width;
 
   const base_styles = {
     alignItems: 'center',
@@ -14,12 +14,12 @@ export default function CameraSettings(props) {
   const vertical_styles = {
     ...base_styles,
     height: 50,
-    width: screen_size.width / 2,
+    width: screenSize.width / 2,
   };
   const horizontal_styles = {
     ...base_styles,
     width: 50,
-    height: screen_size.height / 2,
+    height: screenSize.height / 2,
   };
 
   const toggle_btn_style = is_vertical ? vertical_styles : horizontal_styles;

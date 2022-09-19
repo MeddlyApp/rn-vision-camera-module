@@ -5,28 +5,29 @@ import styles from '../styles';
 import formatElapsedTime from '../../utilities/FormatElapsedTime';
 
 export default function CameraControlsVertical(props) {
-  let {children, state, cameraState} = props;
-  const {flash, isVideo, frontCamera, isRecording} = cameraState;
+  const {children, cameraState, screenSize, orientation, recordingElapsedTime} =
+    props;
+
+  const {isVideo, frontCamera, flash, isRecording} = cameraState;
   const {cameraTop, cameraMiddle, cameraBottom, icons} = children.children;
-  const {screen_size, recording_elapsed_time} = state;
 
   const camera_controls_container_styles = {
     height: 60,
-    width: screen_size.width,
+    width: screenSize.width,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   };
   const bottom_controls_container_styles = {
     height: 60,
-    width: screen_size.width,
+    width: screenSize.width,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   };
   const vertical_content_container = {
-    height: screen_size.height,
-    width: screen_size.width,
+    height: screenSize.height,
+    width: screenSize.width,
     alignItems: 'center',
     justifyContent: 'center',
   };
@@ -55,7 +56,7 @@ export default function CameraControlsVertical(props) {
       <View style={camera_controls_container_styles}>
         {!isRecording ? (
           <CameraSettings
-            screen_size={screen_size}
+            screenSize={screenSize}
             frontCamera={frontCamera}
             flash={flash}
             isVideo={isVideo}
@@ -65,8 +66,8 @@ export default function CameraControlsVertical(props) {
             icons={icons ? icons : null}
           />
         ) : (
-          <Text style={styles.recording_elapsed_time}>
-            {formatElapsedTime(recording_elapsed_time)}
+          <Text style={styles.recordingElapsedTime}>
+            {formatElapsedTime(recordingElapsedTime)}
           </Text>
         )}
       </View>

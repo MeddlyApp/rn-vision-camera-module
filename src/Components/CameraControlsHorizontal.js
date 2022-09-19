@@ -5,33 +5,33 @@ import styles from '../styles';
 import formatElapsedTime from '../../utilities/FormatElapsedTime';
 
 export default function CameraControlsHorizontal(props) {
-  const {children, state, cameraState} = props;
-  const {flash, isVideo, frontCamera, isRecording} = cameraState;
-  const {screen_size, orientation, recording_elapsed_time} = state;
+  const {children, cameraState, screenSize, orientation, recordingElapsedTime} =
+    props;
+  const {isVideo, frontCamera, flash, isRecording} = cameraState;
   const {cameraTop, cameraMiddle, cameraBottom, icons} = children.children;
-  const landscape_right = orientation === 'LANDSCAPE-RIGHT';
+  const orientationLandscapeRight = orientation === 'LANDSCAPE-RIGHT';
 
   const camera_controls_container_styles = {
     width: 60,
-    height: screen_size.height,
+    height: screenSize.height,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   };
   const bottom_controls_container_styles = {
     width: 60,
-    height: screen_size.height,
+    height: screenSize.height,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   };
   let horizontal_content_container = {
-    height: screen_size.height,
-    width: screen_size.width,
+    height: screenSize.height,
+    width: screenSize.width,
     alignItems: 'center',
     justifyContent: 'center',
   };
-  if (landscape_right) {
+  if (orientationLandscapeRight) {
     horizontal_content_container = {
       ...horizontal_content_container,
       flexDirection: 'row-reverse',
@@ -44,12 +44,12 @@ export default function CameraControlsHorizontal(props) {
   }
 
   const topVoid =
-    landscape_right && Platform.OS === 'ios'
+    orientationLandscapeRight && Platform.OS === 'ios'
       ? styles.horizontal_top_void_right
       : styles.horizontal_top_void_left;
 
   const bottomVoid =
-    landscape_right && Platform.OS === 'ios'
+    orientationLandscapeRight && Platform.OS === 'ios'
       ? styles.horizontal_bottom_void_right
       : styles.horizontal_bottom_void_left;
 
@@ -80,7 +80,7 @@ export default function CameraControlsHorizontal(props) {
       <View style={camera_controls_container_styles}>
         {!isRecording ? (
           <CameraSettings
-            screen_size={screen_size}
+            screenSize={screenSize}
             frontCamera={frontCamera}
             flash={flash}
             isVideo={isVideo}
@@ -90,8 +90,8 @@ export default function CameraControlsHorizontal(props) {
             icons={icons ? icons : null}
           />
         ) : (
-          <Text style={styles.recording_elapsed_time}>
-            {formatElapsedTime(recording_elapsed_time)}
+          <Text style={styles.recordingElapsedTime}>
+            {formatElapsedTime(recordingElapsedTime)}
           </Text>
         )}
       </View>
