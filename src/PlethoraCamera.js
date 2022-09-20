@@ -251,9 +251,6 @@ export default function PlethoraCamera(props) {
       flash: frontCamera ? 'off' : flash,
       // enableAutoRedEyeReduction: true,
       // enableAutoStabilization: true,
-      // enableAutoRedEyeReduction: true,
-      // qualityPrioritization: 'balanced',
-      // skipMetadata: true,
     });
     setShowTakePicIndicator(false);
 
@@ -300,6 +297,12 @@ export default function PlethoraCamera(props) {
         zoomValue={zoomValue}
         setZoomValue={setZoomValue}
         config={config}
+        cameraState={cameraState}
+        getDeviceInfo={
+          stateActions && stateActions.getDeviceInfo
+            ? stateActions.getDeviceInfo
+            : null
+        }
         showTakePicIndicator={showTakePicIndicator}
         onDoubleTap={onDoubleTap ? onDoubleTap : () => null}
         swipeDistance={swipeDistance}

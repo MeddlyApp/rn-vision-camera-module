@@ -6,6 +6,7 @@ export default function App() {
   const [isVideo, setIsVideo] = useState(true);
   const [frontCamera, setFrontCamera] = useState(false);
   const [flash, setFlash] = useState('auto');
+  const [videoStabilizationMode, setVideoStabilizationMode] = useState('auto');
 
   const toggleFlash = () => {
     switch (flash) {
@@ -20,8 +21,27 @@ export default function App() {
     }
   };
 
+  const toggleVideoStabilizationMode = () => {
+    switch (videoStabilizationMode) {
+      case 'off':
+        return setFlash('on');
+      case 'on':
+        return setFlash('auto');
+      case 'auto':
+        return setFlash('off');
+      default:
+        return setFlash('off');
+    }
+  };
+
   const [isRecording, setIsRecording] = useState(false); // New
-  const cameraState = {isVideo, frontCamera, flash, isRecording}; // New cameraState.isRecording
+  const cameraState = {
+    isVideo,
+    frontCamera,
+    flash,
+    isRecording,
+    videoStabilizationMode,
+  };
 
   const stateActions = {
     toggleFlash: toggleFlash,
@@ -29,6 +49,7 @@ export default function App() {
     setIsVideo: () => setIsVideo(!isVideo),
     startRecording: () => setIsRecording(true), // New
     stopRecording: () => setIsRecording(false), // New
+    // getDeviceInfo: x => console.log('Device Info: ', x),
   };
 
   /*/ Config takes all arguments from Vision Camera
@@ -43,7 +64,7 @@ export default function App() {
   const config = {
     photo: true, // Required
     video: true, // Required
-    fps: 30,
+    fps: 25,
     nameConvention: `Plethora`,
   };
 

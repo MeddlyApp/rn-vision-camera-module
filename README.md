@@ -98,6 +98,12 @@ const custom = {
 </PlethoraCamera>;
 ```
 
+# Bugs
+
+- For whatever reason, `format` in `RenderCamera.js` isn't working properly
+  - function returns the proper camera
+  - photos are only 1088 x 1088 px instead of 1728 x 3648 px like selected
+
 # Roadmap
 
 - Add: Write Geolocation data to file metadata

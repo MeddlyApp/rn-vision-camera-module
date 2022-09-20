@@ -7,7 +7,15 @@ import GestureHandler from './GestureHandler';
 import styles from '../styles';
 
 export default function RenderCamera(props) {
-  const {cameraRef, frontCamera, zoomValue, setZoomValue, config} = props;
+  const {
+    cameraRef,
+    frontCamera,
+    zoomValue,
+    setZoomValue,
+    config,
+    cameraState,
+    getDeviceInfo,
+  } = props;
 
   const tapToFocus = async ({nativeEvent}) => {
     if (cameraRef && cameraRef.current) {
@@ -43,9 +51,6 @@ export default function RenderCamera(props) {
   const isForeground = useIsForeground();
   const isActive = isFocussed && isForeground;
 
-  const [enableHdr, setEnableHdr] = useState(false);
-  const [enableNightMode, setEnableNightMode] = useState(false);
-
   // Camera Format Settings
   const devices = useCameraDevices();
   const device = devices[frontCamera ? 'front' : 'back'];
@@ -54,33 +59,19 @@ export default function RenderCamera(props) {
       if (device.formats == null) return [];
       return device.formats.sort(sortFormats);
     } else return [];
-  }, [device ? device.formats : null]);
+  }, [device]);
 
+  // need to get devices info and send it back to the front end
+  //
+  // getCameraOptions
+  // currentCamera
+
+  const [enableHdr, setEnableHdr] = useState(false);
+  const [enableNightMode, setEnableNightMode] = useState(false);
   const [is60Fps, setIs60Fps] = useState(true);
-  const fps = useMemo(() => {
-    if (!is60Fps) return 30;
 
-    // User has enabled Night Mode, but Night Mode is not natively supported, so we simulate it by lowering the frame rate.
-    if (enableNightMode && !device.supportsLowLightBoost) return 30;
-
-    const supportsHdrAt60Fps = formats.some(
-      f =>
-        f.supportsVideoHDR &&
-        f.frameRateRanges.some(r => frameRateIncluded(r, 60)),
-    );
-
-    // User has enabled HDR, but HDR is not supported at 60 FPS.
-    if (enableHdr && !supportsHdrAt60Fps) return 30;
-
-    const supports60Fps = formats.some(f =>
-      f.frameRateRanges.some(r => frameRateIncluded(r, 60)),
-    );
-    // 60 FPS is not supported by any format.
-    if (!supports60Fps) return 30;
-
-    // If nothing blocks us from using it, we default to 60 FPS... return 60;
-    // If nothing blocks us from using it, return default setting
-    return config && config.fps ? config.fps : 30;
+  useEffect(() => {
+    getDeviceInfo ? getDeviceInfo(device) : null;
   }, [
     device && device.supportsLowLightBoost
       ? device.supportsLowLightBoost
@@ -91,8 +82,56 @@ export default function RenderCamera(props) {
     is60Fps,
   ]);
 
-  /*
-  // Additional stuff for testing if device supports features...
+  const getFPS = () => {
+    const configLessThan30 = config && config.fps && config.fps < 30;
+    if (!is60Fps) {
+      if (configLessThan30) return config.fps;
+      return 30;
+    }
+
+    // User has enabled Night Mode, but Night Mode is not natively supported, so we simulate it by lowering the frame rate.
+    if (enableNightMode && !device.supportsLowLightBoost) {
+      if (configLessThan30) return config.fps;
+      return 30;
+    }
+
+    const supportsHdrAt60Fps = formats.some(
+      f =>
+        f.supportsVideoHDR &&
+        f.frameRateRanges.some(r => frameRateIncluded(r, 60)),
+    );
+
+    // User has enabled HDR, but HDR is not supported at 60 FPS.
+    if (enableHdr && !supportsHdrAt60Fps) {
+      if (configLessThan30) return config.fps;
+      return 30;
+    }
+
+    const supports60Fps = formats.some(f =>
+      f.frameRateRanges.some(r => frameRateIncluded(r, 60)),
+    );
+
+    // 60 FPS is not supported by any format.
+    if (!supports60Fps) {
+      if (configLessThan30) return config.fps;
+      return 30;
+    }
+
+    const result = config && config.fps ? config.fps : 30;
+    return result;
+  };
+
+  const fps = useMemo(getFPS, [
+    device && device.supportsLowLightBoost
+      ? device.supportsLowLightBoost
+      : false,
+    enableHdr,
+    enableNightMode,
+    formats,
+    is60Fps,
+  ]);
+
+  /*/ Additional stuff for testing if device supports features...
   const supportsCameraFlipping = useMemo(
     () => devices.back != null && devices.front != null,
     [devices.back, devices.front],
@@ -114,19 +153,21 @@ export default function RenderCamera(props) {
     : ((device && device?.supportsLowLightBoost) ?? false) || fps > 30; // either we have native support, or we can lower the FPS
   */
 
+  /*
   const format = useMemo(() => {
-    let result = formats;
+    let availableFormats = formats;
+
     if (enableHdr) {
-      // We only filter by HDR capable formats if HDR is set to true.
-      // Otherwise we ignore the `supportsVideoHDR` property and accept formats which support HDR `true` or `false`
-      result = result.filter(f => f.supportsVideoHDR || f.supportsPhotoHDR);
+      availableFormats = availableFormats.filter(
+        f => f.supportsVideoHDR || f.supportsPhotoHDR,
+      );
     }
 
-    // find the first format that includes the given FPS
-    return result.find(f =>
-      f.frameRateRanges.some(r => frameRateIncluded(r, fps)),
-    );
+    return availableFormats.find(f => {
+      return f.frameRateRanges.some(r => frameRateIncluded(r, fps));
+    });
   }, [formats, fps, enableHdr]);
+  */
 
   // Camera callbacks
   const onError = error => console.error(error);
@@ -172,7 +213,7 @@ export default function RenderCamera(props) {
             ref={cameraRef}
             style={StyleSheet.absoluteFill}
             device={device}
-            format={format}
+            // format={format}
             fps={fps}
             hdr={enableHdr}
             lowLightBoost={device.supportsLowLightBoost && enableNightMode}
@@ -184,7 +225,11 @@ export default function RenderCamera(props) {
             photo={config.photo}
             video={config.video}
             audio={hasMicrophonePermission}
-            // orientation="portrait"
+            videoStabilizationMode={
+              cameraState && cameraState.videoStabilizationMode
+                ? cameraState.videoStabilizationMode
+                : 'auto' || 'off'
+            }
           />
         </GestureHandler>
       )}
