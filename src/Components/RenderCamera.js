@@ -189,7 +189,7 @@ export default function RenderCamera(props) {
         </GestureHandler>
       )}
 
-      {device == null ? (
+      {device == null && isCameraInitialized ? (
         <View style={styles.no_device_container}>
           <Text style={styles.txt_white}>No Device Found</Text>
         </View>
