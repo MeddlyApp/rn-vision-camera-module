@@ -7,6 +7,8 @@ export default function App() {
   const [frontCamera, setFrontCamera] = useState(false);
   const [flash, setFlash] = useState('auto');
   const [videoStabilizationMode, setVideoStabilizationMode] = useState('auto');
+  const [preset, setPreset] = useState(['high', 'medium', 'low'][0]);
+  const [isRecording, setIsRecording] = useState(false);
 
   const toggleFlash = () => {
     switch (flash) {
@@ -24,32 +26,45 @@ export default function App() {
   const toggleVideoStabilizationMode = () => {
     switch (videoStabilizationMode) {
       case 'off':
-        return setFlash('on');
+        return setVideoStabilizationMode('on');
       case 'on':
-        return setFlash('auto');
+        return setVideoStabilizationMode('auto');
       case 'auto':
-        return setFlash('off');
+        return setVideoStabilizationMode('off');
       default:
-        return setFlash('off');
+        return setVideoStabilizationMode('off');
     }
   };
 
-  const [isRecording, setIsRecording] = useState(false); // New
-  const cameraState = {
-    isVideo,
-    frontCamera,
-    flash,
-    isRecording,
-    videoStabilizationMode,
+  const toggleCameraQualityPreset = () => {
+    switch (preset) {
+      case 'low':
+        return setPreset('medium');
+      case 'medium':
+        return setPreset('high');
+      case 'high':
+        return setPreset('low');
+      default:
+        return setPreset('high');
+    }
   };
 
   const stateActions = {
     toggleFlash: toggleFlash,
     toggleFrontCamera: () => setFrontCamera(!frontCamera),
     setIsVideo: () => setIsVideo(!isVideo),
-    startRecording: () => setIsRecording(true), // New
-    stopRecording: () => setIsRecording(false), // New
-    // getDeviceInfo: x => console.log('Device Info: ', x),
+    startRecording: () => setIsRecording(true),
+    stopRecording: () => setIsRecording(false),
+    getDeviceInfo: x => null, // console.log('Device Info: ', x),
+  };
+
+  const cameraState = {
+    isVideo,
+    frontCamera,
+    flash,
+    isRecording,
+    videoStabilizationMode,
+    preset,
   };
 
   /*/ Config takes all arguments from Vision Camera

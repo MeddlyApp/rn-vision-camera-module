@@ -36,7 +36,32 @@
   - Video / Photo Mode:
 
 ```javascript
-// import Camera from '@plethora_co/rn-vision-camera';
+import Camera from '@plethora_co/rn-vision-camera';
+
+const [isVideo, setIsVideo] = useState(true);
+const [frontCamera, setFrontCamera] = useState(false);
+const [flash, setFlash] = useState('auto');
+const [videoStabilizationMode, setVideoStabilizationMode] = useState('auto');
+const [preset, setPreset] = useState('high'); // ['high', 'medium', 'low']
+const [isRecording, setIsRecording] = useState(false);
+
+const stateActions = {
+  toggleFlash: toggleFlash,
+  toggleFrontCamera: () => setFrontCamera(!frontCamera),
+  setIsVideo: () => setIsVideo(!isVideo),
+  startRecording: () => setIsRecording(true),
+  stopRecording: () => setIsRecording(false),
+  getDeviceInfo: x => console.log('Device Info: ', x),
+};
+
+const cameraState = {
+  isVideo,
+  frontCamera,
+  flash,
+  isRecording,
+  videoStabilizationMode,
+  preset,
+};
 
 const cameraConfig = {
   photo: true, // Required

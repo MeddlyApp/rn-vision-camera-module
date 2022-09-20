@@ -153,7 +153,7 @@ export default function RenderCamera(props) {
     : ((device && device?.supportsLowLightBoost) ?? false) || fps > 30; // either we have native support, or we can lower the FPS
   */
 
-  /*
+  // Galaxy S10 5G Bug: this selects a good device, but it only captures 1x1 ratio photos?
   const format = useMemo(() => {
     let availableFormats = formats;
 
@@ -163,13 +163,12 @@ export default function RenderCamera(props) {
       );
     }
 
-    return availableFormats.find(f => {
+    const res = availableFormats.find(f => {
       return f.frameRateRanges.some(r => frameRateIncluded(r, fps));
     });
+    return res;
   }, [formats, fps, enableHdr]);
-  */
 
-  // Camera callbacks
   const onError = error => console.error(error);
   const onInitialized = () => setIsCameraInitialized(true);
 
@@ -222,6 +221,9 @@ export default function RenderCamera(props) {
             onError={onError}
             enableZoomGesture={false}
             zoom={zoom}
+            preset={
+              cameraState && cameraState.preset ? cameraState.preset : 'high'
+            }
             photo={config.photo}
             video={config.video}
             audio={hasMicrophonePermission}
