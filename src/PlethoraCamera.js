@@ -229,7 +229,7 @@ export default function PlethoraCamera(props) {
         const timestamp = new Date().getTime();
 
         // Set Elapsed Time here...
-        if (onRecordingStart) onRecordingStart(timestamp);
+        if (onRecordingStart) return onRecordingStart(timestamp);
       }
     } else if (!startRecording && stopRecording) {
       return alert('Missing prop: startRecording()');

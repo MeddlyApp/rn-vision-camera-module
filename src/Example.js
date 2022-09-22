@@ -77,8 +77,6 @@ export default function App() {
         );
       });
     },
-
-    // startRecording: () => { setIsRecording(true); return true; },
     stopRecording: async () => {
       return new Promise(resolve => {
         return Alert.alert(
