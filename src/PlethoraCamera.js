@@ -175,59 +175,62 @@ export default function PlethoraCamera(props) {
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
   const startVideo = async () => {
-    if (startRecording && stopRecording) {
-      await lockOrientation();
-      await cameraRef.current.startRecording({
-        flash: frontCamera ? 'off' : flash,
-        fileType: 'mp4',
-        onRecordingFinished: async video => {
-          // Write additional metadata here...
+    if (startRecording && stopRecording && !isRecording) {
+      const ready = await startRecording();
 
-          // End Timestamp
-          const timestampEnd = new Date().getTime();
+      if (ready) {
+        await lockOrientation();
+        await cameraRef.current.startRecording({
+          flash: frontCamera ? 'off' : flash,
+          fileType: 'mp4',
+          onRecordingFinished: async video => {
+            // Write additional metadata here...
 
-          // Rename File
-          const nameConvention = config.nameConvention
-            ? config.nameConvention
-            : null;
-          const fileName = nameConvention ? `${nameConvention}_TS` : null;
+            // End Timestamp
+            const timestampEnd = new Date().getTime();
 
-          const newName = `${fileName}${timestamp}`;
-          const finalFile = await renameFile(video, newName);
-          video.path = finalFile;
+            // Rename File
+            const nameConvention = config.nameConvention
+              ? config.nameConvention
+              : null;
+            const fileName = nameConvention ? `${nameConvention}_TS` : null;
 
-          if (saveToCameraRoll) {
-            if (
-              Platform.OS === 'android' &&
-              !(await getCameraRollPermissions())
-            ) {
-              return alert('Camera Roll not permitted');
+            const newName = `${fileName}${timestamp}`;
+            const finalFile = await renameFile(video, newName);
+            video.path = finalFile;
+
+            if (saveToCameraRoll) {
+              if (
+                Platform.OS === 'android' &&
+                !(await getCameraRollPermissions())
+              ) {
+                return alert('Camera Roll not permitted');
+              }
+              CameraRoll.save(finalFile);
             }
-            CameraRoll.save(finalFile);
-          }
 
-          const payload = {
-            data: video.path,
-            duration: video.duration,
-            timestamp_start: timestamp,
-            timestamp_end: timestampEnd,
-          };
+            const payload = {
+              data: video.path,
+              duration: video.duration,
+              timestamp_start: timestamp,
+              timestamp_end: timestampEnd,
+            };
 
-          Orientation.unlockAllOrientations();
+            Orientation.unlockAllOrientations();
 
-          if (onRecordingFinished) onRecordingFinished(payload);
-        },
-        onRecordingError: error => {
-          if (onRecordingError) onRecordingError(error);
-          else console.error('Recording Error', error);
-        },
-      });
+            if (onRecordingFinished) onRecordingFinished(payload);
+          },
+          onRecordingError: error => {
+            if (onRecordingError) onRecordingError(error);
+            else console.error('Recording Error', error);
+          },
+        });
 
-      const timestamp = new Date().getTime();
-      startRecording();
+        const timestamp = new Date().getTime();
 
-      // Set Elapsed Time here...
-      if (onRecordingStart) onRecordingStart(timestamp);
+        // Set Elapsed Time here...
+        if (onRecordingStart) onRecordingStart(timestamp);
+      }
     } else if (!startRecording && stopRecording) {
       return alert('Missing prop: startRecording()');
     } else if (startRecording && !stopRecording) {
@@ -236,9 +239,11 @@ export default function PlethoraCamera(props) {
   };
 
   const endVideo = async () => {
-    if (stopRecording) {
-      await stopRecording();
-      await cameraRef.current.stopRecording();
+    if (stopRecording && isRecording) {
+      const ready = await stopRecording();
+      if (ready) {
+        return await cameraRef.current.stopRecording();
+      }
     } else alert('Please add endVideo() prop');
   };
 

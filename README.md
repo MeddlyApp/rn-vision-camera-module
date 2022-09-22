@@ -45,12 +45,27 @@ const [videoStabilizationMode, setVideoStabilizationMode] = useState('auto');
 const [preset, setPreset] = useState('high'); // ['high', 'medium', 'low']
 const [isRecording, setIsRecording] = useState(false);
 
+/*/
+ * startRecording: 
+ *  - can be async
+ *  - must return true to start recording
+ * stopRecording: 
+ *  - can be async
+ *  - must return true to stop recording
+/*/
+
 const stateActions = {
   toggleFlash: toggleFlash,
   toggleFrontCamera: () => setFrontCamera(!frontCamera),
   setIsVideo: () => setIsVideo(!isVideo),
-  startRecording: () => setIsRecording(true),
-  stopRecording: () => setIsRecording(false),
+  startRecording: () => {
+    setIsRecording(true);
+    return true;
+  },
+  stopRecording: () => {
+    setIsRecording(false);
+    return true;
+  },
   getDeviceInfo: x => console.log('Device Info: ', x),
 };
 

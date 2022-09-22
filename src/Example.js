@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text} from 'react-native';
+import {Alert, Text} from 'react-native';
 import PlethoraCamera from './PlethoraCamera';
 
 export default function App() {
@@ -53,8 +53,56 @@ export default function App() {
     toggleFlash: toggleFlash,
     toggleFrontCamera: () => setFrontCamera(!frontCamera),
     setIsVideo: () => setIsVideo(!isVideo),
-    startRecording: () => setIsRecording(true),
-    stopRecording: () => setIsRecording(false),
+    startRecording: async () => {
+      return new Promise(resolve => {
+        return Alert.alert(
+          `Start`,
+          `Are you sure you're ready to start recording?`,
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel',
+              onPress: () => resolve(false),
+            },
+            {
+              text: 'Start',
+              style: 'default',
+              onPress: () => {
+                setIsRecording(true);
+                return resolve(true);
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+      });
+    },
+
+    // startRecording: () => { setIsRecording(true); return true; },
+    stopRecording: async () => {
+      return new Promise(resolve => {
+        return Alert.alert(
+          `End`,
+          `Are you sure you're ready to end the recording?`,
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel',
+              onPress: () => resolve(false),
+            },
+            {
+              text: 'End',
+              style: 'default',
+              onPress: () => {
+                setIsRecording(false);
+                return resolve(true);
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+      });
+    },
     getDeviceInfo: x => null, // console.log('Device Info: ', x),
   };
 
@@ -132,18 +180,9 @@ export default function App() {
       saveToCameraRoll={true}
       // Lifecycle Events
       onTakePicture={p => console.log('onTakePicture', p)}
-      onRecordingStart={ts => {
-        console.log('onRecordingStart', ts);
-        setIsRecording(true);
-      }}
-      onRecordingFinished={r => {
-        console.log('onRecordingFinished', r);
-        setIsRecording(false);
-      }}
-      onRecordingError={e => {
-        console.log('onRecordingError', e);
-        setIsRecording(false);
-      }}
+      onRecordingStart={ts => console.log('onRecordingStart', ts)}
+      onRecordingFinished={r => console.log('onRecordingFinished', r)}
+      onRecordingError={e => console.log('onRecordingError', e)}
       onOrientationChange={o => console.log('onOrientationChange', o)}
       // Custom Gesture Controls
       onTapFocus={t => console.log('onTapFocus', t)}
