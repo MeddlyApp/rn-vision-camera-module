@@ -58,7 +58,7 @@ export default function PlethoraCamera(props) {
     children,
   } = props;
 
-  const {isVideo, frontCamera, flash, isRecording} = cameraState;
+  const {isVideo, frontCamera, flash, isRecording, hideStatusBar} = cameraState;
   const {
     startRecording,
     stopRecording,
@@ -294,7 +294,12 @@ export default function PlethoraCamera(props) {
 
   return (
     <SafeAreaView style={styles.base_container} onLayout={deviceRotated}>
-      <StatusBar hidden={true} />
+      <StatusBar
+        hidden={hideStatusBar}
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
 
       <RenderCamera
         cameraRef={cameraRef}

@@ -43,6 +43,7 @@ const [frontCamera, setFrontCamera] = useState(false);
 const [flash, setFlash] = useState('auto');
 const [videoStabilizationMode, setVideoStabilizationMode] = useState('auto');
 const [preset, setPreset] = useState('high'); // ['high', 'medium', 'low']
+const [hideStatusBar, setHideStatusBar] = useState(false);
 const [isRecording, setIsRecording] = useState(false);
 
 /*/
@@ -76,6 +77,7 @@ const cameraState = {
   isRecording,
   videoStabilizationMode,
   preset,
+  hideStatusBar,
 };
 
 const cameraConfig = {

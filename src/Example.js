@@ -8,6 +8,7 @@ export default function App() {
   const [flash, setFlash] = useState('auto');
   const [videoStabilizationMode, setVideoStabilizationMode] = useState('auto');
   const [preset, setPreset] = useState(['high', 'medium', 'low'][0]);
+  const [hideStatusBar, setHideStatusBar] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
 
   const toggleFlash = () => {
@@ -111,6 +112,7 @@ export default function App() {
     isRecording,
     videoStabilizationMode,
     preset,
+    hideStatusBar,
   };
 
   /*/ Config takes all arguments from Vision Camera
