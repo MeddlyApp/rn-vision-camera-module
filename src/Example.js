@@ -115,15 +115,6 @@ export default function App() {
     hideStatusBar,
   };
 
-  /*/ Config takes all arguments from Vision Camera
-   *  https://mrousavy.com/react-native-vision-camera/docs/api/interfaces/CameraProps
-   * 
-   *    Config Requires...
-   *    - photo: boolean
-   *    - video: boolean
-   *    - audio: boolean
-  /*/
-
   const config = {
     photo: true, // Required
     video: true, // Required
@@ -131,7 +122,7 @@ export default function App() {
     nameConvention: `Plethora`,
   };
 
-  const custom = {
+  const customComponents = {
     cameraTop: {
       component: <Text style={{color: '#FFF'}}>Top</Text>,
       showWhileRecording: false,
@@ -192,7 +183,7 @@ export default function App() {
       onSwipeRight={t => console.log('onSwipeRight', t)}
       onSwipeUp={t => console.log('onSwipeUp', t)}
       onSwipeDown={t => console.log('onSwipeDown', t)}>
-      {custom}
+      {/* customComponents */}
     </PlethoraCamera>
   );
 }

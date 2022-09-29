@@ -12,11 +12,11 @@ export default function RecordingTimer(props) {
     return () => clearInterval(interval);
   }, []);
 
-  return <Text style={styles.time}>{formatElapsedTime(seconds)}</Text>;
+  return <Text style={styles.time_txt}>{formatElapsedTime(seconds)}</Text>;
 }
 
 const styles = StyleSheet.create({
-  time: {
+  time_txt: {
     fontSize: 16,
     color: '#FFF',
   },

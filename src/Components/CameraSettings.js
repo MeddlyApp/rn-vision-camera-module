@@ -1,42 +1,28 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import styles from '../styles';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
 
 export default function CameraSettings(props) {
-  const {screenSize, frontCamera, flash, isVideo, icons} = props;
+  const {frontCamera, flash, isVideo, icons} = props;
+
+  const {height, width} = useWindowDimensions();
+  const styles = stylesWithProps(height, width);
+
+  const flashIcons = icons ? icons.flashIcons : null;
+  const togglePictureIcon = icons ? icons.togglePictureIcon : null;
+  const toggleVideoIcon = icons ? icons.toggleVideoIcon : null;
+
   const cameraView = frontCamera ? 'Front' : 'Back';
-  const is_vertical = screenSize.height > screenSize.width;
-
-  const base_styles = {
-    alignItems: 'center',
-    justifyContent: 'center',
-  };
-  const vertical_styles = {
-    ...base_styles,
-    height: 50,
-    width: screenSize.width / 2,
-  };
-  const horizontal_styles = {
-    ...base_styles,
-    width: 50,
-    height: screenSize.height / 2,
-  };
-
-  const toggle_btn_style = is_vertical ? vertical_styles : horizontal_styles;
-
-  let flashIcons,
-    togglePictureIcon,
-    toggleVideoIcon = null;
-  if (icons) {
-    flashIcons = icons.flashIcons;
-    togglePictureIcon = icons.togglePictureIcon;
-    toggleVideoIcon = icons.toggleVideoIcon;
-  }
 
   return (
     <>
       {/* Flash */}
-      <View style={toggle_btn_style}>
+      <View>
         {cameraView === 'Front' ? null : (
           <TouchableOpacity
             onPress={props.toggleFlash}
@@ -46,7 +32,7 @@ export default function CameraSettings(props) {
                 flashIcons && flashIcons.flashOn ? (
                   flashIcons.flashOn
                 ) : (
-                  <View>
+                  <View style={[styles.flex_centered]}>
                     <Text style={styles.txt_white}>On</Text>
                   </View>
                 )
@@ -56,7 +42,7 @@ export default function CameraSettings(props) {
                 flashIcons && flashIcons.flashOff ? (
                   flashIcons.flashOff
                 ) : (
-                  <View>
+                  <View style={[styles.flex_centered]}>
                     <Text style={styles.txt_white}>Off</Text>
                   </View>
                 )
@@ -66,7 +52,7 @@ export default function CameraSettings(props) {
                 flashIcons && flashIcons.flashAuto ? (
                   flashIcons.flashAuto
                 ) : (
-                  <View>
+                  <View style={[styles.flex_centered]}>
                     <Text style={styles.txt_white}>Auto</Text>
                   </View>
                 )
@@ -77,7 +63,7 @@ export default function CameraSettings(props) {
       </View>
 
       {/* Camera Mode */}
-      <View style={toggle_btn_style}>
+      <View>
         <TouchableOpacity
           onPress={props.toggleVideoOrPicture}
           style={styles.camera_action_btn}>
@@ -85,14 +71,14 @@ export default function CameraSettings(props) {
             toggleVideoIcon ? (
               toggleVideoIcon
             ) : (
-              <View>
+              <View style={[styles.flex_centered]}>
                 <Text style={styles.txt_white}>Video</Text>
               </View>
             )
           ) : togglePictureIcon ? (
             togglePictureIcon
           ) : (
-            <View>
+            <View style={[styles.flex_centered]}>
               <Text style={styles.txt_white}>Picture</Text>
             </View>
           )}
@@ -101,3 +87,25 @@ export default function CameraSettings(props) {
     </>
   );
 }
+
+const stylesWithProps = (height, width) => {
+  const is_vertical = height > width;
+
+  return StyleSheet.create({
+    flex_centered: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    txt_white: {
+      color: '#FFF',
+    },
+    camera_action_btn: {
+      height: 60,
+      width: 60,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });
+};

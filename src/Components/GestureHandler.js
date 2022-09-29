@@ -1,12 +1,11 @@
 import React, {useRef} from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
   GestureHandlerRootView,
   PinchGestureHandler,
   TapGestureHandler,
   State,
 } from 'react-native-gesture-handler';
-import styles from '../styles';
 
 export default function GestureHandler(props) {
   const {
@@ -29,6 +28,7 @@ export default function GestureHandler(props) {
   const onGesturePinch = ({nativeEvent}) => {
     onPinchProgress(nativeEvent.scale);
   };
+
   const onPinchHandlerStateChange = ({nativeEvent}) => {
     const pinch_end = nativeEvent.state === State.END;
     const pinch_begin = nativeEvent.oldState === State.BEGAN;
@@ -42,27 +42,20 @@ export default function GestureHandler(props) {
     this.touchY = nativeEvent.pageY;
     this.touchX = nativeEvent.pageX;
   };
+
   onTouchEnd = ({nativeEvent}) => {
     const event = nativeEvent;
     const distance = props.swipeDistance ? props.swipeDistance : 200;
 
-    // Vetical - Up
-    if (this.touchY - event.pageY > distance) {
-      return onSwipeUp ? onSwipeUp(event) : null;
-    }
-    // Vetical - Down
-    if (this.touchY - event.pageY < -distance) {
-      return onSwipeDown ? onSwipeDown(event) : null;
-    }
+    const swipingLeft = this.touchX - event.pageX > distance;
+    const swipingRight = this.touchX - event.pageX < -distance;
+    const swipingUp = this.touchY - event.pageY > distance;
+    const swipingDown = this.touchY - event.pageY < -distance;
 
-    // Horizontal - Left
-    if (this.touchX - event.pageX > distance) {
-      return onSwipeLeft ? onSwipeLeft(event) : null;
-    }
-    // Horizontal - Right
-    if (this.touchX - event.pageX < -distance) {
-      return onSwipeRight ? onSwipeRight(event) : null;
-    }
+    if (swipingLeft) return onSwipeLeft ? onSwipeLeft(event) : null;
+    if (swipingRight) return onSwipeRight ? onSwipeRight(event) : null;
+    if (swipingUp) return onSwipeUp ? onSwipeUp(event) : null;
+    if (swipingDown) return onSwipeDown ? onSwipeDown(event) : null;
   };
 
   const msDelay = 175;
@@ -97,3 +90,20 @@ export default function GestureHandler(props) {
     </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  main_view: {
+    borderColor: '#000',
+    borderWidth: 2,
+    height: '100%',
+    width: '100%',
+  },
+
+  take_pic_indicator: {
+    borderColor: '#FFFFFF',
+    backgroundColor: 'rgba(255, 255, 255, 0.72)',
+    borderWidth: 2,
+    height: '100%',
+    width: '100%',
+  },
+});

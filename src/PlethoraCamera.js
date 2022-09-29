@@ -10,22 +10,21 @@
 
 import React, {useState, useEffect, useRef} from 'react';
 import {
+  StyleSheet,
   LogBox,
   PermissionsAndroid,
   Platform,
   SafeAreaView,
+  View,
   Linking,
-  Dimensions,
   StatusBar,
 } from 'react-native';
 import {Camera} from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import Orientation from 'react-native-orientation-locker';
-import styles from './styles';
 import RenderCamera from './components/RenderCamera';
 import MissingPermissions from './components/MissingPermissions';
-import CameraControlsHorizontal from './components/CameraControlsHorizontal';
-import CameraControlsVertical from './components/CameraControlsVertical';
+import CameraControls from './components/CameraControls';
 import VideoControls from './components/VideoControls';
 import PictureControls from './components/PictureControls';
 import renameFile from '../utilities/RenameFile';
@@ -59,6 +58,7 @@ export default function PlethoraCamera(props) {
   } = props;
 
   const {isVideo, frontCamera, flash, isRecording, hideStatusBar} = cameraState;
+
   const {
     startRecording,
     stopRecording,
@@ -66,6 +66,8 @@ export default function PlethoraCamera(props) {
     toggleFrontCamera,
     toggleFlash,
   } = stateActions;
+
+  const isAndroid = Platform.OS === 'android';
 
   // ******************** COMPONENT LIFECYCLE ******************** //
 
@@ -82,25 +84,24 @@ export default function PlethoraCamera(props) {
 
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
-
   const [hasCameraRollPermission, setHasCameraRollPermission] = useState(false);
 
   const checkPermissions = async () => {
     const hasCamera = await getCameraPermissions();
-    const hasMic = await getMicrophonePermissions();
-    const hasCamRoll = await getCameraRollPermissions();
     setHasCameraPermission(hasCamera);
+    const hasMic = await getMicrophonePermissions();
     setHasMicrophonePermission(hasMic);
+    const hasCamRoll = await getCameraRollPermissions();
     setHasCameraRollPermission(hasCamRoll);
   };
 
   const getCameraPermissions = async () => {
     const cameraPermission = await Camera.getCameraPermissionStatus();
-    if (cameraPermission === 'authorized') return true;
-    if (
-      cameraPermission === 'not-determined' ||
-      cameraPermission === 'denied'
-    ) {
+    const isAuthorized = cameraPermission === 'authorized';
+    const isNotDetermined = cameraPermission === 'not-determined';
+    const isDenied = cameraPermission === 'denied';
+    if (isAuthorized) return true;
+    if (isNotDetermined || isDenied) {
       const newCameraPermission = await Camera.requestCameraPermission();
       if (newCameraPermission === 'authorized') return true;
       return false;
@@ -109,11 +110,11 @@ export default function PlethoraCamera(props) {
 
   const getMicrophonePermissions = async () => {
     const microphonePermission = await Camera.getMicrophonePermissionStatus();
-    if (microphonePermission === 'authorized') return true;
-    if (
-      microphonePermission === 'not-determined' ||
-      microphonePermission === 'denied'
-    ) {
+    const isAuthorized = microphonePermission === 'authorized';
+    const isNotDetermined = microphonePermission === 'not-determined';
+    const isDenied = microphonePermission === 'denied';
+    if (isAuthorized) return true;
+    if (isNotDetermined || isDenied) {
       const newMicrophonePermission =
         await Camera.requestMicrophonePermission();
       if (newMicrophonePermission === 'authorized') return true;
@@ -122,7 +123,7 @@ export default function PlethoraCamera(props) {
   };
 
   const getCameraRollPermissions = async () => {
-    if (Platform.OS === 'android') {
+    if (isAndroid) {
       const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
       const hasPermission = await PermissionsAndroid.check(permission);
       if (hasPermission) return true;
@@ -137,12 +138,12 @@ export default function PlethoraCamera(props) {
   // ******************** ORIENTATION CONTROLS ******************** //
 
   const [orientation, setOrientation] = useState(null);
+
   const onOrientationDidChange = orientation => {
     setOrientation(orientation);
     if (onOrientationChange) onOrientationChange(orientation);
   };
-  const [screenSize, setScreenSize] = useState(Dimensions.get('window'));
-  const deviceRotated = () => setScreenSize(Dimensions.get('window'));
+
   const lockOrientation = async () => {
     new Promise(resolve => {
       switch (orientation) {
@@ -153,7 +154,7 @@ export default function PlethoraCamera(props) {
         case 'LANDSCAPE-RIGHT':
           return resolve(Orientation.lockToLandscapeRight());
         default:
-          return resolve(console.log('Lock Orientation Error'));
+          return resolve(Orientation.lockToPortrait());
       }
     });
   };
@@ -161,15 +162,11 @@ export default function PlethoraCamera(props) {
   // ******************** CAMERA ACTIONS ******************** //
 
   const [zoomValue, setZoomValue] = useState(0);
-  const toggleVideoOrPicture = () => {
-    if (setIsVideo) setIsVideo();
-  };
+  const toggleVideoOrPicture = () => (setIsVideo ? setIsVideo() : null);
+  const toggleFlashOnOff = () => (toggleFlash ? toggleFlash() : null);
   const toggleCamera = () => {
     if (toggleFrontCamera) toggleFrontCamera();
     setZoomValue(0);
-  };
-  const toggleFlashOnOff = () => {
-    if (toggleFlash) toggleFlash();
   };
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
@@ -180,30 +177,22 @@ export default function PlethoraCamera(props) {
 
       if (ready) {
         await lockOrientation();
+
         await cameraRef.current.startRecording({
           flash: frontCamera ? 'off' : flash,
           fileType: 'mp4',
           onRecordingFinished: async video => {
-            // Write additional metadata here...
-
-            // End Timestamp
             const timestampEnd = new Date().getTime();
-
-            // Rename File
             const nameConvention = config.nameConvention
               ? config.nameConvention
               : null;
             const fileName = nameConvention ? `${nameConvention}_TS` : null;
-
             const newName = `${fileName}${timestamp}`;
             const finalFile = await renameFile(video, newName);
             video.path = finalFile;
 
             if (saveToCameraRoll) {
-              if (
-                Platform.OS === 'android' &&
-                !(await getCameraRollPermissions())
-              ) {
+              if (isAndroid && !(await getCameraRollPermissions())) {
                 return alert('Camera Roll not permitted');
               }
               CameraRoll.save(finalFile);
@@ -217,7 +206,6 @@ export default function PlethoraCamera(props) {
             };
 
             Orientation.unlockAllOrientations();
-
             if (onRecordingFinished) onRecordingFinished(payload);
           },
           onRecordingError: error => {
@@ -227,8 +215,6 @@ export default function PlethoraCamera(props) {
         });
 
         const timestamp = new Date().getTime();
-
-        // Set Elapsed Time here...
         if (onRecordingStart) return onRecordingStart(timestamp);
       }
     } else if (!startRecording && stopRecording) {
@@ -241,9 +227,7 @@ export default function PlethoraCamera(props) {
   const endVideo = async () => {
     if (stopRecording && isRecording) {
       const ready = await stopRecording();
-      if (ready) {
-        return await cameraRef.current.stopRecording();
-      }
+      if (ready) return await cameraRef.current.stopRecording();
     } else alert('Please add endVideo() prop');
   };
 
@@ -254,22 +238,15 @@ export default function PlethoraCamera(props) {
     setShowTakePicIndicator(true);
     const photo = await cameraRef.current.takePhoto({
       flash: frontCamera ? 'off' : flash,
-      // enableAutoRedEyeReduction: true,
-      // enableAutoStabilization: true,
     });
     setShowTakePicIndicator(false);
 
-    // Rename File
     const nameConvention = config.nameConvention ? config.nameConvention : null;
     const fileName = nameConvention ? `${nameConvention}_TS` : null;
     const timestamp = new Date().getTime();
-
     const newName = `${fileName}${timestamp}`;
     const finalFile = await renameFile(photo, newName);
     photo.path = finalFile;
-
-    // Write additional metadata here...
-
     if (saveToCameraRoll) CameraRoll.save(finalFile);
     if (onTakePicture) onTakePicture(photo);
   };
@@ -277,11 +254,10 @@ export default function PlethoraCamera(props) {
   /******************** RENDERS ********************/
 
   const hasAllPermissions = hasCameraPermission && hasMicrophonePermission;
-  const displayIsVertical = screenSize.height > screenSize.width;
 
   if (!hasAllPermissions) {
     return (
-      <SafeAreaView style={styles.base_container} onLayout={deviceRotated}>
+      <SafeAreaView style={styles.base_container}>
         <MissingPermissions
           hasCameraPermission={hasCameraPermission}
           hasMicrophonePermission={hasMicrophonePermission}
@@ -293,7 +269,7 @@ export default function PlethoraCamera(props) {
   }
 
   return (
-    <SafeAreaView style={styles.base_container} onLayout={deviceRotated}>
+    <View style={styles.base_container}>
       <StatusBar
         hidden={hideStatusBar}
         barStyle="light-content"
@@ -323,82 +299,47 @@ export default function PlethoraCamera(props) {
       />
 
       {showCameraControls ? (
-        displayIsVertical ? (
-          <CameraControlsVertical
-            screenSize={screenSize}
-            orientation={orientation}
-            cameraState={cameraState}
-            children={children}
-            toggleCamera={toggleCamera}
-            toggleFlash={toggleFlashOnOff}
-            toggleVideoOrPicture={toggleVideoOrPicture}>
-            {isVideo
-              ? {
-                  children,
-                  videoControls: (
-                    <VideoControls
-                      isRecording={isRecording}
-                      startVideo={startVideo}
-                      endVideo={endVideo}
-                      toggleCamera={toggleCamera}
-                      cameraState={cameraState}
-                      icons={children.icons ? children.icons : null}
-                      screenSize={screenSize}
-                    />
-                  ),
-                }
-              : {
-                  children,
-                  pictureControls: (
-                    <PictureControls
-                      takePicture={takePicture}
-                      toggleCamera={toggleCamera}
-                      cameraState={cameraState}
-                      icons={children.icons ? children.icons : null}
-                      screenSize={screenSize}
-                    />
-                  ),
-                }}
-          </CameraControlsVertical>
-        ) : (
-          <CameraControlsHorizontal
-            screenSize={screenSize}
-            orientation={orientation}
-            cameraState={cameraState}
-            children={children}
-            toggleCamera={toggleCamera}
-            toggleFlash={toggleFlashOnOff}
-            toggleVideoOrPicture={toggleVideoOrPicture}>
-            {isVideo
-              ? {
-                  children,
-                  videoControls: (
-                    <VideoControls
-                      isRecording={isRecording}
-                      startVideo={startVideo}
-                      endVideo={endVideo}
-                      toggleCamera={toggleCamera}
-                      cameraState={cameraState}
-                      icons={children.icons ? children.icons : null}
-                      screenSize={screenSize}
-                    />
-                  ),
-                }
-              : {
-                  children,
-                  pictureControls: (
-                    <PictureControls
-                      takePicture={takePicture}
-                      toggleCamera={toggleCamera}
-                      cameraState={cameraState}
-                      icons={children.icons ? children.icons : null}
-                      screenSize={screenSize}
-                    />
-                  ),
-                }}
-          </CameraControlsHorizontal>
-        )
+        <CameraControls
+          cameraState={cameraState}
+          customComponents={children ? children : null}
+          toggleCamera={toggleCamera}
+          toggleFlash={toggleFlashOnOff}
+          toggleVideoOrPicture={toggleVideoOrPicture}
+          orientation={orientation}>
+          {isVideo
+            ? {
+                customComponents: children,
+                videoControls: (
+                  <VideoControls
+                    isRecording={isRecording}
+                    startVideo={startVideo}
+                    endVideo={endVideo}
+                    toggleCamera={toggleCamera}
+                    cameraState={cameraState}
+                    icons={children && children.icons ? children.icons : null}
+                  />
+                ),
+              }
+            : {
+                customComponents: children,
+                pictureControls: (
+                  <PictureControls
+                    takePicture={takePicture}
+                    toggleCamera={toggleCamera}
+                    cameraState={cameraState}
+                    icons={children && children.icons ? children.icons : null}
+                  />
+                ),
+              }}
+        </CameraControls>
       ) : null}
-    </SafeAreaView>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  base_container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+});

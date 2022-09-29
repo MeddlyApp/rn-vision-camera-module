@@ -4,7 +4,6 @@ import {sortFormats, useCameraDevices} from 'react-native-vision-camera';
 import {Camera, frameRateIncluded} from 'react-native-vision-camera';
 import {useIsForeground} from '../hooks/useIsForeground';
 import GestureHandler from './GestureHandler';
-import styles from '../styles';
 
 export default function RenderCamera(props) {
   const {
@@ -244,10 +243,22 @@ export default function RenderCamera(props) {
       )}
 
       {device == null && isCameraInitialized ? (
-        <View style={styles.no_device_container}>
+        <View style={styles.flex_centered}>
           <Text style={styles.txt_white}>No Device Found</Text>
         </View>
       ) : null}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  flex_centered: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  txt_white: {
+    color: '#FFF',
+  },
+});

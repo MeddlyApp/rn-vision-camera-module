@@ -2,32 +2,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 
 let window = Dimensions.get('window');
 const styles = StyleSheet.create({
-  /******************** GENERAL ********************/
-
-  base_container: {
-    flex: 1,
-    backgroundColor: '#000000',
-  },
-  flex_1: {
-    flex: 1,
-  },
-  txt_white: {
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
-  txt_white_margin_top: {
-    fontWeight: '700',
-    color: '#FFFFFF',
-    marginTop: 30,
-  },
-
   /******************** VISION CAMERA ********************/
-
-  permissions_content_container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 
   // Vertical Layout Formatting
   vertical_row_select_event: {
@@ -95,76 +70,6 @@ const styles = StyleSheet.create({
   horizontal_bottom_void_right: {
     flex: 0,
     height: window.height,
-  },
-
-  /******************** RENDER CAMERA ********************/
-  camera_action_btn: {
-    height: 60,
-    width: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  // Built In Camera Component Contorls
-  snap_btn: {
-    height: 90,
-    width: 90,
-    borderColor: '#FFFFFF',
-    borderWidth: 3,
-    borderRadius: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  rec_btn: {
-    height: 90,
-    width: 90,
-    borderColor: '#FFFFFF',
-    borderWidth: 3,
-    borderRadius: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  stop_btn: {
-    height: 90,
-    width: 90,
-    borderColor: '#FF0000',
-    borderWidth: 3,
-    borderRadius: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  no_device_container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  camera_action: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  camera_bottom_container: {
-    height: '100%',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  // Photo Indicator
-  take_pic_indicator: {
-    borderColor: '#FFFFFF',
-    backgroundColor: 'rgba(255, 255, 255, 0.72)',
-    borderWidth: 2,
-    height: '100%',
-    width: '100%',
-  },
-  main_view: {
-    borderColor: '#000',
-    borderWidth: 2,
-    height: '100%',
-    width: '100%',
   },
 });
 

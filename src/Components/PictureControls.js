@@ -1,40 +1,28 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
-import styles from '../styles';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 
 export default function PictureControls(props) {
-  const {icons, cameraState, isRecording, screenSize} = props;
+  const {icons, cameraState, isRecording} = props;
   const {frontCamera} = cameraState;
 
-  let takePictureIcon,
-    cameraSecondary,
-    viewportIcon = null;
-  if (icons) {
-    takePictureIcon = icons.takePictureIcon;
-    cameraSecondary = icons.cameraSecondary;
-    viewportIcon = icons.viewportIcon;
-  }
+  const {height, width} = useWindowDimensions();
+  const styles = stylesWithProps(height, width);
 
-  const is_vertical = screenSize.height > screenSize.width;
-  const vertical_styles = {
-    ...styles.camera_action,
-    height: 120,
-    minWidth: screenSize.width / 3,
-    maxWidth: screenSize.width / 3,
-  };
-  const horizontal_styles = {
-    ...styles.camera_action,
-    flex: 1,
-    width: 120,
-    minHeight: screenSize.height / 3,
-    maxHeight: screenSize.height / 3,
-  };
+  const takePictureIcon = icons ? icons.takePictureIcon : null;
+  const cameraSecondary = icons ? icons.cameraSecondary : null;
+  const viewportIcon = icons ? icons.viewportIcon : null;
 
   const cameraView = frontCamera ? 'Front' : 'Back';
 
   return (
     <>
-      <View style={is_vertical ? vertical_styles : horizontal_styles}>
+      <View style={[styles.flex_centered]}>
         {!isRecording || cameraSecondary.showWhileRecording
           ? cameraSecondary && cameraSecondary.component
             ? cameraSecondary.component
@@ -42,7 +30,7 @@ export default function PictureControls(props) {
           : null}
       </View>
 
-      <View style={is_vertical ? vertical_styles : horizontal_styles}>
+      <View style={[styles.flex_centered]}>
         <TouchableOpacity
           onPress={props.takePicture}
           style={!takePictureIcon ? styles.snap_btn : styles.camera_action_btn}>
@@ -54,7 +42,7 @@ export default function PictureControls(props) {
         </TouchableOpacity>
       </View>
 
-      <View style={is_vertical ? vertical_styles : horizontal_styles}>
+      <View style={[styles.flex_centered]}>
         {cameraView === 'Front' ? (
           <TouchableOpacity
             onPress={props.toggleCamera}
@@ -62,7 +50,7 @@ export default function PictureControls(props) {
             {viewportIcon && viewportIcon.frontCamera ? (
               viewportIcon.frontCamera
             ) : (
-              <View>
+              <View style={[styles.flex_centered]}>
                 <Text style={styles.txt_white}>Front</Text>
               </View>
             )}
@@ -74,7 +62,7 @@ export default function PictureControls(props) {
             {viewportIcon && viewportIcon.backCamera ? (
               viewportIcon.backCamera
             ) : (
-              <View>
+              <View style={[styles.flex_centered]}>
                 <Text style={styles.txt_white}>Back</Text>
               </View>
             )}
@@ -84,3 +72,36 @@ export default function PictureControls(props) {
     </>
   );
 }
+
+const stylesWithProps = (height, width) => {
+  const is_vertical = height > width;
+
+  return StyleSheet.create({
+    flex_centered: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    txt_white: {
+      color: '#FFF',
+    },
+
+    camera_action_btn: {
+      height: 60,
+      width: 60,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    snap_btn: {
+      height: 90,
+      width: 90,
+      borderColor: '#FFFFFF',
+      borderWidth: 3,
+      borderRadius: 45,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });
+};

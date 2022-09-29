@@ -1,35 +1,37 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
-import styles from '../styles';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 
 export default function VideoControls(props) {
-  const {icons, cameraState, isRecording, screenSize} = props;
+  const {icons, cameraState, isRecording} = props;
   const {frontCamera} = cameraState;
 
-  let startRecordingIcon,
-    stopRecordingIcon,
-    cameraSecondary,
-    viewportIcon = null;
-  if (icons) {
-    startRecordingIcon = icons.startRecordingIcon;
-    stopRecordingIcon = icons.stopRecordingIcon;
-    cameraSecondary = icons.cameraSecondary;
-    viewportIcon = icons.viewportIcon;
-  }
+  const {height, width} = useWindowDimensions();
+  const styles = stylesWithProps(height, width);
 
-  const is_vertical = screenSize.height > screenSize.width;
+  const startRecordingIcon = icons ? icons.startRecordingIcon : null;
+  const stopRecordingIcon = icons ? icons.stopRecordingIcon : null;
+  const cameraSecondary = icons ? icons.cameraSecondary : null;
+  const viewportIcon = icons ? icons.viewportIcon : null;
+
+  const is_vertical = height > width;
   const vertical_styles = {
-    ...styles.camera_action,
+    ...styles.flex_centered,
     height: 120,
-    minWidth: screenSize.width / 3,
-    maxWidth: screenSize.width / 3,
+    minWidth: width / 3,
+    maxWidth: width / 3,
   };
   const horizontal_styles = {
-    ...styles.camera_action,
+    ...styles.flex_centered,
     flex: 1,
     width: 120,
-    minHeight: screenSize.height / 3,
-    maxHeight: screenSize.height / 3,
+    minHeight: height / 3,
+    maxHeight: height / 3,
   };
 
   const cameraView = frontCamera ? 'Front' : 'Back';
@@ -105,3 +107,46 @@ export default function VideoControls(props) {
     </>
   );
 }
+
+const stylesWithProps = (height, width) => {
+  const is_vertical = height > width;
+
+  return StyleSheet.create({
+    flex_centered: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    txt_white: {
+      color: '#FFF',
+    },
+
+    camera_action_btn: {
+      height: 60,
+      width: 60,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    rec_btn: {
+      height: 90,
+      width: 90,
+      borderColor: '#FFFFFF',
+      borderWidth: 3,
+      borderRadius: 45,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    stop_btn: {
+      height: 90,
+      width: 90,
+      borderColor: '#FF0000',
+      borderWidth: 3,
+      borderRadius: 45,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });
+};
