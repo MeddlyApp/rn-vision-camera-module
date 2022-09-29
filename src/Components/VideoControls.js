@@ -19,26 +19,11 @@ export default function VideoControls(props) {
   const cameraSecondary = icons ? icons.cameraSecondary : null;
   const viewportIcon = icons ? icons.viewportIcon : null;
 
-  const is_vertical = height > width;
-  const vertical_styles = {
-    ...styles.flex_centered,
-    height: 120,
-    minWidth: width / 3,
-    maxWidth: width / 3,
-  };
-  const horizontal_styles = {
-    ...styles.flex_centered,
-    flex: 1,
-    width: 120,
-    minHeight: height / 3,
-    maxHeight: height / 3,
-  };
-
   const cameraView = frontCamera ? 'Front' : 'Back';
 
   return (
     <>
-      <View style={is_vertical ? vertical_styles : horizontal_styles}>
+      <View>
         {/* cameraSecondary.showWhileRecording */}
         {!isRecording || cameraSecondary.showWhileRecording
           ? cameraSecondary && cameraSecondary.component
@@ -47,7 +32,7 @@ export default function VideoControls(props) {
           : null}
       </View>
 
-      <View style={is_vertical ? vertical_styles : horizontal_styles}>
+      <View>
         {!isRecording ? (
           <TouchableOpacity
             onPress={props.startVideo}
@@ -75,7 +60,7 @@ export default function VideoControls(props) {
         )}
       </View>
 
-      <View style={is_vertical ? vertical_styles : horizontal_styles}>
+      <View>
         {!isRecording ? (
           cameraView === 'Front' ? (
             <TouchableOpacity

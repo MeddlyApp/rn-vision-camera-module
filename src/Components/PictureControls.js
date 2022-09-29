@@ -22,7 +22,7 @@ export default function PictureControls(props) {
 
   return (
     <>
-      <View style={[styles.flex_centered]}>
+      <View>
         {!isRecording || cameraSecondary.showWhileRecording
           ? cameraSecondary && cameraSecondary.component
             ? cameraSecondary.component
@@ -30,7 +30,7 @@ export default function PictureControls(props) {
           : null}
       </View>
 
-      <View style={[styles.flex_centered]}>
+      <View>
         <TouchableOpacity
           onPress={props.takePicture}
           style={!takePictureIcon ? styles.snap_btn : styles.camera_action_btn}>
@@ -42,7 +42,7 @@ export default function PictureControls(props) {
         </TouchableOpacity>
       </View>
 
-      <View style={[styles.flex_centered]}>
+      <View>
         {cameraView === 'Front' ? (
           <TouchableOpacity
             onPress={props.toggleCamera}

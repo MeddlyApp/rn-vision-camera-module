@@ -306,31 +306,26 @@ export default function PlethoraCamera(props) {
           toggleFlash={toggleFlashOnOff}
           toggleVideoOrPicture={toggleVideoOrPicture}
           orientation={orientation}>
-          {isVideo
-            ? {
-                customComponents: children,
-                videoControls: (
-                  <VideoControls
-                    isRecording={isRecording}
-                    startVideo={startVideo}
-                    endVideo={endVideo}
-                    toggleCamera={toggleCamera}
-                    cameraState={cameraState}
-                    icons={children && children.icons ? children.icons : null}
-                  />
-                ),
-              }
-            : {
-                customComponents: children,
-                pictureControls: (
-                  <PictureControls
-                    takePicture={takePicture}
-                    toggleCamera={toggleCamera}
-                    cameraState={cameraState}
-                    icons={children && children.icons ? children.icons : null}
-                  />
-                ),
-              }}
+          {{
+            customComponents: children,
+            controls: isVideo ? (
+              <VideoControls
+                isRecording={isRecording}
+                startVideo={startVideo}
+                endVideo={endVideo}
+                toggleCamera={toggleCamera}
+                cameraState={cameraState}
+                icons={children && children.icons ? children.icons : null}
+              />
+            ) : (
+              <PictureControls
+                takePicture={takePicture}
+                toggleCamera={toggleCamera}
+                cameraState={cameraState}
+                icons={children && children.icons ? children.icons : null}
+              />
+            ),
+          }}
         </CameraControls>
       ) : null}
     </View>

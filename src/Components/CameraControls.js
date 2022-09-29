@@ -7,28 +7,25 @@ import {
 } from 'react-native';
 import CameraSettings from './CameraSettings';
 import RecordingTimer from './RecordingTimer';
+import VideoControls from './VideoControls';
 
 export default function CameraControls(props) {
   const {
-    customComponents,
+    children,
     cameraState,
     toggleVideoOrPicture,
     toggleCamera,
     toggleFlash,
     orientation,
   } = props;
+
+  const {customComponents, controls} = children;
   const {isVideo, frontCamera, flash, isRecording} = cameraState;
 
   const cameraTop = customComponents ? customComponents.cameraTop : null;
   const cameraMiddle = customComponents ? customComponents.cameraBottom : null;
   const cameraBottom = customComponents ? customComponents.cameraBottom : null;
   const icons = customComponents ? customComponents.icons : null;
-  const videoControls = customComponents
-    ? customComponents.videoControls
-    : null;
-  const pictureControls = customComponents
-    ? customComponents.pictureControls
-    : null;
 
   const {height, width} = useWindowDimensions();
   const styles = stylesWithProps(height, width, orientation);
@@ -71,9 +68,7 @@ export default function CameraControls(props) {
       </View>
 
       {/* Recording / Take Picture Controls */}
-      <View style={styles.section_controls}>
-        {isVideo ? videoControls : pictureControls}
-      </View>
+      <View style={styles.section_controls}>{controls}</View>
 
       {/* Bottom Area */}
       <View style={styles.section_bottom}>
@@ -105,37 +100,48 @@ const stylesWithProps = (height, width, orientation) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      flexDirection: is_vertical ? 'column' : 'row',
+      flexDirection: is_vertical ? 'column' : is_left ? 'row' : 'row-reverse',
     },
 
     section_top: {
       height: is_vertical ? top : height,
       width: is_vertical ? height : top,
-      backgroundColor: 'pink',
+      backgroundColor: 'rgba(0, 0, 255, 0.25)',
+      flexDirection: is_vertical ? 'row' : 'column',
     },
 
     section_gestures: {
       flex: 1,
       height: is_vertical ? null : height,
-      backgroundColor: 'purple',
+      backgroundColor: 'rgba(255, 0, 0, 0.25)',
     },
 
     section_settings: {
       height: is_vertical ? settings : height,
       width: is_vertical ? height : settings,
-      backgroundColor: 'yellow',
+      backgroundColor: 'rgba(0, 0, 255, 0.25)',
+      flexDirection: is_vertical
+        ? 'row'
+        : is_left
+        ? 'column-reverse'
+        : 'column',
     },
 
     section_controls: {
       height: is_vertical ? controls : height,
       width: is_vertical ? height : controls,
-      backgroundColor: 'green',
+      backgroundColor: 'rgba(255, 0, 0, 0.25)',
+      flexDirection: is_vertical
+        ? 'row'
+        : is_left
+        ? 'column-reverse'
+        : 'column',
     },
 
     section_bottom: {
       height: is_vertical ? bottom : height,
       width: is_vertical ? height : bottom,
-      backgroundColor: 'red',
+      backgroundColor: 'rgba(0, 0, 255, 0.25)',
     },
   });
 };
