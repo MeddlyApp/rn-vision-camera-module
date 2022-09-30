@@ -23,7 +23,7 @@ export default function VideoControls(props) {
 
   return (
     <>
-      <View>
+      <View style={styles.w33}>
         {/* cameraSecondary.showWhileRecording */}
         {!isRecording || cameraSecondary.showWhileRecording
           ? cameraSecondary && cameraSecondary.component
@@ -32,7 +32,7 @@ export default function VideoControls(props) {
           : null}
       </View>
 
-      <View>
+      <View style={styles.w33}>
         {!isRecording ? (
           <TouchableOpacity
             onPress={props.startVideo}
@@ -60,7 +60,7 @@ export default function VideoControls(props) {
         )}
       </View>
 
-      <View>
+      <View style={styles.w33}>
         {!isRecording ? (
           cameraView === 'Front' ? (
             <TouchableOpacity
@@ -99,6 +99,13 @@ const stylesWithProps = (height, width) => {
   return StyleSheet.create({
     flex_centered: {
       flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    w33: {
+      height: is_vertical ? 120 : height / 3,
+      width: is_vertical ? width / 3 : 120,
       alignItems: 'center',
       justifyContent: 'center',
     },

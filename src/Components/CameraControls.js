@@ -106,20 +106,17 @@ const stylesWithProps = (height, width, orientation) => {
     section_top: {
       height: is_vertical ? top : height,
       width: is_vertical ? height : top,
-      backgroundColor: 'rgba(0, 0, 255, 0.25)',
       flexDirection: is_vertical ? 'row' : 'column',
     },
 
     section_gestures: {
       flex: 1,
       height: is_vertical ? null : height,
-      backgroundColor: 'rgba(255, 0, 0, 0.25)',
     },
 
     section_settings: {
       height: is_vertical ? settings : height,
       width: is_vertical ? height : settings,
-      backgroundColor: 'rgba(0, 0, 255, 0.25)',
       flexDirection: is_vertical
         ? 'row'
         : is_left
@@ -130,7 +127,6 @@ const stylesWithProps = (height, width, orientation) => {
     section_controls: {
       height: is_vertical ? controls : height,
       width: is_vertical ? height : controls,
-      backgroundColor: 'rgba(255, 0, 0, 0.25)',
       flexDirection: is_vertical
         ? 'row'
         : is_left
@@ -141,7 +137,6 @@ const stylesWithProps = (height, width, orientation) => {
     section_bottom: {
       height: is_vertical ? bottom : height,
       width: is_vertical ? height : bottom,
-      backgroundColor: 'rgba(0, 0, 255, 0.25)',
     },
   });
 };

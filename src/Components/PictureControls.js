@@ -22,7 +22,7 @@ export default function PictureControls(props) {
 
   return (
     <>
-      <View>
+      <View style={styles.w33}>
         {!isRecording || cameraSecondary.showWhileRecording
           ? cameraSecondary && cameraSecondary.component
             ? cameraSecondary.component
@@ -30,7 +30,7 @@ export default function PictureControls(props) {
           : null}
       </View>
 
-      <View>
+      <View style={styles.w33}>
         <TouchableOpacity
           onPress={props.takePicture}
           style={!takePictureIcon ? styles.snap_btn : styles.camera_action_btn}>
@@ -42,7 +42,7 @@ export default function PictureControls(props) {
         </TouchableOpacity>
       </View>
 
-      <View>
+      <View style={styles.w33}>
         {cameraView === 'Front' ? (
           <TouchableOpacity
             onPress={props.toggleCamera}
@@ -79,6 +79,13 @@ const stylesWithProps = (height, width) => {
   return StyleSheet.create({
     flex_centered: {
       flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    w33: {
+      height: is_vertical ? 120 : height / 3,
+      width: is_vertical ? width / 3 : 120,
       alignItems: 'center',
       justifyContent: 'center',
     },

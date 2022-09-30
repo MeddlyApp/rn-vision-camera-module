@@ -102,7 +102,7 @@ export default function App() {
         );
       });
     },
-    getDeviceInfo: x => null, // console.log('Device Info: ', x),
+    getDeviceInfo: x => console.log('Device Info: ', x),
   };
 
   const cameraState = {
@@ -183,7 +183,7 @@ export default function App() {
       onSwipeRight={t => console.log('onSwipeRight', t)}
       onSwipeUp={t => console.log('onSwipeUp', t)}
       onSwipeDown={t => console.log('onSwipeDown', t)}>
-      {/* customComponents */}
+      {customComponents}
     </PlethoraCamera>
   );
 }

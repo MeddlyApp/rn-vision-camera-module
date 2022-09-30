@@ -22,7 +22,7 @@ export default function CameraSettings(props) {
   return (
     <>
       {/* Flash */}
-      <View>
+      <View style={styles.w50}>
         {cameraView === 'Front' ? null : (
           <TouchableOpacity
             onPress={props.toggleFlash}
@@ -63,7 +63,7 @@ export default function CameraSettings(props) {
       </View>
 
       {/* Camera Mode */}
-      <View>
+      <View style={styles.w50}>
         <TouchableOpacity
           onPress={props.toggleVideoOrPicture}
           style={styles.camera_action_btn}>
@@ -92,6 +92,13 @@ const stylesWithProps = (height, width) => {
   const is_vertical = height > width;
 
   return StyleSheet.create({
+    w50: {
+      height: is_vertical ? 60 : height / 2,
+      width: is_vertical ? width / 2 : 60,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
     flex_centered: {
       flex: 1,
       alignItems: 'center',
@@ -101,6 +108,7 @@ const stylesWithProps = (height, width) => {
     txt_white: {
       color: '#FFF',
     },
+
     camera_action_btn: {
       height: 60,
       width: 60,
