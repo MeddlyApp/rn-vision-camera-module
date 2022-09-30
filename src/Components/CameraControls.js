@@ -23,7 +23,7 @@ export default function CameraControls(props) {
   const {isVideo, frontCamera, flash, isRecording} = cameraState;
 
   const cameraTop = customComponents ? customComponents.cameraTop : null;
-  const cameraMiddle = customComponents ? customComponents.cameraBottom : null;
+  const cameraMiddle = customComponents ? customComponents.cameraMiddle : null;
   const cameraBottom = customComponents ? customComponents.cameraBottom : null;
   const icons = customComponents ? customComponents.icons : null;
 
