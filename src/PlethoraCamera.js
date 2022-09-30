@@ -54,6 +54,7 @@ export default function PlethoraCamera(props) {
     onSwipeRight,
     swipeDistance,
     showCameraControls,
+    sectionHeights,
     children,
   } = props;
 
@@ -301,6 +302,7 @@ export default function PlethoraCamera(props) {
       {showCameraControls ? (
         <CameraControls
           cameraState={cameraState}
+          sectionHeights={sectionHeights}
           customComponents={children ? children : null}
           toggleCamera={toggleCamera}
           toggleFlash={toggleFlashOnOff}

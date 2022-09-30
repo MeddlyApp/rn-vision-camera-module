@@ -13,6 +13,7 @@ export default function CameraControls(props) {
   const {
     children,
     cameraState,
+    sectionHeights,
     toggleVideoOrPicture,
     toggleCamera,
     toggleFlash,
@@ -28,7 +29,7 @@ export default function CameraControls(props) {
   const icons = customComponents ? customComponents.icons : null;
 
   const {height, width} = useWindowDimensions();
-  const styles = stylesWithProps(height, width, orientation);
+  const styles = stylesWithProps(height, width, orientation, sectionHeights);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -85,17 +86,22 @@ export default function CameraControls(props) {
   );
 }
 
-const stylesWithProps = (height, width, orientation) => {
+const stylesWithProps = (height, width, orientation, sectionHeights) => {
   const is_vertical = height > width;
 
   const is_portrait = orientation === 'PORTRAIT';
   const is_left = orientation === 'LANDSCAPE-LEFT';
   const is_right = orientation === 'LANDSCAPE-RIGHT';
 
-  const top = 100;
+  const customTopHeight =
+    sectionHeights && sectionHeights.top ? sectionHeights.top : 100;
+  const customBottomHeight =
+    sectionHeights && sectionHeights.bottom ? sectionHeights.bottom : 100;
+
+  const top = customTopHeight;
   const settings = 60;
   const controls = 140;
-  const bottom = 60;
+  const bottom = customBottomHeight;
 
   return StyleSheet.create({
     container: {

@@ -113,12 +113,18 @@ const custom = {
   },
 };
 
+const sectionHeights = {
+  top: 100,
+  bottom: 100,
+};
+
 // Render
 <PlethoraCamera
   // Camera Config
   config={config}
   cameraState={cameraState}
   stateActions={stateActions}
+  sectionHeights={sectionHeights}
   // Pre-Built Actions
   showCameraControls={true}
   saveToCameraRoll={true}
