@@ -1,6 +1,6 @@
 {
   "name": "@plethora_co/rn-vision-camera",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "private": false,
   "scripts": {
     "android": "react-native run-android",

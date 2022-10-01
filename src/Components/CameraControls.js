@@ -54,6 +54,8 @@ export default function CameraControls(props) {
       {/* Settings */}
       <View style={styles.section_settings}>
         {isRecording ? (
+          <RecordingTimer />
+        ) : (
           <CameraSettings
             frontCamera={frontCamera}
             flash={flash}
@@ -63,8 +65,6 @@ export default function CameraControls(props) {
             toggleFlash={toggleFlash}
             icons={icons ? icons : null}
           />
-        ) : (
-          <RecordingTimer />
         )}
       </View>
 
