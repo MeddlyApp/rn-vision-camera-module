@@ -53,7 +53,7 @@ export default function CameraControls(props) {
 
       {/* Settings */}
       <View style={styles.section_settings}>
-        {!isRecording ? (
+        {isRecording ? (
           <CameraSettings
             frontCamera={frontCamera}
             flash={flash}
