@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import CameraSettings from './CameraSettings';
 import RecordingTimer from './RecordingTimer';
-import VideoControls from './VideoControls';
 
 export default function CameraControls(props) {
   const {
@@ -32,9 +31,9 @@ export default function CameraControls(props) {
   const styles = stylesWithProps(height, width, orientation, sectionHeights);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} pointerEvents="box-none">
       {/* Top Bar */}
-      <View style={styles.section_top}>
+      <View style={styles.section_top} pointerEvents="box-none">
         {!isRecording || cameraTop.showWhileRecording
           ? cameraTop && cameraTop.component
             ? cameraTop.component
@@ -43,7 +42,7 @@ export default function CameraControls(props) {
       </View>
 
       {/* Gesture Controls */}
-      <View style={styles.section_gestures}>
+      <View style={styles.section_gestures} pointerEvents="box-none">
         {!isRecording || cameraMiddle.showWhileRecording
           ? cameraMiddle && cameraMiddle.component
             ? cameraMiddle.component
@@ -52,7 +51,7 @@ export default function CameraControls(props) {
       </View>
 
       {/* Settings */}
-      <View style={styles.section_settings}>
+      <View style={styles.section_settings} pointerEvents="box-none">
         {isRecording ? (
           <RecordingTimer />
         ) : (
@@ -69,10 +68,12 @@ export default function CameraControls(props) {
       </View>
 
       {/* Recording / Take Picture Controls */}
-      <View style={styles.section_controls}>{controls}</View>
+      <View style={styles.section_controls} pointerEvents="box-none">
+        {controls}
+      </View>
 
       {/* Bottom Area */}
-      <View style={styles.section_bottom}>
+      <View style={styles.section_bottom} pointerEvents="box-none">
         {!isRecording
           ? cameraBottom && cameraBottom.component
             ? cameraBottom.component

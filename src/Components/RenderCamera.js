@@ -247,6 +247,25 @@ export default function RenderCamera(props) {
           <Text style={styles.txt_white}>No Device Found</Text>
         </View>
       ) : null}
+
+      {!isCameraInitialized ? (
+        <GestureHandler
+          showTakePicIndicator={props.showTakePicIndicator}
+          onSingleTap={tapToFocus}
+          onDoubleTap={props.onDoubleTap}
+          onPinchStart={onPinchStart}
+          onPinchEnd={onPinchEnd}
+          onPinchProgress={onPinchProgress}
+          swipeDistance={props.swipeDistance}
+          onSwipeUp={props.onSwipeUp}
+          onSwipeDown={props.onSwipeDown}
+          onSwipeLeft={props.onSwipeLeft}
+          onSwipeRight={props.onSwipeRight}>
+          <View style={styles.flex_centered}>
+            {/* <Text style={styles.txt_white}>Not Initialized</Text> */}
+          </View>
+        </GestureHandler>
+      ) : null}
     </View>
   );
 }
