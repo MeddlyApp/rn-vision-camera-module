@@ -9,7 +9,6 @@ import {
 
 export default function GestureHandler(props) {
   const {
-    showTakePicIndicator,
     onSingleTap,
     onDoubleTap,
     onPinchStart,
@@ -77,11 +76,7 @@ export default function GestureHandler(props) {
             <View
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
-              style={
-                showTakePicIndicator
-                  ? styles.take_pic_indicator
-                  : styles.main_view
-              }>
+              style={styles.flex1}>
               {children}
             </View>
           </TapGestureHandler>
@@ -92,18 +87,5 @@ export default function GestureHandler(props) {
 }
 
 const styles = StyleSheet.create({
-  main_view: {
-    borderColor: '#000',
-    borderWidth: 2,
-    height: '100%',
-    width: '100%',
-  },
-
-  take_pic_indicator: {
-    borderColor: '#FFFFFF',
-    backgroundColor: 'rgba(255, 255, 255, 0.72)',
-    borderWidth: 2,
-    height: '100%',
-    width: '100%',
-  },
+  flex1: {flex: 1},
 });

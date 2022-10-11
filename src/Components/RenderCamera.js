@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, useWindowDimensions} from 'react-native';
 import {sortFormats, useCameraDevices} from 'react-native-vision-camera';
 import {Camera, frameRateIncluded} from 'react-native-vision-camera';
 import {useIsForeground} from '../hooks/useIsForeground';
@@ -14,6 +14,7 @@ export default function RenderCamera(props) {
     config,
     cameraState,
     getDeviceInfo,
+    showTakePicIndicator,
   } = props;
 
   const tapToFocus = async ({nativeEvent}) => {
@@ -199,11 +200,18 @@ export default function RenderCamera(props) {
 
   const zoom = zoomValue * 10; // multiplied by 10 because 1 is minimum
 
+  const {height, width} = useWindowDimensions();
+  const styles = stylesWithArgs(height, width);
+
   return (
-    <View style={StyleSheet.absoluteFill}>
+    <View
+      style={
+        showTakePicIndicator
+          ? [styles.container, styles.take_picture_indicator]
+          : [styles.container]
+      }>
       {device != null && (
         <GestureHandler
-          showTakePicIndicator={props.showTakePicIndicator}
           onSingleTap={tapToFocus}
           onDoubleTap={props.onDoubleTap}
           onPinchStart={onPinchStart}
@@ -250,7 +258,6 @@ export default function RenderCamera(props) {
 
       {!isCameraInitialized ? (
         <GestureHandler
-          showTakePicIndicator={props.showTakePicIndicator}
           onSingleTap={tapToFocus}
           onDoubleTap={props.onDoubleTap}
           onPinchStart={onPinchStart}
@@ -270,14 +277,29 @@ export default function RenderCamera(props) {
   );
 }
 
-const styles = StyleSheet.create({
-  flex_centered: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const stylesWithArgs = (height, width) => {
+  return StyleSheet.create({
+    container: {
+      ...StyleSheet.absoluteFill,
+      height,
+      width,
+      borderColor: 'rgba(0,0,0,0)',
+      borderWidth: 2,
+    },
 
-  txt_white: {
-    color: '#FFF',
-  },
-});
+    take_picture_indicator: {
+      borderColor: '#FFFFFF',
+      backgroundColor: 'rgba(255, 255, 255, 0.72)',
+    },
+
+    flex_centered: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    txt_white: {
+      color: '#FFF',
+    },
+  });
+};
