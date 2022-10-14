@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo} from 'react';
-import {StyleSheet, View, Text, useWindowDimensions} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import {sortFormats, useCameraDevices} from 'react-native-vision-camera';
 import {Camera, frameRateIncluded} from 'react-native-vision-camera';
 import {useIsForeground} from '../hooks/useIsForeground';
@@ -200,9 +200,6 @@ export default function RenderCamera(props) {
 
   const zoom = zoomValue * 10; // multiplied by 10 because 1 is minimum
 
-  const {height, width} = useWindowDimensions();
-  const styles = stylesWithArgs(height, width);
-
   return (
     <View
       style={
@@ -277,29 +274,25 @@ export default function RenderCamera(props) {
   );
 }
 
-const stylesWithArgs = (height, width) => {
-  return StyleSheet.create({
-    container: {
-      ...StyleSheet.absoluteFill,
-      height,
-      width,
-      borderColor: 'rgba(0,0,0,0)',
-      borderWidth: 2,
-    },
+const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFill,
+    borderColor: 'rgba(0,0,0,0)',
+    borderWidth: 2,
+  },
 
-    take_picture_indicator: {
-      borderColor: '#FFFFFF',
-      backgroundColor: 'rgba(255, 255, 255, 0.72)',
-    },
+  take_picture_indicator: {
+    borderColor: '#FFFFFF',
+    backgroundColor: 'rgba(255, 255, 255, 0.72)',
+  },
 
-    flex_centered: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  flex_centered: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    txt_white: {
-      color: '#FFF',
-    },
-  });
-};
+  txt_white: {
+    color: '#FFF',
+  },
+});

@@ -18,7 +18,6 @@ import {
   View,
   Linking,
   StatusBar,
-  useWindowDimensions,
 } from 'react-native';
 import {Camera} from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
@@ -257,9 +256,6 @@ export default function PlethoraCamera(props) {
 
   const hasAllPermissions = hasCameraPermission && hasMicrophonePermission;
 
-  const {height, width} = useWindowDimensions();
-  const styles = stylesWithArgs(height, width);
-
   if (!hasAllPermissions) {
     return (
       <View style={styles.base_container}>
@@ -340,18 +336,14 @@ export default function PlethoraCamera(props) {
   );
 }
 
-const stylesWithArgs = (height, width) => {
-  return StyleSheet.create({
-    base_container: {
-      flex: 1,
-      backgroundColor: '#000',
-      height,
-      width,
-    },
-    missing_permissions: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  base_container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  missing_permissions: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
