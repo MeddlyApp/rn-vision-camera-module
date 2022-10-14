@@ -76,7 +76,7 @@ export default function GestureHandler(props) {
             <View
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
-              style={styles.flex1}>
+              style={styles.main_view}>
               {children}
             </View>
           </TapGestureHandler>
@@ -87,5 +87,8 @@ export default function GestureHandler(props) {
 }
 
 const styles = StyleSheet.create({
-  flex1: {flex: 1},
+  main_view: {
+    height: '100%',
+    width: '100%',
+  },
 });
