@@ -179,6 +179,7 @@ export default function PlethoraCamera(props) {
       if (ready) {
         await lockOrientation();
 
+        console.log('Recording - Pre', new Date().getTime());
         await cameraRef.current.startRecording({
           flash: frontCamera ? 'off' : flash,
           fileType: 'mp4',
@@ -199,6 +200,8 @@ export default function PlethoraCamera(props) {
               CameraRoll.save(finalFile);
             }
 
+            console.log('Recording - Ended', timestampEnd);
+
             const payload = {
               data: video.path,
               duration: video.duration,
@@ -218,6 +221,7 @@ export default function PlethoraCamera(props) {
         const timestamp = new Date().getTime();
         if (onRecordingStart) return onRecordingStart(timestamp);
       }
+      console.log('Recording - Active', new Date().getTime());
     } else if (!startRecording && stopRecording) {
       return alert('Missing prop: startRecording()');
     } else if (startRecording && !stopRecording) {

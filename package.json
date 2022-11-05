@@ -23,7 +23,7 @@
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/runtime": "^7.19.0",
-    "@react-native-camera-roll/camera-roll": "^5.0.2",
+    "@react-native-camera-roll/camera-roll": "^5.0.4",
     "@react-native-community/eslint-config": "^3.1.0",
     "babel-jest": "^29.0.3",
     "eslint": "^8.23.1",
@@ -35,8 +35,8 @@
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.6.1",
     "react-native-orientation-locker": "^1.5.0",
-    "react-native-reanimated": "^2.10.0",
-    "react-native-vision-camera": "^2.14.1",
+    "react-native-reanimated": "^2.12.0",
+    "react-native-vision-camera": "^2.15.2",
     "react-test-renderer": "18.2.0"
   },
   "jest": {
