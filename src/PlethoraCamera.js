@@ -18,6 +18,7 @@ import {
   View,
   Linking,
   StatusBar,
+  useWindowDimensions,
 } from 'react-native';
 import {Camera} from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
@@ -69,6 +70,7 @@ export default function PlethoraCamera(props) {
   } = stateActions;
 
   const isAndroid = Platform.OS === 'android';
+  const {height, width} = useWindowDimensions();
 
   // ******************** COMPONENT LIFECYCLE ******************** //
 
@@ -179,6 +181,9 @@ export default function PlethoraCamera(props) {
       if (ready) {
         await lockOrientation();
 
+        const orientationWatchValue = height > width ? 'portrait' : 'landscape';
+        const isPortrait = orientationWatchValue === 'portrait';
+
         console.log('Recording - Pre', new Date().getTime());
         await cameraRef.current.startRecording({
           flash: frontCamera ? 'off' : flash,
@@ -207,6 +212,9 @@ export default function PlethoraCamera(props) {
               duration: video.duration,
               timestamp_start: timestamp,
               timestamp_end: timestampEnd,
+              orientation: orientationWatchValue,
+              height: isPortrait === 'portrait' ? '1920' : '1080',
+              width: isPortrait === 'portrait' ? '1080' : '1920',
             };
 
             Orientation.unlockAllOrientations();
