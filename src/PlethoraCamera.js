@@ -182,7 +182,6 @@ export default function PlethoraCamera(props) {
         await lockOrientation();
 
         const orientationWatchValue = height > width ? 'portrait' : 'landscape';
-        const isPortrait = orientationWatchValue === 'portrait';
 
         console.log('Recording - Pre', new Date().getTime());
         await cameraRef.current.startRecording({
@@ -213,8 +212,8 @@ export default function PlethoraCamera(props) {
               timestamp_start: timestamp,
               timestamp_end: timestampEnd,
               orientation: orientationWatchValue,
-              height: isPortrait === 'portrait' ? '1920' : '1080',
-              width: isPortrait === 'portrait' ? '1080' : '1920',
+              height: height > width ? '1920' : '1080',
+              width: height > width ? '1080' : '1920',
             };
 
             Orientation.unlockAllOrientations();
