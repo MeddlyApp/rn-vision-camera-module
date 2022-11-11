@@ -207,7 +207,6 @@ export default function PlethoraCamera(props) {
               duration: video.duration,
               timestamp_start: timestamp,
               timestamp_end: timestampEnd,
-              orientation: orientation,
             };
 
             Orientation.unlockAllOrientations();
