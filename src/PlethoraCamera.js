@@ -259,6 +259,12 @@ export default function PlethoraCamera(props) {
     const newName = `${fileName}${timestamp}`;
     const finalFile = await renameFile(photo, newName);
     photo.path = finalFile;
+
+    const orientationWatchValue = height > width ? 'portrait' : 'landscape';
+    photo.orientation = orientationWatchValue;
+    photo.height = height > width ? '1920' : '1080';
+    photo.width = height > width ? '1080' : '1920';
+
     if (saveToCameraRoll) CameraRoll.save(finalFile);
     if (onTakePicture) onTakePicture(photo);
   };
