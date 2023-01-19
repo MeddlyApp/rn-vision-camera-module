@@ -6,9 +6,18 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
+import {CameraIcons, CameraState} from '../Interfaces';
 
-export default function PictureControls(props) {
-  const {icons, cameraState, isRecording} = props;
+interface Props {
+  icons: CameraIcons;
+  cameraState: CameraState;
+  isRecording?: boolean;
+  takePicture: () => any;
+  toggleCamera: () => any;
+}
+
+export default function PictureControls(props: Props) {
+  const {icons, cameraState, isRecording, takePicture, toggleCamera} = props;
   const {frontCamera} = cameraState;
 
   const {height, width} = useWindowDimensions();
@@ -23,7 +32,7 @@ export default function PictureControls(props) {
   return (
     <>
       <View style={styles.w33}>
-        {!isRecording || cameraSecondary.showWhileRecording
+        {!isRecording || cameraSecondary?.showWhileRecording
           ? cameraSecondary && cameraSecondary.component
             ? cameraSecondary.component
             : null
@@ -32,7 +41,7 @@ export default function PictureControls(props) {
 
       <View style={styles.w33}>
         <TouchableOpacity
-          onPress={props.takePicture}
+          onPress={takePicture}
           style={!takePictureIcon ? styles.snap_btn : styles.camera_action_btn}>
           {takePictureIcon ? (
             takePictureIcon
@@ -45,7 +54,7 @@ export default function PictureControls(props) {
       <View style={styles.w33}>
         {cameraView === 'Front' ? (
           <TouchableOpacity
-            onPress={props.toggleCamera}
+            onPress={toggleCamera}
             style={styles.camera_action_btn}>
             {viewportIcon && viewportIcon.frontCamera ? (
               viewportIcon.frontCamera
@@ -57,7 +66,7 @@ export default function PictureControls(props) {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            onPress={props.toggleCamera}
+            onPress={toggleCamera}
             style={styles.camera_action_btn}>
             {viewportIcon && viewportIcon.backCamera ? (
               viewportIcon.backCamera
@@ -73,7 +82,7 @@ export default function PictureControls(props) {
   );
 }
 
-const stylesWithProps = (height, width) => {
+const stylesWithProps = (height: number, width: number) => {
   const is_vertical = height > width;
 
   return StyleSheet.create({

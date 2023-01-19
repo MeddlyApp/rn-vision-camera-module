@@ -7,8 +7,26 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-export default function CameraSettings(props) {
-  const {frontCamera, flash, isVideo, icons} = props;
+interface Props {
+  frontCamera: boolean;
+  flash?: string;
+  isVideo: boolean;
+  toggleFlash?: () => any;
+  toggleVideoOrPicture?: () => any;
+  toggleCamera: () => any;
+  icons?: any;
+}
+
+export default function CameraSettings(props: Props) {
+  const {
+    frontCamera,
+    flash,
+    isVideo,
+    toggleFlash,
+    toggleVideoOrPicture,
+    toggleCamera,
+    icons,
+  } = props;
 
   const {height, width} = useWindowDimensions();
   const styles = stylesWithProps(height, width);
@@ -25,7 +43,7 @@ export default function CameraSettings(props) {
       <View style={styles.w50}>
         {cameraView === 'Front' ? null : (
           <TouchableOpacity
-            onPress={props.toggleFlash}
+            onPress={toggleFlash}
             style={styles.camera_action_btn}>
             <>
               {flash === 'on' ? (
@@ -65,7 +83,7 @@ export default function CameraSettings(props) {
       {/* Camera Mode */}
       <View style={styles.w50}>
         <TouchableOpacity
-          onPress={props.toggleVideoOrPicture}
+          onPress={toggleVideoOrPicture}
           style={styles.camera_action_btn}>
           {isVideo ? (
             toggleVideoIcon ? (
@@ -88,7 +106,7 @@ export default function CameraSettings(props) {
   );
 }
 
-const stylesWithProps = (height, width) => {
+const stylesWithProps = (height: number, width: number) => {
   const is_vertical = height > width;
 
   return StyleSheet.create({

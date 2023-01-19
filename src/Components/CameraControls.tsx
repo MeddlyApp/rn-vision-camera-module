@@ -5,10 +5,21 @@ import {
   useWindowDimensions,
   SafeAreaView,
 } from 'react-native';
+import {CameraState, SectionHeights} from '../Interfaces';
 import CameraSettings from './CameraSettings';
 import RecordingTimer from './RecordingTimer';
 
-export default function CameraControls(props) {
+interface Props {
+  children: any;
+  cameraState: CameraState;
+  sectionHeights: SectionHeights;
+  toggleVideoOrPicture: () => void;
+  toggleCamera: () => void;
+  toggleFlash: () => void;
+  orientation: string;
+}
+
+export default function CameraControls(props: Props) {
   const {
     children,
     cameraState,
@@ -22,10 +33,14 @@ export default function CameraControls(props) {
   const {customComponents, controls} = children;
   const {isVideo, frontCamera, flash, isRecording} = cameraState;
 
-  const cameraTop = customComponents ? customComponents.cameraTop : null;
-  const cameraMiddle = customComponents ? customComponents.cameraMiddle : null;
-  const cameraBottom = customComponents ? customComponents.cameraBottom : null;
-  const icons = customComponents ? customComponents.icons : null;
+  const cameraTop: any = customComponents ? customComponents.cameraTop : null;
+  const cameraMiddle: any = customComponents
+    ? customComponents.cameraMiddle
+    : null;
+  const cameraBottom: any = customComponents
+    ? customComponents.cameraBottom
+    : null;
+  const icons: any = customComponents ? customComponents.icons : null;
 
   const {height, width} = useWindowDimensions();
   const styles = stylesWithProps(height, width, orientation, sectionHeights);
@@ -87,22 +102,26 @@ export default function CameraControls(props) {
   );
 }
 
-const stylesWithProps = (height, width, orientation, sectionHeights) => {
-  const is_vertical = height > width;
+const stylesWithProps = (
+  height: any,
+  width: number,
+  orientation: string,
+  sectionHeights: SectionHeights,
+) => {
+  const is_vertical: boolean = height > width;
+  const is_portrait: boolean = orientation === 'PORTRAIT';
+  const is_left: boolean = orientation === 'LANDSCAPE-LEFT';
+  const is_right: boolean = orientation === 'LANDSCAPE-RIGHT';
 
-  const is_portrait = orientation === 'PORTRAIT';
-  const is_left = orientation === 'LANDSCAPE-LEFT';
-  const is_right = orientation === 'LANDSCAPE-RIGHT';
-
-  const customTopHeight =
+  const customTopHeight: number =
     sectionHeights && sectionHeights.top ? sectionHeights.top : 100;
-  const customBottomHeight =
+  const customBottomHeight: number =
     sectionHeights && sectionHeights.bottom ? sectionHeights.bottom : 100;
 
-  const top = customTopHeight;
-  const settings = 60;
-  const controls = 140;
-  const bottom = customBottomHeight;
+  const top: number = customTopHeight;
+  const settings: number = 60;
+  const controls: number = 140;
+  const bottom: number = customBottomHeight;
 
   return StyleSheet.create({
     container: {

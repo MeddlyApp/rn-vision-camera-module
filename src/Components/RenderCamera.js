@@ -5,7 +5,7 @@ import {Camera, frameRateIncluded} from 'react-native-vision-camera';
 import {useIsForeground} from '../hooks/useIsForeground';
 import GestureHandler from './GestureHandler';
 
-export default function RenderCamera(props) {
+export default function RenderCamera(props: any) {
   const {
     cameraRef,
     frontCamera,

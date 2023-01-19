@@ -6,9 +6,20 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
+import {CameraIcons, CameraState} from '../Interfaces';
 
-export default function VideoControls(props) {
-  const {icons, cameraState, isRecording} = props;
+interface Props {
+  icons: CameraIcons;
+  cameraState: CameraState;
+  startVideo: () => void;
+  endVideo: () => void;
+  isRecording: boolean;
+  toggleCamera: () => void;
+}
+
+export default function VideoControls(props: Props) {
+  const {icons, cameraState, startVideo, endVideo, isRecording, toggleCamera} =
+    props;
   const {frontCamera} = cameraState;
 
   const {height, width} = useWindowDimensions();
@@ -25,7 +36,7 @@ export default function VideoControls(props) {
     <>
       <View style={styles.w33}>
         {/* cameraSecondary.showWhileRecording */}
-        {!isRecording || cameraSecondary.showWhileRecording
+        {!isRecording || cameraSecondary?.showWhileRecording
           ? cameraSecondary && cameraSecondary.component
             ? cameraSecondary.component
             : null
@@ -35,7 +46,7 @@ export default function VideoControls(props) {
       <View style={styles.w33}>
         {!isRecording ? (
           <TouchableOpacity
-            onPress={props.startVideo}
+            onPress={startVideo}
             style={
               !startRecordingIcon ? styles.rec_btn : styles.camera_action_btn
             }>
@@ -47,7 +58,7 @@ export default function VideoControls(props) {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            onPress={props.endVideo}
+            onPress={endVideo}
             style={
               !stopRecordingIcon ? styles.stop_btn : styles.camera_action_btn
             }>
@@ -64,7 +75,7 @@ export default function VideoControls(props) {
         {!isRecording ? (
           cameraView === 'Front' ? (
             <TouchableOpacity
-              onPress={props.toggleCamera}
+              onPress={toggleCamera}
               style={styles.camera_action_btn}>
               {viewportIcon && viewportIcon.frontCamera ? (
                 viewportIcon.frontCamera
@@ -76,7 +87,7 @@ export default function VideoControls(props) {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              onPress={props.toggleCamera}
+              onPress={toggleCamera}
               style={styles.camera_action_btn}>
               {viewportIcon && viewportIcon.backCamera ? (
                 viewportIcon.backCamera
@@ -93,8 +104,8 @@ export default function VideoControls(props) {
   );
 }
 
-const stylesWithProps = (height, width) => {
-  const is_vertical = height > width;
+const stylesWithProps = (height: number, width: number) => {
+  const is_vertical: boolean = height > width;
 
   return StyleSheet.create({
     flex_centered: {

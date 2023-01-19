@@ -1,7 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
-export default function MissingPermissions(props) {
+interface Props {
+  hasCameraPermission: boolean;
+  hasMicrophonePermission: boolean;
+  hasCameraRollPermission: boolean;
+  openSettings: () => void;
+}
+
+export default function MissingPermissions(props: Props) {
   const {
     hasCameraPermission,
     hasMicrophonePermission,

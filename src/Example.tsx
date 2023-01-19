@@ -1,15 +1,24 @@
 import React, {useState} from 'react';
 import {Alert, Text} from 'react-native';
+import {
+  CameraConfig,
+  CameraState,
+  CustomComponents,
+  PhotoPlayload,
+  SectionHeights,
+  VideoPayload,
+} from './Interfaces';
 import PlethoraCamera from './PlethoraCamera';
 
 export default function App() {
-  const [isVideo, setIsVideo] = useState(true);
-  const [frontCamera, setFrontCamera] = useState(false);
-  const [flash, setFlash] = useState('auto');
-  const [videoStabilizationMode, setVideoStabilizationMode] = useState('auto');
-  const [preset, setPreset] = useState(['high', 'medium', 'low'][0]);
-  const [hideStatusBar, setHideStatusBar] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
+  const [isVideo, setIsVideo] = useState<boolean>(true);
+  const [frontCamera, setFrontCamera] = useState<boolean>(false);
+  const [flash, setFlash] = useState<string>('auto');
+  const [videoStabilizationMode, setVideoStabilizationMode] =
+    useState<string>('auto');
+  const [preset, setPreset] = useState<string>(['high', 'medium', 'low'][0]);
+  const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
+  const [isRecording, setIsRecording] = useState<boolean>(false);
 
   const toggleFlash = () => {
     switch (flash) {
@@ -102,10 +111,10 @@ export default function App() {
         );
       });
     },
-    getDeviceInfo: x => console.log('Device Info: ', x),
+    getDeviceInfo: (x: any) => console.log('Device Info: ', x),
   };
 
-  const cameraState = {
+  const cameraState: CameraState = {
     isVideo,
     frontCamera,
     flash,
@@ -115,14 +124,14 @@ export default function App() {
     hideStatusBar,
   };
 
-  const config = {
+  const config: CameraConfig = {
     photo: true, // Required
     video: true, // Required
     fps: 25,
     nameConvention: `Plethora`,
   };
 
-  const customComponents = {
+  const customComponents: CustomComponents = {
     cameraTop: {
       component: <Text style={{color: '#FFF'}}>Top</Text>,
       showWhileRecording: false,
@@ -160,7 +169,7 @@ export default function App() {
     },
   };
 
-  const sectionHeights = {
+  const sectionHeights: SectionHeights = {
     top: 100,
     bottom: 100,
   };
@@ -176,19 +185,22 @@ export default function App() {
       showCameraControls={true}
       saveToCameraRoll={true}
       // Lifecycle Events
-      onTakePicture={p => console.log('onTakePicture', p)}
-      onRecordingStart={ts => console.log('onRecordingStart', ts)}
-      onRecordingFinished={r => console.log('onRecordingFinished', r)}
-      onRecordingError={e => console.log('onRecordingError', e)}
-      onOrientationChange={o => console.log('onOrientationChange', o)}
+      onTakePicture={(res: PhotoPlayload) => console.log('onTakePicture', res)}
+      onRecordingStart={(res: number) => console.log('onRecordingStart', res)}
+      onRecordingFinished={(res: VideoPayload) =>
+        console.log('onRecordingFinished', res)
+      }
+      onRecordingError={(e: any) => console.log('onRecordingError', e)}
+      onOrientationChange={(val: string) =>
+        console.log('onOrientationChange', val)
+      }
       // Custom Gesture Controls
-      onTapFocus={t => console.log('onTapFocus', t)}
-      onDoubleTap={t => console.log('onDoubleTap', t)}
+      onDoubleTap={(res: any) => console.log('onDoubleTap', res)}
       swipeDistance={200}
-      onSwipeLeft={t => console.log('onSwipeLeft', t)}
-      onSwipeRight={t => console.log('onSwipeRight', t)}
-      onSwipeUp={t => console.log('onSwipeUp', t)}
-      onSwipeDown={t => console.log('onSwipeDown', t)}>
+      onSwipeLeft={(res: any) => console.log('onSwipeLeft', res)}
+      onSwipeRight={(res: any) => console.log('onSwipeRight', res)}
+      onSwipeUp={(res: any) => console.log('onSwipeUp', res)}
+      onSwipeDown={(res: any) => console.log('onSwipeDown', res)}>
       {customComponents}
     </PlethoraCamera>
   );

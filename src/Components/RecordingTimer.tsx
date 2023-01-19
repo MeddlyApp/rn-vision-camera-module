@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, useWindowDimensions} from 'react-native';
 import formatElapsedTime from '../../utilities/FormatElapsedTime';
 
-export default function RecordingTimer(props) {
-  const [seconds, setSeconds] = useState(0);
+export default function RecordingTimer() {
+  const [seconds, setSeconds] = useState<number>(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,7 +22,7 @@ export default function RecordingTimer(props) {
   );
 }
 
-const stylesWithProps = (height, width) => {
+const stylesWithProps = (height: number, width: number) => {
   const is_vertical = height > width;
 
   return StyleSheet.create({

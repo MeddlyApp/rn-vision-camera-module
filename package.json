@@ -1,6 +1,6 @@
 {
   "name": "@plethora_co/rn-vision-camera",
-  "version": "0.0.64",
+  "version": "0.0.65",
   "private": false,
   "scripts": {
     "android": "react-native run-android",
@@ -25,6 +25,11 @@
     "@babel/runtime": "^7.19.0",
     "@react-native-camera-roll/camera-roll": "^5.0.4",
     "@react-native-community/eslint-config": "^3.1.0",
+    "@tsconfig/react-native": "^2.0.3",
+    "@types/jest": "^29.2.6",
+    "@types/react": "^18.0.27",
+    "@types/react-native": "^0.71.0",
+    "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.0.3",
     "eslint": "^8.23.1",
     "fbjs": "^3.0.4",
@@ -37,7 +42,8 @@
     "react-native-orientation-locker": "^1.5.0",
     "react-native-reanimated": "^2.12.0",
     "react-native-vision-camera": "^2.15.2",
-    "react-test-renderer": "18.2.0"
+    "react-test-renderer": "18.2.0",
+    "typescript": "^4.9.4"
   },
   "jest": {
     "preset": "react-native"

@@ -1,6 +1,10 @@
 const RNFS = require('react-native-fs');
 
-export default async function renameFile(file, newName) {
+interface File {
+  path: string;
+}
+
+export default async function renameFile(file: File, newName: string) {
   const {path} = file;
   const filename = path.replace(/^.*[\\\/]/, '');
   const ext = path.split('.').pop();
