@@ -6,7 +6,7 @@ export interface CameraState {
   isVideo: boolean;
   frontCamera: boolean;
   flash?: string;
-  isRecording?: boolean;
+  isRecording: boolean;
   videoStabilizationMode?: string;
   preset?: string;
   hideStatusBar?: boolean;
