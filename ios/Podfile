@@ -1,10 +1,24 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '12.4'
-install! 'cocoapods', :deterministic_uuids => false
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
 
-production = ENV["PRODUCTION"] == "1"
+# If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
+# because `react-native-flipper` depends on (FlipperKit,...) that will be excluded
+#
+# To fix this you can also exclude `react-native-flipper` using a `react-native.config.js`
+# ```js
+# module.exports = {
+#   dependencies: {
+#     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
+# ```
+flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
 
 target 'plethoracamera' do
   config = use_native_modules! 
@@ -14,35 +28,37 @@ target 'plethoracamera' do
 
   use_react_native!(
     :path => config[:reactNativePath],
-    # to enable hermes on iOS, change `false` to `true` and then install pods
-    :production => production,
+    # we make it explicit here to aid in the React Native upgrade process.
     :hermes_enabled => flags[:hermes_enabled],
     :fabric_enabled => flags[:fabric_enabled],
-    :flipper_configuration => FlipperConfiguration.enabled,
+    # Enables Flipper.
+    #
+    # Note that if you have use_frameworks! enabled, Flipper will not work and
+    # you should disable the next line.
+    :flipper_configuration => flipper_config,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
   
+  # Handle Signing for RNImageCropPicker-QBImagePicker
   post_install do |installer|
-    # Workaround for signing error on Xcode 14
     installer.pods_project.targets.each do |target|
-      if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
-        target.build_configurations.each do |config|
-            config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
-        end
+      target.build_configurations.each do |config|
+        config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
+        config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
+        config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
       end
     end
-    # End Workaround
-
-    # Workaround for vision camera on Xcode 14
-    installer.target_installation_results.pod_target_installation_results.each do |pod_name, target_installation_result|
-      target_installation_result.native_target.build_configurations.each do |config|
-        # For third party modules who have React-bridging dependency to search correct headers
-        config.build_settings['HEADER_SEARCH_PATHS'] ||= '$(inherited) '
-        config.build_settings['HEADER_SEARCH_PATHS'] << '"$(PODS_ROOT)/Headers/Private/React-bridging/react/bridging" '
-        config.build_settings['HEADER_SEARCH_PATHS'] << '"$(PODS_CONFIGURATION_BUILD_DIR)/React-bridging/react_bridging.framework/Headers" '
-      end
-    end
-    # End Workaround
   end
+
+  # Original
+  #post_install do |installer|
+  #  react_native_post_install(
+  #    installer,
+  #    # Set `mac_catalyst_enabled` to `true` in order to apply patches
+  #    # necessary for Mac Catalyst builds
+  #    :mac_catalyst_enabled => false
+  #  )
+  #  __apply_Xcode_12_5_M1_post_install_workaround(installer)
+  #end
 end
