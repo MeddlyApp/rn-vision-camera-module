@@ -1,4 +1,9 @@
-import {PhotoFile} from 'react-native-vision-camera';
+import {
+  CameraDevice,
+  CameraPreset,
+  PhotoFile,
+  VideoStabilizationMode,
+} from 'react-native-vision-camera';
 
 // ********** Config & Controls ********** //
 
@@ -7,8 +12,8 @@ export interface CameraState {
   frontCamera: boolean;
   flash?: string;
   isRecording: boolean;
-  videoStabilizationMode?: string;
-  preset?: string;
+  videoStabilizationMode: VideoStabilizationMode;
+  preset: CameraPreset;
   hideStatusBar?: boolean;
 }
 
@@ -27,37 +32,30 @@ export interface SectionHeights {
 // ********** Custom Components ********** //
 
 export interface CameraCustomSection {
-  component?: any;
+  component?: JSX.Element;
   showWhileRecording?: boolean;
 }
 
-export interface ViewportIcons {
-  frontCamera?: any;
-  backCamera?: any;
-}
-
-export interface FlashIcons {
-  flashOn?: any;
-  flashAuto?: any;
-  flashOff?: any;
-}
-
 export interface CameraIcons {
-  takePictureIcon?: any;
-  startRecordingIcon?: any;
-  stopRecordingIcon?: any;
-  togglePictureIcon?: any;
-  toggleVideoIcon?: any;
-  viewportIcon?: ViewportIcons;
-  flashIcons?: FlashIcons;
-  cameraSecondary?: CameraCustomSection;
+  takePictureIcon?: JSX.Element;
+  startRecordingIcon?: JSX.Element;
+  stopRecordingIcon?: JSX.Element;
 }
 
 export interface CustomComponents {
   cameraTop?: CameraCustomSection;
   cameraMiddle?: CameraCustomSection;
+  cameraAboveControls?: CameraCustomSection;
   cameraBottom?: CameraCustomSection;
+  cameraControlsLeft?: CameraCustomSection;
+  cameraControlsRight?: CameraCustomSection;
   icons?: CameraIcons;
+}
+
+export interface StateActions {
+  startRecording: () => Promise<boolean>;
+  stopRecording: () => Promise<boolean>;
+  getDeviceInfo: (val: CameraDevice | undefined) => void | undefined;
 }
 
 // ********** Media Response Payloads ********** //

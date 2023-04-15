@@ -5,42 +5,41 @@ import {
   useWindowDimensions,
   SafeAreaView,
 } from 'react-native';
-import {CameraState, SectionHeights} from '../Interfaces';
-import CameraSettings from './CameraSettings';
+import {
+  CameraCustomSection,
+  CameraState,
+  CustomComponents,
+  SectionHeights,
+} from '../Interfaces';
 import RecordingTimer from './RecordingTimer';
 
 interface Props {
-  children: any;
+  children: {
+    customComponents: CustomComponents;
+    controls: JSX.Element;
+  };
   cameraState: CameraState;
   sectionHeights: SectionHeights;
-  toggleVideoOrPicture: () => void;
-  toggleCamera: () => void;
-  toggleFlash: () => void;
   orientation: string;
 }
 
 export default function CameraControls(props: Props) {
-  const {
-    children,
-    cameraState,
-    sectionHeights,
-    toggleVideoOrPicture,
-    toggleCamera,
-    toggleFlash,
-    orientation,
-  } = props;
+  const {children, cameraState, sectionHeights, orientation} = props;
 
   const {customComponents, controls} = children;
-  const {isVideo, frontCamera, flash, isRecording} = cameraState;
+  const {isRecording} = cameraState;
 
-  const cameraTop: any = customComponents ? customComponents.cameraTop : null;
-  const cameraMiddle: any = customComponents
+  const cameraTop: CameraCustomSection | null | undefined = customComponents
+    ? customComponents.cameraTop
+    : null;
+  const cameraMiddle: CameraCustomSection | null | undefined = customComponents
     ? customComponents.cameraMiddle
     : null;
-  const cameraBottom: any = customComponents
+  const cameraAboveControls: CameraCustomSection | null | undefined =
+    customComponents ? customComponents.cameraAboveControls : null;
+  const cameraBottom: CameraCustomSection | null | undefined = customComponents
     ? customComponents.cameraBottom
     : null;
-  const icons: any = customComponents ? customComponents.icons : null;
 
   const {height, width} = useWindowDimensions();
   const styles = stylesWithProps(height, width, orientation, sectionHeights);
@@ -49,8 +48,8 @@ export default function CameraControls(props: Props) {
     <SafeAreaView style={styles.container} pointerEvents="box-none">
       {/* Top Bar */}
       <View style={styles.section_top} pointerEvents="box-none">
-        {!isRecording || cameraTop.showWhileRecording
-          ? cameraTop && cameraTop.component
+        {!isRecording || cameraTop?.showWhileRecording
+          ? cameraTop && cameraTop?.component
             ? cameraTop.component
             : null
           : null}
@@ -58,28 +57,20 @@ export default function CameraControls(props: Props) {
 
       {/* Gesture Controls */}
       <View style={styles.section_gestures} pointerEvents="box-none">
-        {!isRecording || cameraMiddle.showWhileRecording
-          ? cameraMiddle && cameraMiddle.component
+        {!isRecording || cameraMiddle?.showWhileRecording
+          ? cameraMiddle && cameraMiddle?.component
             ? cameraMiddle.component
             : null
           : null}
       </View>
 
-      {/* Settings */}
-      <View style={styles.section_settings} pointerEvents="box-none">
+      {/* Above Camera Controls */}
+      <View style={styles.section_above_controls} pointerEvents="box-none">
         {isRecording ? (
           <RecordingTimer />
-        ) : (
-          <CameraSettings
-            frontCamera={frontCamera}
-            flash={flash}
-            isVideo={isVideo}
-            toggleVideoOrPicture={toggleVideoOrPicture}
-            toggleCamera={toggleCamera}
-            toggleFlash={toggleFlash}
-            icons={icons ? icons : null}
-          />
-        )}
+        ) : cameraAboveControls && cameraAboveControls?.component ? (
+          cameraAboveControls.component
+        ) : null}
       </View>
 
       {/* Recording / Take Picture Controls */}
@@ -90,11 +81,11 @@ export default function CameraControls(props: Props) {
       {/* Bottom Area */}
       <View style={styles.section_bottom} pointerEvents="box-none">
         {!isRecording
-          ? cameraBottom && cameraBottom.component
+          ? cameraBottom && cameraBottom?.component
             ? cameraBottom.component
             : null
           : cameraBottom &&
-            (cameraBottom.component && cameraBottom.showWhileRecording
+            (cameraBottom?.component && cameraBottom?.showWhileRecording
               ? cameraBottom.component
               : null)}
       </View>
@@ -103,15 +94,13 @@ export default function CameraControls(props: Props) {
 }
 
 const stylesWithProps = (
-  height: any,
+  height: number,
   width: number,
   orientation: string,
   sectionHeights: SectionHeights,
 ) => {
   const is_vertical: boolean = height > width;
-  const is_portrait: boolean = orientation === 'PORTRAIT';
   const is_left: boolean = orientation === 'LANDSCAPE-LEFT';
-  const is_right: boolean = orientation === 'LANDSCAPE-RIGHT';
 
   const customTopHeight: number =
     sectionHeights && sectionHeights.top ? sectionHeights.top : 100;
@@ -119,8 +108,8 @@ const stylesWithProps = (
     sectionHeights && sectionHeights.bottom ? sectionHeights.bottom : 100;
 
   const top: number = customTopHeight;
-  const settings: number = 60;
-  const controls: number = 140;
+  const settings = 60;
+  const controls = 140;
   const bottom: number = customBottomHeight;
 
   return StyleSheet.create({
@@ -137,10 +126,10 @@ const stylesWithProps = (
 
     section_gestures: {
       flex: 1,
-      height: is_vertical ? null : height,
+      height: is_vertical ? undefined : height,
     },
 
-    section_settings: {
+    section_above_controls: {
       height: is_vertical ? settings : height,
       width: is_vertical ? height : settings,
       flexDirection: is_vertical

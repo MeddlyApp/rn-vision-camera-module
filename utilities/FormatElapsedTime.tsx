@@ -17,7 +17,7 @@ export default function formatElapsedTime(value: number) {
   // Everything below is a mess but it seems to be working as expected
   // Needs refactor
   const hasHours: number | boolean = hours && hours > 0;
-  const minutesMoreThanNine: boolean = dMinutes > 9;
+  const minutesMoreThanNine: boolean = Number(dMinutes) > 9;
 
   let fMinutes: number | string = '';
   if (hasHours && dMinutes !== '') {

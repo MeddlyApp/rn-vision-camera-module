@@ -9,34 +9,27 @@ import {
 import {CameraIcons, CameraState} from '../Interfaces';
 
 interface Props {
-  icons: CameraIcons;
+  icons?: CameraIcons;
   cameraState: CameraState;
-  isRecording?: boolean;
-  takePicture: () => any;
-  toggleCamera: () => any;
+  takePicture: () => void;
 }
 
 export default function PictureControls(props: Props) {
-  const {icons, cameraState, isRecording, takePicture, toggleCamera} = props;
-  const {frontCamera} = cameraState;
+  const {icons, takePicture} = props;
 
   const {height, width} = useWindowDimensions();
   const styles = stylesWithProps(height, width);
 
-  const takePictureIcon = icons ? icons.takePictureIcon : null;
-  const cameraSecondary = icons ? icons.cameraSecondary : null;
-  const viewportIcon = icons ? icons.viewportIcon : null;
-
-  const cameraView = frontCamera ? 'Front' : 'Back';
+  const takePictureIcon = icons?.takePictureIcon ? icons.takePictureIcon : null;
 
   return (
     <>
       <View style={styles.w33}>
-        {!isRecording || cameraSecondary?.showWhileRecording
-          ? cameraSecondary && cameraSecondary.component
-            ? cameraSecondary.component
+        {/* !isRecording || cameraTop?.showWhileRecording
+          ? cameraTop && cameraTop?.component
+            ? cameraTop.component
             : null
-          : null}
+          : null */}
       </View>
 
       <View style={styles.w33}>
@@ -52,31 +45,11 @@ export default function PictureControls(props: Props) {
       </View>
 
       <View style={styles.w33}>
-        {cameraView === 'Front' ? (
-          <TouchableOpacity
-            onPress={toggleCamera}
-            style={styles.camera_action_btn}>
-            {viewportIcon && viewportIcon.frontCamera ? (
-              viewportIcon.frontCamera
-            ) : (
-              <View style={[styles.flex_centered]}>
-                <Text style={styles.txt_white}>Front</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            onPress={toggleCamera}
-            style={styles.camera_action_btn}>
-            {viewportIcon && viewportIcon.backCamera ? (
-              viewportIcon.backCamera
-            ) : (
-              <View style={[styles.flex_centered]}>
-                <Text style={styles.txt_white}>Back</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        )}
+        {/* !isRecording || cameraTop?.showWhileRecording
+          ? cameraTop && cameraTop?.component
+            ? cameraTop.component
+            : null
+          : null */}
       </View>
     </>
   );
@@ -99,9 +72,7 @@ const stylesWithProps = (height: number, width: number) => {
       justifyContent: 'center',
     },
 
-    txt_white: {
-      color: '#FFF',
-    },
+    txt_white: {color: '#FFF'},
 
     camera_action_btn: {
       height: 60,

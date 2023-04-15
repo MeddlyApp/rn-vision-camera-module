@@ -30,7 +30,7 @@ export default function MissingPermissions(props: Props) {
         <Text style={styles.txt_white}>Camera Roll Permission Denied</Text>
       ) : null}
 
-      <Text style={[styles.txt_white, styles.margin_top]}>Open Settings</Text>
+      <Text style={[styles.txt_white, styles.mt30]}>Open Settings</Text>
     </TouchableOpacity>
   );
 }
@@ -47,7 +47,5 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 
-  margin_top: {
-    marginTop: 30,
-  },
+  mt30: {marginTop: 30},
 });

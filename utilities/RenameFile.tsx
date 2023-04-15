@@ -1,4 +1,4 @@
-const RNFS = require('react-native-fs');
+import RNFS from 'react-native-fs';
 
 interface File {
   path: string;

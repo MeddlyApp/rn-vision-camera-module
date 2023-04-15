@@ -8,7 +8,7 @@
  * RENDERS
 /*/
 
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {
   StyleSheet,
   LogBox,
@@ -20,6 +20,7 @@ import {
   StatusBar,
   useWindowDimensions,
   Alert,
+  NativeTouchEvent,
 } from 'react-native';
 import {Camera, CaptureError, VideoFile} from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
@@ -27,8 +28,10 @@ import Orientation, {OrientationType} from 'react-native-orientation-locker';
 import {
   CameraConfig,
   CameraState,
+  CustomComponents,
   PhotoPlayload,
   SectionHeights,
+  StateActions,
   VideoPayload,
 } from './Interfaces';
 import RenderCamera from './components/RenderCamera';
@@ -37,6 +40,7 @@ import CameraControls from './components/CameraControls';
 import VideoControls from './components/VideoControls';
 import PictureControls from './components/PictureControls';
 import renameFile from '../utilities/RenameFile';
+import {GestureEventPayload} from 'react-native-gesture-handler';
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 LogBox.ignoreLogs([
@@ -46,26 +50,26 @@ LogBox.ignoreLogs([
 interface Props {
   cameraState: CameraState;
   config: CameraConfig;
-  stateActions: any;
-  onOrientationChange?: (val: string) => any;
-  onTakePicture?: (val: PhotoPlayload) => any;
-  onRecordingStart?: (val: number) => any;
-  onRecordingFinished?: (val: VideoPayload) => any;
-  onRecordingError?: (val: CaptureError | undefined) => any;
+  stateActions: StateActions;
+  onOrientationChange?: (val: string) => void;
+  onTakePicture?: (val: PhotoPlayload) => void;
+  onRecordingStart?: (val: number) => void;
+  onRecordingFinished?: (val: VideoPayload) => void;
+  onRecordingError: (val: CaptureError) => void;
   saveToCameraRoll?: boolean;
-  onDoubleTap?: (val: any) => any;
-  onSwipeUp?: (val: any) => any;
-  onSwipeDown?: (val: any) => any;
-  onSwipeLeft?: (val: any) => any;
-  onSwipeRight?: (val: any) => any;
+  onDoubleTap?: (val: GestureEventPayload) => void;
+  onSwipeUp?: (val: NativeTouchEvent) => void;
+  onSwipeDown?: (val: NativeTouchEvent) => void;
+  onSwipeLeft?: (val: NativeTouchEvent) => void;
+  onSwipeRight?: (val: NativeTouchEvent) => void;
   swipeDistance?: number;
   showCameraControls?: boolean;
   sectionHeights: SectionHeights;
-  children?: any;
+  children: CustomComponents;
 }
 
 export default function PlethoraCamera(props: Props) {
-  const cameraRef = useRef<any>();
+  const cameraRef = useRef<any>(null);
 
   const {
     cameraState,
@@ -90,27 +94,10 @@ export default function PlethoraCamera(props: Props) {
 
   const {isVideo, frontCamera, flash, isRecording, hideStatusBar} = cameraState;
 
-  const {
-    startRecording,
-    stopRecording,
-    setIsVideo,
-    toggleFrontCamera,
-    toggleFlash,
-  } = stateActions;
+  const {startRecording, stopRecording} = stateActions;
 
   const isAndroid: boolean = Platform.OS === 'android';
   const {height, width} = useWindowDimensions();
-
-  // ******************** COMPONENT LIFECYCLE ******************** //
-
-  useEffect(() => {
-    checkPermissions();
-    Orientation.unlockAllOrientations();
-    Orientation.addOrientationListener(onOrientationDidChange);
-    return () => {
-      Orientation.removeOrientationListener(onOrientationDidChange);
-    };
-  }, []);
 
   // ******************** PERMISSIONS ******************** //
 
@@ -121,16 +108,7 @@ export default function PlethoraCamera(props: Props) {
   const [hasCameraRollPermission, setHasCameraRollPermission] =
     useState<boolean>(false);
 
-  const checkPermissions = async () => {
-    const hasCamera: boolean = await getCameraPermissions();
-    setHasCameraPermission(hasCamera);
-    const hasMic: boolean = await getMicrophonePermissions();
-    setHasMicrophonePermission(hasMic);
-    const hasCamRoll: any = await getCameraRollPermissions();
-    setHasCameraRollPermission(hasCamRoll);
-  };
-
-  const getCameraPermissions = async () => {
+  const getCameraPermissions = useCallback(async () => {
     const cameraPermission: string = await Camera.getCameraPermissionStatus();
     const isAuthorized: boolean = cameraPermission === 'authorized';
     const isNotDetermined: boolean = cameraPermission === 'not-determined';
@@ -142,9 +120,9 @@ export default function PlethoraCamera(props: Props) {
       if (newCameraPermission === 'authorized') return true;
       return false;
     } else return false;
-  };
+  }, []);
 
-  const getMicrophonePermissions = async () => {
+  const getMicrophonePermissions = useCallback(async () => {
     const microphonePermission: string =
       await Camera.getMicrophonePermissionStatus();
     const isAuthorized: boolean = microphonePermission === 'authorized';
@@ -157,9 +135,9 @@ export default function PlethoraCamera(props: Props) {
       if (newMicrophonePermission === 'authorized') return true;
       return false;
     } else return false;
-  };
+  }, []);
 
-  const getCameraRollPermissions = async () => {
+  const getCameraRollPermissions = useCallback(async () => {
     if (isAndroid) {
       const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
       const hasPermission: boolean = await PermissionsAndroid.check(permission);
@@ -169,20 +147,40 @@ export default function PlethoraCamera(props: Props) {
         return status === 'authorized' || status === 'granted';
       }
     }
-  };
+  }, [isAndroid]);
+
+  const checkPermissions = useCallback(async () => {
+    const hasCamera: boolean = await getCameraPermissions();
+    setHasCameraPermission(hasCamera);
+
+    const hasMic: boolean = await getMicrophonePermissions();
+    setHasMicrophonePermission(hasMic);
+
+    const hasCamRoll: boolean | undefined = await getCameraRollPermissions();
+    if (typeof hasCamRoll === 'boolean') {
+      setHasCameraRollPermission(hasCamRoll);
+    }
+  }, [
+    getCameraRollPermissions,
+    getCameraPermissions,
+    getMicrophonePermissions,
+  ]);
   const openSettings = async () => await Linking.openSettings();
 
   // ******************** ORIENTATION CONTROLS ******************** //
 
   const [orientation, setOrientation] = useState<string>('');
 
-  const onOrientationDidChange = (orientation: OrientationType) => {
-    setOrientation(orientation);
-    if (onOrientationChange) onOrientationChange(orientation);
-  };
+  const onOrientationDidChange = useCallback(
+    (o: OrientationType) => {
+      setOrientation(o);
+      if (onOrientationChange) onOrientationChange(o);
+    },
+    [onOrientationChange],
+  );
 
   const lockOrientation = async () => {
-    new Promise(resolve => {
+    return await new Promise(resolve => {
       switch (orientation) {
         case 'PORTRAIT':
           return resolve(Orientation.lockToPortrait());
@@ -196,20 +194,26 @@ export default function PlethoraCamera(props: Props) {
     });
   };
 
+  // ******************** COMPONENT LIFECYCLE ******************** //
+
+  useEffect(() => {
+    checkPermissions();
+    Orientation.unlockAllOrientations();
+    Orientation.addOrientationListener(onOrientationDidChange);
+    return () => {
+      Orientation.removeOrientationListener(onOrientationDidChange);
+    };
+  }, [checkPermissions, onOrientationDidChange]);
+
   // ******************** CAMERA ACTIONS ******************** //
 
+  // This might need moved to highest level component
   const [zoomValue, setZoomValue] = useState<number>(0);
-  const toggleVideoOrPicture = () => (setIsVideo ? setIsVideo() : null);
-  const toggleFlashOnOff = () => (toggleFlash ? toggleFlash() : null);
-  const toggleCamera = () => {
-    if (toggleFrontCamera) toggleFrontCamera();
-    setZoomValue(0);
-  };
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
   const startVideo = async () => {
-    if (startRecording && stopRecording && !isRecording) {
+    if (!isRecording) {
       const ready = await startRecording();
 
       if (ready) {
@@ -220,6 +224,8 @@ export default function PlethoraCamera(props: Props) {
 
         console.log('Recording - Pre', new Date().getTime());
 
+        // In React Native Vision Camera V2, this doesn't
+        // actually await. V3 should fix this...
         await cameraRef.current.startRecording({
           flash: frontCamera ? 'off' : flash,
           fileType: 'mp4',
@@ -231,7 +237,7 @@ export default function PlethoraCamera(props: Props) {
             const fileName: string | null = nameConvention
               ? `${nameConvention}_TS`
               : null;
-            const newName: string = `${fileName}${timestamp}`;
+            const newName = `${fileName}${timestamp}`;
             const finalFile: string = await renameFile(video, newName);
             video.path = finalFile;
 
@@ -267,15 +273,11 @@ export default function PlethoraCamera(props: Props) {
         if (onRecordingStart) return onRecordingStart(timestamp);
       }
       console.log('Recording - Active', new Date().getTime());
-    } else if (!startRecording && stopRecording) {
-      return Alert.alert('Missing prop: startRecording()');
-    } else if (startRecording && !stopRecording) {
-      return Alert.alert('Missing prop: endVideo()');
     } else return;
   };
 
   const endVideo = async () => {
-    if (stopRecording && isRecording) {
+    if (isRecording) {
       const ready = await stopRecording();
       if (ready) return await cameraRef.current.stopRecording();
     } else Alert.alert('Please add endVideo() prop');
@@ -343,9 +345,7 @@ export default function PlethoraCamera(props: Props) {
         config={config}
         cameraState={cameraState}
         getDeviceInfo={
-          stateActions && stateActions.getDeviceInfo
-            ? stateActions.getDeviceInfo
-            : null
+          stateActions?.getDeviceInfo ? stateActions.getDeviceInfo : undefined
         }
         showTakePicIndicator={showTakePicIndicator}
         onDoubleTap={onDoubleTap ? onDoubleTap : () => null}
@@ -360,28 +360,22 @@ export default function PlethoraCamera(props: Props) {
         <CameraControls
           cameraState={cameraState}
           sectionHeights={sectionHeights}
-          toggleCamera={toggleCamera}
-          toggleFlash={toggleFlashOnOff}
-          toggleVideoOrPicture={toggleVideoOrPicture}
           orientation={orientation}>
           {{
             customComponents: children,
             controls: isVideo ? (
               <VideoControls
                 isRecording={isRecording}
-                startVideo={startVideo}
+                startVideo={cameraRef ? startVideo : () => null}
                 endVideo={endVideo}
-                toggleCamera={toggleCamera}
                 cameraState={cameraState}
-                icons={children && children.icons ? children.icons : null}
+                icons={children.icons}
               />
             ) : (
               <PictureControls
-                isRecording={isRecording}
                 takePicture={takePicture}
-                toggleCamera={toggleCamera}
                 cameraState={cameraState}
-                icons={children && children.icons ? children.icons : null}
+                icons={children.icons}
               />
             ),
           }}

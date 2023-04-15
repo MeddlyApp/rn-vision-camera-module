@@ -7,10 +7,10 @@ export default function RecordingTimer() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSeconds(seconds => seconds + 1);
+      setSeconds(() => seconds + 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [seconds]);
 
   const {height, width} = useWindowDimensions();
   const styles = stylesWithProps(height, width);
