@@ -94,7 +94,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     namespace "com.plethoracamera"
-    defaultConfig {
+    defaultConfig { 
         applicationId "com.plethoracamera"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
