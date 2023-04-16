@@ -91,29 +91,23 @@ const customComponents = {
   // Main Sections
   cameraTop: {
     component: <Text>Top</Text>,
-    showWhileRecording: false,
   },
   cameraMiddle: {
     component: <Text>Middle</Text>,
-    showWhileRecording: false,
   },
   cameraAboveControls: {
     component: <Text>Above Camera</Text>,
-    showWhileRecording: false,
   },
   cameraBottom: {
     component: <Text>Bottom</Text>,
-    showWhileRecording: false,
   },
 
   // Camera Controls Section
   cameraControlsLeft: {
     component: <Text>Left</Text>,
-    showWhileRecording: false,
   },
   cameraControlsRight: {
     component: <Text>Right</Text>,
-    showWhileRecording: false,
   },
 
   // Camera Control Icons

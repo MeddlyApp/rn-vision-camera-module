@@ -48,7 +48,7 @@ export default function CameraControls(props: Props) {
     <SafeAreaView style={styles.container} pointerEvents="box-none">
       {/* Top Bar */}
       <View style={styles.section_top} pointerEvents="box-none">
-        {!isRecording || cameraTop?.showWhileRecording
+        {!isRecording
           ? cameraTop && cameraTop?.component
             ? cameraTop.component
             : null
@@ -57,7 +57,7 @@ export default function CameraControls(props: Props) {
 
       {/* Gesture Controls */}
       <View style={styles.section_gestures} pointerEvents="box-none">
-        {!isRecording || cameraMiddle?.showWhileRecording
+        {!isRecording
           ? cameraMiddle && cameraMiddle?.component
             ? cameraMiddle.component
             : null
@@ -85,9 +85,7 @@ export default function CameraControls(props: Props) {
             ? cameraBottom.component
             : null
           : cameraBottom &&
-            (cameraBottom?.component && cameraBottom?.showWhileRecording
-              ? cameraBottom.component
-              : null)}
+            (cameraBottom?.component ? cameraBottom.component : null)}
       </View>
     </SafeAreaView>
   );

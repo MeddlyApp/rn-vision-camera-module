@@ -109,29 +109,23 @@ export default function App() {
     // Main Sections
     cameraTop: {
       component: <Text style={whiteText}>Top</Text>,
-      showWhileRecording: false,
     },
     cameraMiddle: {
       component: <Text style={whiteText}>Middle</Text>,
-      showWhileRecording: false,
     },
     cameraAboveControls: {
       component: <Text style={whiteText}>Above Camera</Text>,
-      showWhileRecording: false,
     },
     cameraBottom: {
       component: <Text style={whiteText}>Bottom</Text>,
-      showWhileRecording: false,
     },
 
     // Camera Controls Section
     cameraControlsLeft: {
       component: <Text style={whiteText}>Left</Text>,
-      showWhileRecording: false,
     },
     cameraControlsRight: {
       component: <Text style={whiteText}>Right</Text>,
-      showWhileRecording: false,
     },
 
     // Camera Control Icons

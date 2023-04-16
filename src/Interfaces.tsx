@@ -33,7 +33,6 @@ export interface SectionHeights {
 
 export interface CameraCustomSection {
   component?: JSX.Element;
-  showWhileRecording?: boolean;
 }
 
 export interface CameraIcons {
