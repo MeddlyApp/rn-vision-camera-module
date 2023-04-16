@@ -24,6 +24,7 @@ interface Props {
   cameraState: CameraState;
   getDeviceInfo?: (val: CameraDevice | undefined) => void;
   showTakePicIndicator: boolean;
+  onSingleTap?: (val: GestureEventPayload) => void;
   onDoubleTap?: (val: GestureEventPayload) => void;
   swipeDistance?: number;
   onSwipeUp?: (val: NativeTouchEvent) => void;
@@ -43,6 +44,7 @@ export default function RenderCamera(props: Props) {
     getDeviceInfo,
     showTakePicIndicator,
     //
+    onSingleTap,
     onDoubleTap,
     swipeDistance,
     onSwipeUp,
@@ -54,6 +56,8 @@ export default function RenderCamera(props: Props) {
   const tapToFocus = async ({
     nativeEvent,
   }: HandlerStateChangeEvent<Record<string, unknown>>) => {
+    if (onSingleTap) onSingleTap();
+
     if (cameraRef && cameraRef.current) {
       return await cameraRef.current
         .focus({x: nativeEvent.absoluteX, y: nativeEvent.absoluteY})

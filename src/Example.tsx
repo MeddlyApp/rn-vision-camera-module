@@ -162,6 +162,9 @@ export default function App() {
         console.log('onOrientationChange', val)
       }
       // Custom Gesture Controls
+      onSingleTap={(res: GestureEventPayload) =>
+        console.log('onSingleTap', res)
+      }
       onDoubleTap={(res: GestureEventPayload) =>
         console.log('onDoubleTap', res)
       }

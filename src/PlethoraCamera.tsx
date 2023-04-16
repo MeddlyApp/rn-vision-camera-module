@@ -56,6 +56,7 @@ interface Props {
   onRecordingFinished?: (val: VideoPayload) => void;
   onRecordingError: (val: CaptureError) => void;
   saveToCameraRoll?: boolean;
+  onSingleTap?: (val: GestureEventPayload) => void;
   onDoubleTap?: (val: GestureEventPayload) => void;
   onSwipeUp?: (val: NativeTouchEvent) => void;
   onSwipeDown?: (val: NativeTouchEvent) => void;
@@ -80,6 +81,7 @@ export default function PlethoraCamera(props: Props) {
     onRecordingFinished,
     onRecordingError,
     saveToCameraRoll,
+    onSingleTap,
     onDoubleTap,
     onSwipeUp,
     onSwipeDown,
@@ -343,6 +345,7 @@ export default function PlethoraCamera(props: Props) {
           stateActions?.getDeviceInfo ? stateActions.getDeviceInfo : undefined
         }
         showTakePicIndicator={showTakePicIndicator}
+        onSingleTap={onSingleTap ? onSingleTap : () => null}
         onDoubleTap={onDoubleTap ? onDoubleTap : () => null}
         swipeDistance={swipeDistance}
         onSwipeUp={onSwipeUp}
