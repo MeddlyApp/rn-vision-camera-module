@@ -28,23 +28,25 @@
 - Portrait / Landscape UI for right and left handed individuals
 - Save to camera roll
 - Flash
-- Custom icons, custom top bar, custom middle section, and custom bottom bar
+- Custom icons, custom top bar, custom middle section, left / right of record / snap icons, and custom bottom bar
 - Component Example (includes all props)
 - Camera settings: control state and hook into component
-  - Flash:
-  - Viewport:
-  - Video / Photo Mode:
+  - Flash
+  - Viewport
+  - Video / Photo Mode
 
-```javascript
+```typescript
 import Camera from '@plethora_co/rn-vision-camera';
 
-const [isVideo, setIsVideo] = useState(true);
-const [frontCamera, setFrontCamera] = useState(false);
-const [flash, setFlash] = useState('auto');
-const [videoStabilizationMode, setVideoStabilizationMode] = useState('auto');
-const [preset, setPreset] = useState('high'); // ['high', 'medium', 'low']
-const [hideStatusBar, setHideStatusBar] = useState(false);
-const [isRecording, setIsRecording] = useState(false);
+const [isVideo, setIsVideo] = useState<boolean>(true);
+const [frontCamera, setFrontCamera] = useState<boolean>(false);
+const [flash, setFlash] = useState<string>('auto');
+const [videoStabilizationMode, setVideoStabilizationMode] =
+  useState<VideoStabilizationMode>('auto');
+const [preset, setPreset] = useState<CameraPreset>('high');
+const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
+const [isRecording, setIsRecording] = useState<boolean>(false);
+const [zoomValue, setZoomValue] = useState<number>(0);
 
 /*/
  * startRecording: 
@@ -56,9 +58,6 @@ const [isRecording, setIsRecording] = useState(false);
 /*/
 
 const stateActions = {
-  toggleFlash: toggleFlash,
-  toggleFrontCamera: () => setFrontCamera(!frontCamera),
-  setIsVideo: () => setIsVideo(!isVideo),
   startRecording: () => {
     setIsRecording(true);
     return true;
@@ -67,7 +66,8 @@ const stateActions = {
     setIsRecording(false);
     return true;
   },
-  getDeviceInfo: x => console.log('Device Info: ', x),
+  getDeviceInfo: (x: CameraDevice) => console.log('Device Info: ', x),
+  setZoomValue: (x: number) => setZoomValue(x),
 };
 
 const cameraState = {
@@ -77,39 +77,50 @@ const cameraState = {
   isRecording,
   videoStabilizationMode,
   preset,
+  zoomValue,
   hideStatusBar,
 };
 
 const cameraConfig = {
   photo: true, // Required
   video: true, // Required
-  fps: 60,
   nameConvention: 'Plethora',
 };
 
-const custom = {
-  cameraTop: <Text style={{color: '#FFF'}}>Top</Text>,
-  cameraMiddle: <Text style={{color: '#FFF'}}>Middle</Text>,
-  cameraBottom: <Text style={{color: '#FFF'}}>Bottom</Text>,
+const customComponents = {
+  // Main Sections
+  cameraTop: {
+    component: <Text>Top</Text>,
+    showWhileRecording: false,
+  },
+  cameraMiddle: {
+    component: <Text>Middle</Text>,
+    showWhileRecording: false,
+  },
+  cameraAboveControls: {
+    component: <Text>Above Camera</Text>,
+    showWhileRecording: false,
+  },
+  cameraBottom: {
+    component: <Text>Bottom</Text>,
+    showWhileRecording: false,
+  },
+
+  // Camera Controls Section
+  cameraControlsLeft: {
+    component: <Text>Left</Text>,
+    showWhileRecording: false,
+  },
+  cameraControlsRight: {
+    component: <Text>Right</Text>,
+    showWhileRecording: false,
+  },
+
+  // Camera Control Icons
   icons: {
-    // Base Camera Controls
-    takePictureIcon: <Text style={{color: '#FFFF00'}}>SNP</Text>,
-    startRecordingIcon: <Text style={{color: '#00FF00'}}>REC</Text>,
-    stopRecordingIcon: <Text style={{color: '#00FFFF'}}>STP</Text>,
-    // Built In Setting Controls
-    togglePictureIcon: <Text style={{color: '#00AAFF'}}>Picture</Text>,
-    toggleVideoIcon: <Text style={{color: '#FFAAFF'}}>Video</Text>,
-    viewportIcon: {
-      frontCamera: <Text style={{color: '#00FF00'}}>Front</Text>,
-      backCamera: <Text style={{color: '#00FFFF'}}>Back</Text>,
-    },
-    flashIcons: {
-      flashOn: <Text style={{color: '#FFFF00'}}>On</Text>,
-      flashAuto: <Text style={{color: '#00FFFF'}}>Auto</Text>,
-      flashOff: <Text style={{color: '#00FF00'}}>Off</Text>,
-    },
-    // Additional Recording Controls
-    cameraSecondary: <Text style={{color: '#FFAAFF'}}>SEC</Text>,
+    takePictureIcon: <Text>SNP</Text>,
+    startRecordingIcon: <Text>REC</Text>,
+    stopRecordingIcon: <Text>STP</Text>,
   },
 };
 
@@ -129,20 +140,19 @@ const sectionHeights = {
   showCameraControls={true}
   saveToCameraRoll={true}
   // Lifecycle Events
-  onTakePicture={p => console.log('onTakePicture', p)}
-  onRecordingStart={ts => console.log('onRecordingStart', ts)}
-  onRecordingFinished={r => console.log('onRecordingFinished', r)}
+  onTakePicture={res => console.log('onTakePicture', res)}
+  onRecordingStart={res => console.log('onRecordingStart', res)}
+  onRecordingFinished={res => console.log('onRecordingFinished', res)}
   onRecordingError={e => console.log('onRecordingError', e)}
-  onOrientationChange={o => console.log('onOrientationChange', o)}
+  onOrientationChange={val => console.log('onOrientationChange', val)}
   // Custom Gesture Controls
-  onTapFocus={t => console.log('onTapFocus', t)}
-  onDoubleTap={t => console.log('onDoubleTap', t)}
+  onDoubleTap={res => console.log('onDoubleTap', res)}
   swipeDistance={200}
-  onSwipeLeft={t => console.log('onSwipeLeft', t)}
-  onSwipeRight={t => console.log('onSwipeRight', t)}
-  onSwipeUp={t => console.log('onSwipeUp', t)}
-  onSwipeDown={t => console.log('onSwipeDown', t)}>
-  {custom}
+  onSwipeLeft={res => console.log('onSwipeLeft', res)}
+  onSwipeRight={res => console.log('onSwipeRight', res)}
+  onSwipeUp={res => console.log('onSwipeUp', res)}
+  onSwipeDown={res => console.log('onSwipeDown', res)}>
+  {customComponents}
 </PlethoraCamera>;
 ```
 

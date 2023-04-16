@@ -6,10 +6,10 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import {CameraIcons, CameraState} from '../Interfaces';
+import {CustomComponents, CameraState} from '../Interfaces';
 
 interface Props {
-  icons?: CameraIcons;
+  children?: CustomComponents;
   cameraState: CameraState;
   startVideo: () => void;
   endVideo: () => void;
@@ -17,26 +17,24 @@ interface Props {
 }
 
 export default function VideoControls(props: Props) {
-  const {icons, startVideo, endVideo, isRecording} = props;
+  const {children, startVideo, endVideo, isRecording} = props;
 
   const {height, width} = useWindowDimensions();
   const styles = stylesWithProps(height, width);
 
-  const startRecordingIcon = icons?.startRecordingIcon
-    ? icons.startRecordingIcon
+  const startRecordingIcon = children?.icons?.startRecordingIcon
+    ? children.icons.startRecordingIcon
     : null;
-  const stopRecordingIcon = icons?.stopRecordingIcon
-    ? icons.stopRecordingIcon
+  const stopRecordingIcon = children?.icons?.stopRecordingIcon
+    ? children.icons.stopRecordingIcon
     : null;
 
   return (
     <>
       <View style={styles.w33}>
-        {/* !isRecording || cameraTop?.showWhileRecording
-          ? cameraTop && cameraTop?.component
-            ? cameraTop.component
-            : null
-          : null */}
+        {children?.cameraControlsLeft && children?.cameraControlsLeft?.component
+          ? children.cameraControlsLeft.component
+          : null}
       </View>
 
       <View style={styles.w33}>
@@ -68,11 +66,10 @@ export default function VideoControls(props: Props) {
       </View>
 
       <View style={styles.w33}>
-        {/* !isRecording || cameraTop?.showWhileRecording
-          ? cameraTop && cameraTop?.component
-            ? cameraTop.component
-            : null
-          : null */}
+        {children?.cameraControlsRight &&
+        children.cameraControlsRight?.component
+          ? children.cameraControlsRight.component
+          : null}
       </View>
     </>
   );

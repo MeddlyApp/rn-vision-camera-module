@@ -27,6 +27,7 @@ export default function App() {
   const [preset, setPreset] = useState<CameraPreset>('high');
   const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [zoomValue, setZoomValue] = useState<number>(0);
 
   const stateActions: StateActions = {
     startRecording: async () => {
@@ -80,6 +81,7 @@ export default function App() {
     getDeviceInfo: (x: CameraDevice | undefined) => {
       console.log('Device Info: ', x);
     },
+    setZoomValue: (x: number) => setZoomValue(x),
   };
 
   const cameraState: CameraState = {
@@ -89,17 +91,20 @@ export default function App() {
     isRecording,
     videoStabilizationMode,
     preset,
+    zoomValue,
     hideStatusBar,
   };
 
   const config: CameraConfig = {
     photo: true, // Required
     video: true, // Required
-    fps: 25,
     nameConvention: `Plethora`,
   };
 
   const whiteText = {color: '#FFF'};
+  const greenText = {color: '#0F0'};
+  const redText = {color: '#F00'};
+
   const customComponents: CustomComponents = {
     // Main Sections
     cameraTop: {
@@ -131,15 +136,9 @@ export default function App() {
 
     // Camera Control Icons
     icons: {
-      // Base Camera Controls
-      // takePictureIcon: <Text style={{color: '#FFFF00'}}>SNP</Text>,
-      // startRecordingIcon: <Text style={{color: '#00FF00'}}>REC</Text>,
-      // stopRecordingIcon: <Text style={{color: '#00FFFF'}}>STP</Text>,
-      // Additional Recording Controls
-      // cameraSecondary: {
-      //  component: <Text style={{color: '#FFAAFF'}}>SEC</Text>,
-      //  showWhileRecording: true,
-      // },
+      takePictureIcon: <Text style={greenText}>SNP</Text>,
+      startRecordingIcon: <Text style={greenText}>REC</Text>,
+      stopRecordingIcon: <Text style={redText}>STP</Text>,
     },
   };
 

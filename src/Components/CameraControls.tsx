@@ -132,11 +132,6 @@ const stylesWithProps = (
     section_above_controls: {
       height: is_vertical ? settings : height,
       width: is_vertical ? height : settings,
-      flexDirection: is_vertical
-        ? 'row'
-        : is_left
-        ? 'column-reverse'
-        : 'column',
     },
 
     section_controls: {

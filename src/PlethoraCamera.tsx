@@ -92,9 +92,10 @@ export default function PlethoraCamera(props: Props) {
     children,
   } = props;
 
-  const {isVideo, frontCamera, flash, isRecording, hideStatusBar} = cameraState;
+  const {isVideo, frontCamera, flash, isRecording, hideStatusBar, zoomValue} =
+    cameraState;
 
-  const {startRecording, stopRecording} = stateActions;
+  const {startRecording, stopRecording, setZoomValue} = stateActions;
 
   const isAndroid: boolean = Platform.OS === 'android';
   const {height, width} = useWindowDimensions();
@@ -208,7 +209,6 @@ export default function PlethoraCamera(props: Props) {
   // ******************** CAMERA ACTIONS ******************** //
 
   // This might need moved to highest level component
-  const [zoomValue, setZoomValue] = useState<number>(0);
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
@@ -369,13 +369,13 @@ export default function PlethoraCamera(props: Props) {
                 startVideo={cameraRef ? startVideo : () => null}
                 endVideo={endVideo}
                 cameraState={cameraState}
-                icons={children.icons}
+                children={children}
               />
             ) : (
               <PictureControls
                 takePicture={takePicture}
                 cameraState={cameraState}
-                icons={children.icons}
+                children={children}
               />
             ),
           }}

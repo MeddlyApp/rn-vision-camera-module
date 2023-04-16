@@ -14,13 +14,13 @@ export interface CameraState {
   isRecording: boolean;
   videoStabilizationMode: VideoStabilizationMode;
   preset: CameraPreset;
+  zoomValue: number;
   hideStatusBar?: boolean;
 }
 
 export interface CameraConfig {
   photo: boolean;
   video: boolean;
-  fps?: number;
   nameConvention?: string;
 }
 
@@ -56,6 +56,7 @@ export interface StateActions {
   startRecording: () => Promise<boolean>;
   stopRecording: () => Promise<boolean>;
   getDeviceInfo: (val: CameraDevice | undefined) => void | undefined;
+  setZoomValue: (val: number) => void;
 }
 
 // ********** Media Response Payloads ********** //

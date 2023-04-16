@@ -6,30 +6,30 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import {CameraIcons, CameraState} from '../Interfaces';
+import {CustomComponents, CameraState} from '../Interfaces';
 
 interface Props {
-  icons?: CameraIcons;
+  children?: CustomComponents;
   cameraState: CameraState;
   takePicture: () => void;
 }
 
 export default function PictureControls(props: Props) {
-  const {icons, takePicture} = props;
+  const {children, takePicture} = props;
 
   const {height, width} = useWindowDimensions();
   const styles = stylesWithProps(height, width);
 
-  const takePictureIcon = icons?.takePictureIcon ? icons.takePictureIcon : null;
+  const takePictureIcon = children?.icons?.takePictureIcon
+    ? children.icons.takePictureIcon
+    : null;
 
   return (
     <>
       <View style={styles.w33}>
-        {/* !isRecording || cameraTop?.showWhileRecording
-          ? cameraTop && cameraTop?.component
-            ? cameraTop.component
-            : null
-          : null */}
+        {children?.cameraControlsLeft && children?.cameraControlsLeft?.component
+          ? children.cameraControlsLeft.component
+          : null}
       </View>
 
       <View style={styles.w33}>
@@ -45,11 +45,10 @@ export default function PictureControls(props: Props) {
       </View>
 
       <View style={styles.w33}>
-        {/* !isRecording || cameraTop?.showWhileRecording
-          ? cameraTop && cameraTop?.component
-            ? cameraTop.component
-            : null
-          : null */}
+        {children?.cameraControlsRight &&
+        children.cameraControlsRight?.component
+          ? children.cameraControlsRight.component
+          : null}
       </View>
     </>
   );
