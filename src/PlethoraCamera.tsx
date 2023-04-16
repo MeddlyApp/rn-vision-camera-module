@@ -2,7 +2,6 @@
  * COMPONENT LIFECYCLE
  * PERMISSIONS
  * ORIENTATION CONTROLS
- * CAMERA ACTIONS
  * VIDEO CAMERA LIFECYCLE
  * PICTURE LIFECYCLE
  * RENDERS
@@ -205,10 +204,6 @@ export default function PlethoraCamera(props: Props) {
       Orientation.removeOrientationListener(onOrientationDidChange);
     };
   }, [checkPermissions, onOrientationDidChange]);
-
-  // ******************** CAMERA ACTIONS ******************** //
-
-  // This might need moved to highest level component
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
