@@ -22,7 +22,7 @@ interface Props {
   setZoomValue: (zoomValue: number) => void;
   config: CameraConfig;
   cameraState: CameraState;
-  getDeviceInfo?: (val: CameraDevice | undefined) => void;
+  getDeviceInfo?: (val?: CameraDevice | undefined) => void;
   showTakePicIndicator: boolean;
   onSingleTap?: (val: GestureEventPayload) => void;
   onDoubleTap?: (val: GestureEventPayload) => void;
@@ -56,7 +56,7 @@ export default function RenderCamera(props: Props) {
   const tapToFocus = async ({
     nativeEvent,
   }: HandlerStateChangeEvent<Record<string, unknown>>) => {
-    if (onSingleTap) onSingleTap();
+    if (onSingleTap) onSingleTap(nativeEvent);
 
     if (cameraRef && cameraRef.current) {
       return await cameraRef.current

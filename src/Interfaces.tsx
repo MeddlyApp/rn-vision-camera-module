@@ -54,7 +54,7 @@ export interface CustomComponents {
 export interface StateActions {
   startRecording: () => Promise<boolean>;
   stopRecording: () => Promise<boolean>;
-  getDeviceInfo: (val: CameraDevice | undefined) => void | undefined;
+  getDeviceInfo?: (val: CameraDevice | undefined) => void | undefined;
   setZoomValue: (val: number) => void;
 }
 
