@@ -106,9 +106,17 @@ const customComponents = {
   cameraControlsLeft: {
     component: <Text>Left</Text>,
   },
+  cameraControlsPrimary: {
+    component: <Text>{isVideo ? 'Video' : 'Photo'}</Text>,
+  },
   cameraControlsRight: {
     component: <Text>Right</Text>,
   },
+
+  // Alternatively, you don't want to add custom logic to ,
+  // cameraControlsPrimary you can use the built-in camera
+  // controls and just add custom icons
+  // Note: if you use both, cameraControlsPrimary will take precedence
 
   // Camera Control Icons
   icons: {

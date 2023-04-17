@@ -19,7 +19,7 @@ import {
 import {GestureEventPayload} from 'react-native-gesture-handler';
 
 export default function App() {
-  const [isVideo, setIsVideo] = useState<boolean>(true);
+  const [isVideo, setIsVideo] = useState<boolean>(false);
   const [frontCamera, setFrontCamera] = useState<boolean>(false);
   const [flash, setFlash] = useState<string>('auto');
   const [videoStabilizationMode, setVideoStabilizationMode] =
@@ -124,15 +124,22 @@ export default function App() {
     cameraControlsLeft: {
       component: <Text style={whiteText}>Left</Text>,
     },
+    cameraControlsPrimary: {
+      component: <Text style={whiteText}>{isVideo ? 'Video' : 'Photo'}</Text>,
+    },
     cameraControlsRight: {
       component: <Text style={whiteText}>Right</Text>,
     },
 
-    // Camera Control Icons
+    // Alternatively, you don't want to add custom logic to ,
+    // cameraControlsPrimary you can use the built-in camera
+    // controls and just add custom icons
+    // Note: if you use both, cameraControlsPrimary will take precedence
+
     icons: {
-      takePictureIcon: <Text style={greenText}>SNP</Text>,
-      startRecordingIcon: <Text style={greenText}>REC</Text>,
-      stopRecordingIcon: <Text style={redText}>STP</Text>,
+      takePictureIcon: <Text style={greenText}>Snap</Text>,
+      startRecordingIcon: <Text style={greenText}>Record</Text>,
+      stopRecordingIcon: <Text style={redText}>Stop</Text>,
     },
   };
 

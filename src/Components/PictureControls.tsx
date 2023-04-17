@@ -33,15 +33,22 @@ export default function PictureControls(props: Props) {
       </View>
 
       <View style={styles.w33}>
-        <TouchableOpacity
-          onPress={takePicture}
-          style={!takePictureIcon ? styles.snap_btn : styles.camera_action_btn}>
-          {takePictureIcon ? (
-            takePictureIcon
-          ) : (
-            <Text style={styles.txt_white}>Snap</Text>
-          )}
-        </TouchableOpacity>
+        {children?.cameraControlsPrimary &&
+        children?.cameraControlsPrimary?.component ? (
+          children.cameraControlsPrimary.component
+        ) : (
+          <TouchableOpacity
+            onPress={takePicture}
+            style={
+              !takePictureIcon ? styles.snap_btn : styles.camera_action_btn
+            }>
+            {takePictureIcon ? (
+              takePictureIcon
+            ) : (
+              <Text style={styles.txt_white}>Snap</Text>
+            )}
+          </TouchableOpacity>
+        )}
       </View>
 
       <View style={styles.w33}>

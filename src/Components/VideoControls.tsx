@@ -38,30 +38,41 @@ export default function VideoControls(props: Props) {
       </View>
 
       <View style={styles.w33}>
-        {!isRecording ? (
-          <TouchableOpacity
-            onPress={startVideo}
-            style={
-              !startRecordingIcon ? styles.rec_btn : styles.camera_action_btn
-            }>
-            {startRecordingIcon ? (
-              startRecordingIcon
-            ) : (
-              <Text style={styles.txt_white}>Record</Text>
-            )}
-          </TouchableOpacity>
+        {children?.cameraControlsPrimary &&
+        children?.cameraControlsPrimary?.component ? (
+          children.cameraControlsPrimary.component
         ) : (
-          <TouchableOpacity
-            onPress={endVideo}
-            style={
-              !stopRecordingIcon ? styles.stop_btn : styles.camera_action_btn
-            }>
-            {stopRecordingIcon ? (
-              stopRecordingIcon
+          <>
+            {!isRecording ? (
+              <TouchableOpacity
+                onPress={startVideo}
+                style={
+                  !startRecordingIcon
+                    ? styles.rec_btn
+                    : styles.camera_action_btn
+                }>
+                {startRecordingIcon ? (
+                  startRecordingIcon
+                ) : (
+                  <Text style={styles.txt_white}>Record</Text>
+                )}
+              </TouchableOpacity>
             ) : (
-              <Text style={styles.txt_white}>Stop</Text>
+              <TouchableOpacity
+                onPress={endVideo}
+                style={
+                  !stopRecordingIcon
+                    ? styles.stop_btn
+                    : styles.camera_action_btn
+                }>
+                {stopRecordingIcon ? (
+                  stopRecordingIcon
+                ) : (
+                  <Text style={styles.txt_white}>Stop</Text>
+                )}
+              </TouchableOpacity>
             )}
-          </TouchableOpacity>
+          </>
         )}
       </View>
 

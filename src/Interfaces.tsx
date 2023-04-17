@@ -47,6 +47,7 @@ export interface CustomComponents {
   cameraAboveControls?: CameraCustomSection;
   cameraBottom?: CameraCustomSection;
   cameraControlsLeft?: CameraCustomSection;
+  cameraControlsPrimary?: CameraCustomSection;
   cameraControlsRight?: CameraCustomSection;
   icons?: CameraIcons;
 }
