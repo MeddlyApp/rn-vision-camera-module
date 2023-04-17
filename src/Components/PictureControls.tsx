@@ -35,7 +35,9 @@ export default function PictureControls(props: Props) {
       <View style={styles.w33}>
         {children?.cameraControlsPrimary &&
         children?.cameraControlsPrimary?.component ? (
-          children.cameraControlsPrimary.component
+          <TouchableOpacity onPress={takePicture}>
+            {children.cameraControlsPrimary.component}
+          </TouchableOpacity>
         ) : (
           <TouchableOpacity
             onPress={takePicture}
