@@ -135,6 +135,7 @@ const sectionHeights = {
 <PlethoraCamera
   // Camera Config
   config={config}
+  isFocused={true}
   cameraState={cameraState}
   stateActions={stateActions}
   sectionHeights={sectionHeights}

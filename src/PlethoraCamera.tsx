@@ -49,6 +49,7 @@ LogBox.ignoreLogs([
 interface Props {
   cameraState: CameraState;
   config: CameraConfig;
+  isFocused: boolean;
   stateActions: StateActions;
   onOrientationChange?: (val: string) => void;
   onTakePicture?: (val: PhotoPlayload) => void;
@@ -74,6 +75,7 @@ export default function PlethoraCamera(props: Props) {
   const {
     cameraState,
     config,
+    isFocused,
     stateActions,
     onOrientationChange,
     onTakePicture,
@@ -336,6 +338,7 @@ export default function PlethoraCamera(props: Props) {
 
       <RenderCamera
         cameraRef={cameraRef}
+        isFocused={isFocused}
         frontCamera={frontCamera}
         zoomValue={zoomValue}
         setZoomValue={setZoomValue}

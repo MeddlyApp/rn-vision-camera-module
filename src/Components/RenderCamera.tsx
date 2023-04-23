@@ -11,13 +11,13 @@ import {
   GestureEventPayload,
   HandlerStateChangeEvent,
 } from 'react-native-gesture-handler';
-import {useIsForeground} from '../hooks/useIsForeground';
 import GestureHandler from './GestureHandler';
 import {CameraConfig, CameraState} from '../Interfaces';
 
 interface Props {
   cameraRef: any;
   frontCamera: boolean;
+  isFocused: boolean;
   zoomValue: number;
   setZoomValue: (zoomValue: number) => void;
   config: CameraConfig;
@@ -37,6 +37,7 @@ export default function RenderCamera(props: Props) {
   const {
     cameraRef,
     frontCamera,
+    isFocused,
     zoomValue,
     setZoomValue,
     config,
@@ -85,12 +86,6 @@ export default function RenderCamera(props: Props) {
 
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
-
-  // check if camera page is active
-  // const isFocussed = useIsFocused();
-  const isFocussed = true;
-  const isForeground = useIsForeground();
-  const isActive = isFocussed && isForeground;
 
   // Camera Format Settings
   const devices: CameraDevices = useCameraDevices();
@@ -142,7 +137,7 @@ export default function RenderCamera(props: Props) {
             ref={cameraRef}
             style={StyleSheet.absoluteFill}
             device={device}
-            isActive={isActive}
+            isActive={isFocused}
             onInitialized={onInitialized}
             onError={onError}
             zoom={zoom}
