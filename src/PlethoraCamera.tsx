@@ -251,9 +251,12 @@ export default function PlethoraCamera(props: Props) {
 
   const endVideo = async () => {
     if (isRecording) {
-      setIsRecording(false);
       const ready = await stopRecording();
-      if (ready) return await cameraRef.current.stopRecording();
+
+      if (ready) {
+        await cameraRef.current.stopRecording();
+        return setIsRecording(false);
+      }
     } else Alert.alert('Please add endVideo() prop');
   };
 
