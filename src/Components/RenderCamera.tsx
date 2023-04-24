@@ -138,6 +138,7 @@ export default function RenderCamera(props: Props) {
             style={StyleSheet.absoluteFill}
             device={device}
             isActive={isFocused}
+            isActive={true}
             onInitialized={onInitialized}
             onError={onError}
             zoom={zoom}

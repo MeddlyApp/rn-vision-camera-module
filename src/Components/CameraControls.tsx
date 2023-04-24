@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import {
   CameraCustomSection,
-  CameraState,
   CustomComponents,
   SectionHeights,
 } from '../Interfaces';
@@ -18,16 +17,15 @@ interface Props {
     customComponents: CustomComponents;
     controls: JSX.Element;
   };
-  cameraState: CameraState;
+  isRecording: boolean;
   sectionHeights: SectionHeights;
   orientation: string;
 }
 
 export default function CameraControls(props: Props) {
-  const {children, cameraState, sectionHeights, orientation} = props;
+  const {children, isRecording, sectionHeights, orientation} = props;
 
   const {customComponents, controls} = children;
-  const {isRecording} = cameraState;
 
   const cameraTop: CameraCustomSection | null | undefined = customComponents
     ? customComponents.cameraTop
@@ -48,19 +46,19 @@ export default function CameraControls(props: Props) {
     <SafeAreaView style={styles.container} pointerEvents="box-none">
       {/* Top Bar */}
       <View style={styles.section_top} pointerEvents="box-none">
-        {!isRecording
-          ? cameraTop && cameraTop?.component
-            ? cameraTop.component
-            : null
+        {isRecording
+          ? null
+          : cameraTop && cameraTop?.component
+          ? cameraTop.component
           : null}
       </View>
 
       {/* Gesture Controls */}
       <View style={styles.section_gestures} pointerEvents="box-none">
-        {!isRecording
-          ? cameraMiddle && cameraMiddle?.component
-            ? cameraMiddle.component
-            : null
+        {isRecording
+          ? null
+          : cameraMiddle && cameraMiddle?.component
+          ? cameraMiddle.component
           : null}
       </View>
 
@@ -80,12 +78,18 @@ export default function CameraControls(props: Props) {
 
       {/* Bottom Area */}
       <View style={styles.section_bottom} pointerEvents="box-none">
-        {!isRecording
+        {/* !isRecording
           ? cameraBottom && cameraBottom?.component
             ? cameraBottom.component
             : null
           : cameraBottom &&
-            (cameraBottom?.component ? cameraBottom.component : null)}
+            (cameraBottom?.component ? cameraBottom.component : null) */}
+
+        {isRecording
+          ? null
+          : cameraBottom && cameraBottom?.component
+          ? cameraBottom.component
+          : null}
       </View>
     </SafeAreaView>
   );

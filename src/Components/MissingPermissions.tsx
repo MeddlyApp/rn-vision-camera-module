@@ -4,17 +4,11 @@ import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 interface Props {
   hasCameraPermission: boolean;
   hasMicrophonePermission: boolean;
-  hasCameraRollPermission: boolean;
   openSettings: () => void;
 }
 
 export default function MissingPermissions(props: Props) {
-  const {
-    hasCameraPermission,
-    hasMicrophonePermission,
-    hasCameraRollPermission,
-    openSettings,
-  } = props;
+  const {hasCameraPermission, hasMicrophonePermission, openSettings} = props;
 
   return (
     <TouchableOpacity onPress={openSettings} style={styles.flex_centered}>
@@ -24,10 +18,6 @@ export default function MissingPermissions(props: Props) {
 
       {!hasMicrophonePermission ? (
         <Text style={styles.txt_white}>Microphone Permission Denied</Text>
-      ) : null}
-
-      {!hasCameraRollPermission ? (
-        <Text style={styles.txt_white}>Camera Roll Permission Denied</Text>
       ) : null}
 
       <Text style={[styles.txt_white, styles.mt30]}>Open Settings</Text>

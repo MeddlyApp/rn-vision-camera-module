@@ -19,7 +19,7 @@ import {
 import {GestureEventPayload} from 'react-native-gesture-handler';
 
 export default function App() {
-  const [isVideo, setIsVideo] = useState<boolean>(false);
+  const [isVideo, setIsVideo] = useState<boolean>(true);
   const [frontCamera, setFrontCamera] = useState<boolean>(false);
   const [flash, setFlash] = useState<string>('auto');
   const [videoStabilizationMode, setVideoStabilizationMode] =
@@ -36,19 +36,8 @@ export default function App() {
           'Start',
           "Are you sure you're ready to start recording?",
           [
-            {
-              text: 'Cancel',
-              style: 'cancel',
-              onPress: () => resolve(false),
-            },
-            {
-              text: 'Start',
-              style: 'default',
-              onPress: () => {
-                setIsRecording(true);
-                return resolve(true);
-              },
-            },
+            {text: 'Cancel', style: 'cancel', onPress: () => resolve(false)},
+            {text: 'Start', style: 'default', onPress: () => resolve(true)},
           ],
           {cancelable: false},
         );
@@ -60,26 +49,16 @@ export default function App() {
           'End',
           "Are you sure you're ready to end the recording?",
           [
-            {
-              text: 'Cancel',
-              style: 'cancel',
-              onPress: () => resolve(false),
-            },
-            {
-              text: 'End',
-              style: 'default',
-              onPress: () => {
-                setIsRecording(false);
-                return resolve(true);
-              },
-            },
+            {text: 'Cancel', style: 'cancel', onPress: () => resolve(false)},
+            {text: 'End', style: 'default', onPress: () => resolve(true)},
           ],
           {cancelable: false},
         );
       });
     },
     getDeviceInfo: (x: CameraDevice | undefined) => {
-      console.log('Device Info: ', x);
+      // console.log('Device Info: ', x);
+      return;
     },
     setZoomValue: (x: number) => setZoomValue(x),
   };
@@ -88,7 +67,6 @@ export default function App() {
     isVideo,
     frontCamera,
     flash,
-    isRecording,
     videoStabilizationMode,
     preset,
     zoomValue,
@@ -101,9 +79,9 @@ export default function App() {
     nameConvention: `Plethora`,
   };
 
-  const whiteText = {color: '#FFF'};
-  const greenText = {color: '#0F0'};
-  const redText = {color: '#F00'};
+  const whiteText: any = {color: '#FFF'};
+  const greenText: any = {color: '#0F0'};
+  const redText: any = {color: '#F00'};
 
   const customComponents: CustomComponents = {
     // Main Sections
@@ -125,7 +103,11 @@ export default function App() {
       component: <Text style={whiteText}>Left</Text>,
     },
     cameraControlsPrimary: {
-      component: <Text style={whiteText}>{isVideo ? 'Video' : 'Photo'}</Text>,
+      component: (
+        <Text style={whiteText}>
+          {isVideo ? (isRecording ? 'Stop' : 'Start') : 'Photo'}
+        </Text>
+      ),
     },
     cameraControlsRight: {
       component: <Text style={whiteText}>Right</Text>,
@@ -143,10 +125,7 @@ export default function App() {
     },
   };
 
-  const sectionHeights: SectionHeights = {
-    top: 100,
-    bottom: 100,
-  };
+  const sectionHeights: SectionHeights = {top: 100, bottom: 100};
 
   return (
     <PlethoraCamera
@@ -160,22 +139,15 @@ export default function App() {
       showCameraControls={true}
       saveToCameraRoll={true}
       // Lifecycle Events
+      onIsRecording={(val: any) => setIsRecording(val)}
       onTakePicture={(res: PhotoPlayload) => console.log('onTakePicture', res)}
       onRecordingStart={(res: number) => console.log('onRecordingStart', res)}
-      onRecordingFinished={(res: VideoPayload) =>
-        console.log('onRecordingFinished', res)
-      }
+      onRecordingFinished={(res: VideoPayload) => console.log('finished', res)}
       onRecordingError={(e: CaptureError) => console.log('onRecordingError', e)}
-      onOrientationChange={(val: string) =>
-        console.log('onOrientationChange', val)
-      }
+      onOrientationChange={(val: string) => console.log('orientation', val)}
       // Custom Gesture Controls
-      onSingleTap={(res: GestureEventPayload) =>
-        console.log('onSingleTap', res)
-      }
-      onDoubleTap={(res: GestureEventPayload) =>
-        console.log('onDoubleTap', res)
-      }
+      onSingleTap={(res: GestureEventPayload) => console.log('singleTap', res)}
+      onDoubleTap={(res: GestureEventPayload) => console.log('doubleTap', res)}
       swipeDistance={200}
       onSwipeLeft={(res: NativeTouchEvent) => console.log('onSwipeLeft', res)}
       onSwipeRight={(res: NativeTouchEvent) => console.log('onSwipeRight', res)}

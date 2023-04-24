@@ -6,11 +6,10 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import {CustomComponents, CameraState} from '../Interfaces';
+import {CustomComponents} from '../Interfaces';
 
 interface Props {
   children?: CustomComponents;
-  cameraState: CameraState;
   takePicture: () => void;
 }
 

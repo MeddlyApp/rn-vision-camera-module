@@ -11,7 +11,6 @@ export interface CameraState {
   isVideo: boolean;
   frontCamera: boolean;
   flash?: string;
-  isRecording: boolean;
   videoStabilizationMode: VideoStabilizationMode;
   preset: CameraPreset;
   zoomValue: number;

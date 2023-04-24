@@ -6,11 +6,10 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import {CustomComponents, CameraState} from '../Interfaces';
+import {CustomComponents} from '../Interfaces';
 
 interface Props {
   children?: CustomComponents;
-  cameraState: CameraState;
   startVideo: () => void;
   endVideo: () => void;
   isRecording: boolean;
@@ -32,7 +31,9 @@ export default function VideoControls(props: Props) {
   return (
     <>
       <View style={styles.w33}>
-        {children?.cameraControlsLeft && children?.cameraControlsLeft?.component
+        {children?.cameraControlsLeft &&
+        children?.cameraControlsLeft?.component &&
+        !isRecording
           ? children.cameraControlsLeft.component
           : null}
       </View>
@@ -40,7 +41,9 @@ export default function VideoControls(props: Props) {
       <View style={styles.w33}>
         {children?.cameraControlsPrimary &&
         children?.cameraControlsPrimary?.component ? (
-          children.cameraControlsPrimary.component
+          <TouchableOpacity onPress={!isRecording ? startVideo : endVideo}>
+            {children.cameraControlsPrimary.component}
+          </TouchableOpacity>
         ) : (
           <>
             {!isRecording ? (
@@ -78,7 +81,8 @@ export default function VideoControls(props: Props) {
 
       <View style={styles.w33}>
         {children?.cameraControlsRight &&
-        children.cameraControlsRight?.component
+        children.cameraControlsRight?.component &&
+        !isRecording
           ? children.cameraControlsRight.component
           : null}
       </View>

@@ -58,14 +58,8 @@ const [zoomValue, setZoomValue] = useState<number>(0);
 /*/
 
 const stateActions = {
-  startRecording: () => {
-    setIsRecording(true);
-    return true;
-  },
-  stopRecording: () => {
-    setIsRecording(false);
-    return true;
-  },
+  startRecording: () => true,
+  stopRecording: () => true,
   getDeviceInfo: (x: CameraDevice) => console.log('Device Info: ', x),
   setZoomValue: (x: number) => setZoomValue(x),
 };
@@ -107,7 +101,9 @@ const customComponents = {
     component: <Text>Left</Text>,
   },
   cameraControlsPrimary: {
-    component: <Text>{isVideo ? 'Video' : 'Photo'}</Text>,
+    component: (
+      <Text>{isVideo ? (isRecording ? 'Stop' : 'Start') : 'Photo'}</Text>
+    ),
   },
   cameraControlsRight: {
     component: <Text>Right</Text>,
@@ -143,6 +139,7 @@ const sectionHeights = {
   showCameraControls={true}
   saveToCameraRoll={true}
   // Lifecycle Events
+  onIsRecording={val => setIsRecording(val)}
   onTakePicture={res => console.log('onTakePicture', res)}
   onRecordingStart={res => console.log('onRecordingStart', res)}
   onRecordingFinished={res => console.log('onRecordingFinished', res)}

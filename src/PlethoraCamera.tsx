@@ -11,8 +11,6 @@ import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {
   StyleSheet,
   LogBox,
-  PermissionsAndroid,
-  Platform,
   SafeAreaView,
   View,
   Linking,
@@ -52,6 +50,7 @@ interface Props {
   isFocused: boolean;
   stateActions: StateActions;
   onOrientationChange?: (val: string) => void;
+  onIsRecording?: (val: boolean) => void;
   onTakePicture?: (val: PhotoPlayload) => void;
   onRecordingStart?: (val: number) => void;
   onRecordingFinished?: (val: VideoPayload) => void;
@@ -78,6 +77,7 @@ export default function PlethoraCamera(props: Props) {
     isFocused,
     stateActions,
     onOrientationChange,
+    onIsRecording,
     onTakePicture,
     onRecordingStart,
     onRecordingFinished,
@@ -95,12 +95,8 @@ export default function PlethoraCamera(props: Props) {
     children,
   } = props;
 
-  const {isVideo, frontCamera, flash, isRecording, hideStatusBar, zoomValue} =
-    cameraState;
-
+  const {isVideo, frontCamera, flash, hideStatusBar, zoomValue} = cameraState;
   const {startRecording, stopRecording, setZoomValue} = stateActions;
-
-  const isAndroid: boolean = Platform.OS === 'android';
   const {height, width} = useWindowDimensions();
 
   // ******************** PERMISSIONS ******************** //
@@ -108,8 +104,6 @@ export default function PlethoraCamera(props: Props) {
   const [hasCameraPermission, setHasCameraPermission] =
     useState<boolean>(false);
   const [hasMicrophonePermission, setHasMicrophonePermission] =
-    useState<boolean>(false);
-  const [hasCameraRollPermission, setHasCameraRollPermission] =
     useState<boolean>(false);
 
   const getCameraPermissions = useCallback(async () => {
@@ -141,34 +135,13 @@ export default function PlethoraCamera(props: Props) {
     } else return false;
   }, []);
 
-  const getCameraRollPermissions = useCallback(async () => {
-    if (isAndroid) {
-      const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
-      const hasPermission: boolean = await PermissionsAndroid.check(permission);
-      if (hasPermission) return true;
-      else {
-        const status: string = await PermissionsAndroid.request(permission);
-        return status === 'authorized' || status === 'granted';
-      }
-    }
-  }, [isAndroid]);
-
   const checkPermissions = useCallback(async () => {
     const hasCamera: boolean = await getCameraPermissions();
     setHasCameraPermission(hasCamera);
 
     const hasMic: boolean = await getMicrophonePermissions();
     setHasMicrophonePermission(hasMic);
-
-    const hasCamRoll: boolean | undefined = await getCameraRollPermissions();
-    if (typeof hasCamRoll === 'boolean') {
-      setHasCameraRollPermission(hasCamRoll);
-    }
-  }, [
-    getCameraRollPermissions,
-    getCameraPermissions,
-    getMicrophonePermissions,
-  ]);
+  }, [getCameraPermissions, getMicrophonePermissions]);
   const openSettings = async () => await Linking.openSettings();
 
   // ******************** ORIENTATION CONTROLS ******************** //
@@ -184,6 +157,7 @@ export default function PlethoraCamera(props: Props) {
   );
 
   const lockOrientation = async () => {
+    console.log('Locking orientation', orientation);
     return await new Promise(resolve => {
       switch (orientation) {
         case 'PORTRAIT':
@@ -211,17 +185,22 @@ export default function PlethoraCamera(props: Props) {
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
+  const [isRecording, setIsRecording] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (onIsRecording) onIsRecording(isRecording);
+  }, [isRecording, onIsRecording]);
+
   const startVideo = async () => {
     if (!isRecording) {
       const ready = await startRecording();
 
       if (ready) {
         await lockOrientation();
+        setIsRecording(true);
 
         const orientationWatchValue: string =
           height > width ? 'portrait' : 'landscape';
-
-        console.log('Recording - Pre', new Date().getTime());
 
         // In React Native Vision Camera V2, this doesn't
         // actually await. V3 should fix this...
@@ -229,6 +208,7 @@ export default function PlethoraCamera(props: Props) {
           flash: frontCamera ? 'off' : flash,
           fileType: 'mp4',
           onRecordingFinished: async (video: VideoFile) => {
+            setIsRecording(false);
             const timestampEnd = new Date().getTime();
             const nameConvention = config.nameConvention
               ? config.nameConvention
@@ -240,14 +220,7 @@ export default function PlethoraCamera(props: Props) {
             const finalFile: string = await renameFile(video, newName);
             video.path = finalFile;
 
-            if (saveToCameraRoll) {
-              if (isAndroid && !(await getCameraRollPermissions())) {
-                return Alert.alert('Camera Roll not permitted');
-              }
-              CameraRoll.save(finalFile);
-            }
-
-            console.log('Recording - Ended', timestampEnd);
+            if (saveToCameraRoll) CameraRoll.save(finalFile);
 
             const payload: VideoPayload = {
               data: video.path,
@@ -263,6 +236,7 @@ export default function PlethoraCamera(props: Props) {
             if (onRecordingFinished) onRecordingFinished(payload);
           },
           onRecordingError: (error: CaptureError) => {
+            setIsRecording(false);
             if (onRecordingError) onRecordingError(error);
             else console.error('Recording Error', error);
           },
@@ -272,11 +246,12 @@ export default function PlethoraCamera(props: Props) {
         if (onRecordingStart) return onRecordingStart(timestamp);
       }
       console.log('Recording - Active', new Date().getTime());
-    } else return;
+    }
   };
 
   const endVideo = async () => {
     if (isRecording) {
+      setIsRecording(false);
       const ready = await stopRecording();
       if (ready) return await cameraRef.current.stopRecording();
     } else Alert.alert('Please add endVideo() prop');
@@ -319,7 +294,6 @@ export default function PlethoraCamera(props: Props) {
           <MissingPermissions
             hasCameraPermission={hasCameraPermission}
             hasMicrophonePermission={hasMicrophonePermission}
-            hasCameraRollPermission={hasCameraRollPermission}
             openSettings={openSettings}
           />
         </SafeAreaView>
@@ -359,7 +333,7 @@ export default function PlethoraCamera(props: Props) {
 
       {showCameraControls ? (
         <CameraControls
-          cameraState={cameraState}
+          isRecording={isRecording}
           sectionHeights={sectionHeights}
           orientation={orientation}>
           {{
@@ -369,15 +343,10 @@ export default function PlethoraCamera(props: Props) {
                 isRecording={isRecording}
                 startVideo={cameraRef ? startVideo : () => null}
                 endVideo={endVideo}
-                cameraState={cameraState}
                 children={children}
               />
             ) : (
-              <PictureControls
-                takePicture={takePicture}
-                cameraState={cameraState}
-                children={children}
-              />
+              <PictureControls takePicture={takePicture} children={children} />
             ),
           }}
         </CameraControls>
