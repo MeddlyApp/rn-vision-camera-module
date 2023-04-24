@@ -139,7 +139,7 @@ export default function App() {
       showCameraControls={true}
       saveToCameraRoll={true}
       // Lifecycle Events
-      onIsRecording={(val: any) => setIsRecording(val)}
+      onIsRecording={(val: boolean) => setIsRecording(val)}
       onTakePicture={(res: PhotoPlayload) => console.log('onTakePicture', res)}
       onRecordingStart={(res: number) => console.log('onRecordingStart', res)}
       onRecordingFinished={(res: VideoPayload) => console.log('finished', res)}
