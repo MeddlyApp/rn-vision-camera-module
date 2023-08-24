@@ -1,5 +1,9 @@
-require_relative '../node_modules/react-native/scripts/react_native_pods'
-require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
@@ -28,7 +32,7 @@ target 'plethoracamera' do
 
   use_react_native!(
     :path => config[:reactNativePath],
-    # we make it explicit here to aid in the React Native upgrade process.
+     # Hermes is now enabled by default. Disable by setting this flag to false.
     :hermes_enabled => flags[:hermes_enabled],
     :fabric_enabled => flags[:fabric_enabled],
     # Enables Flipper.
@@ -42,6 +46,7 @@ target 'plethoracamera' do
   
   # Handle Signing for RNImageCropPicker-QBImagePicker
   post_install do |installer|
+    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202         
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
         config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
@@ -49,6 +54,14 @@ target 'plethoracamera' do
         config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
       end
     end
+
+    # Old?
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false
+    )
+    __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 
   # Original
