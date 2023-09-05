@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {StyleSheet, View, Text, NativeTouchEvent} from 'react-native';
 import {
   CameraDevice,
@@ -89,31 +89,33 @@ export default function RenderCamera(props: Props) {
 
   // Camera Format Settings
   const devices: CameraDevices = useCameraDevices();
-  const device = devices[frontCamera ? 'front' : 'back'];
+  const device: CameraDevice | undefined =
+    devices[frontCamera ? 'front' : 'back'];
 
   useEffect(() => {
     getDeviceInfo ? getDeviceInfo(device) : null;
   }, [device, getDeviceInfo]);
 
   const onError = (error: CameraRuntimeError) => console.error(error);
-  const onInitialized = () => setIsCameraInitialized(true);
+  const onInitialized = () => {
+    console.log('Camera initialized!');
+    setIsCameraInitialized(true);
+  };
 
   useEffect(() => {
     Camera.getMicrophonePermissionStatus().then(status =>
-      setHasMicrophonePermission(status === 'authorized'),
+      setHasMicrophonePermission(status === 'granted'),
     );
   }, []);
-
-  const cameraPreset =
-    cameraState && cameraState?.preset ? cameraState.preset : 'high';
 
   const videoStabilizationMode =
     cameraState && cameraState.videoStabilizationMode
       ? cameraState.videoStabilizationMode
       : 'auto' || 'off';
 
-  const zoom = zoomValue * 10; // multiplied by 10 because 1 is minimum
+  // const zoom = zoomValue * 10; // multiplied by 10 because 1 is minimum
 
+  console.log({isCameraInitialized, isFocused});
   return (
     <View
       style={
@@ -140,8 +142,8 @@ export default function RenderCamera(props: Props) {
             isActive={isFocused}
             onInitialized={onInitialized}
             onError={onError}
-            zoom={zoom}
-            preset={cameraPreset}
+            // zoom={zoom}
+            enableZoomGesture={true}
             photo={config.photo}
             video={config.video}
             audio={hasMicrophonePermission}

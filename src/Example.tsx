@@ -12,7 +12,6 @@ import {
 import PlethoraCamera from './PlethoraCamera';
 import {
   CameraDevice,
-  CameraPreset,
   CaptureError,
   VideoStabilizationMode,
 } from 'react-native-vision-camera';
@@ -24,7 +23,6 @@ export default function App() {
   const [flash, setFlash] = useState<string>('auto');
   const [videoStabilizationMode, setVideoStabilizationMode] =
     useState<VideoStabilizationMode>('auto');
-  const [preset, setPreset] = useState<CameraPreset>('high');
   const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [zoomValue, setZoomValue] = useState<number>(0);
@@ -57,7 +55,6 @@ export default function App() {
       });
     },
     getDeviceInfo: (x: CameraDevice | undefined) => {
-      // console.log('Device Info: ', x);
       return;
     },
     setZoomValue: (x: number) => setZoomValue(x),
@@ -68,7 +65,6 @@ export default function App() {
     frontCamera,
     flash,
     videoStabilizationMode,
-    preset,
     zoomValue,
     hideStatusBar,
   };
@@ -131,7 +127,7 @@ export default function App() {
     <PlethoraCamera
       // Camera Config
       config={config}
-      isFocused={true}
+      isFocused={true} // for react-navigation, use const isFocused = useIsFocused()
       cameraState={cameraState}
       stateActions={stateActions}
       sectionHeights={sectionHeights}

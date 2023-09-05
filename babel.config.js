@@ -12,6 +12,7 @@ module.exports = {
           // '@components': './src/components',
         },
       },
+      // 'react-native-reanimated/plugin', // should be listed last!
     ],
   ],
 };
