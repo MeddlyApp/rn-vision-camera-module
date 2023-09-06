@@ -88,6 +88,17 @@ export default function RenderCamera(props: Props) {
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
 
   // Camera Format Settings
+  const [dev, setDev] = useState<any>(null);
+  const getCameraDevices = useCallback(async () => {
+    const devices = await Camera.getAvailableCameraDevices();
+    console.log('Devices', devices);
+    setDev(devices);
+  }, []);
+
+  useEffect(() => {
+    getCameraDevices();
+  }, []);
+
   const devices: CameraDevices = useCameraDevices();
   const device: CameraDevice | undefined =
     devices[frontCamera ? 'front' : 'back'];
@@ -97,10 +108,10 @@ export default function RenderCamera(props: Props) {
   }, [device, getDeviceInfo]);
 
   const onError = (error: CameraRuntimeError) => console.error(error);
-  const onInitialized = () => {
+  const onInitialized = useCallback(() => {
     console.log('Camera initialized!');
     setIsCameraInitialized(true);
-  };
+  }, []);
 
   useEffect(() => {
     Camera.getMicrophonePermissionStatus().then(status =>
