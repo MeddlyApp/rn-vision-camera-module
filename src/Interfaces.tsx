@@ -12,7 +12,6 @@ export interface CameraState {
   frontCamera: boolean;
   flash?: string;
   videoStabilizationMode: VideoStabilizationMode;
-  zoomValue: number;
   hideStatusBar?: boolean;
 }
 
@@ -54,7 +53,6 @@ export interface StateActions {
   startRecording: () => Promise<boolean>;
   stopRecording: () => Promise<boolean>;
   getDeviceInfo?: (val: CameraDevice | undefined) => void | undefined;
-  setZoomValue: (val: number) => void;
 }
 
 // ********** Media Response Payloads ********** //

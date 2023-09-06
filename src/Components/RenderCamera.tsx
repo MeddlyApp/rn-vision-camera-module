@@ -1,9 +1,11 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import {StyleSheet, View, Text, NativeTouchEvent} from 'react-native';
 import {
   CameraDevice,
+  CameraDeviceFormat,
   CameraDevices,
   CameraRuntimeError,
+  FrameProcessor,
   useCameraDevices,
 } from 'react-native-vision-camera';
 import {Camera} from 'react-native-vision-camera';
@@ -18,8 +20,6 @@ interface Props {
   cameraRef: any;
   frontCamera: boolean;
   isFocused: boolean;
-  zoomValue: number;
-  setZoomValue: (zoomValue: number) => void;
   config: CameraConfig;
   cameraState: CameraState;
   getDeviceInfo?: (val?: CameraDevice | undefined) => void;
@@ -31,6 +31,7 @@ interface Props {
   onSwipeDown?: (val: NativeTouchEvent) => void;
   onSwipeLeft?: (val: NativeTouchEvent) => void;
   onSwipeRight?: (val: NativeTouchEvent) => void;
+  frameProcessor?: FrameProcessor;
 }
 
 export default function RenderCamera(props: Props) {
@@ -38,13 +39,10 @@ export default function RenderCamera(props: Props) {
     cameraRef,
     frontCamera,
     isFocused,
-    zoomValue,
-    setZoomValue,
     config,
     cameraState,
     getDeviceInfo,
     showTakePicIndicator,
-    //
     onSingleTap,
     onDoubleTap,
     swipeDistance,
@@ -52,6 +50,7 @@ export default function RenderCamera(props: Props) {
     onSwipeDown,
     onSwipeLeft,
     onSwipeRight,
+    frameProcessor,
   } = props;
 
   const tapToFocus = async ({
@@ -60,48 +59,33 @@ export default function RenderCamera(props: Props) {
     if (onSingleTap) onSingleTap(nativeEvent);
 
     if (cameraRef && cameraRef.current) {
-      return await cameraRef.current
+      return await cameraRef?.current
         .focus({x: nativeEvent.absoluteX, y: nativeEvent.absoluteY})
         .catch(() => null);
-    }
-  };
-
-  let _prevPinch = 1;
-  const onPinchStart = () => (_prevPinch = 1);
-  const onPinchEnd = () => (_prevPinch = 1);
-  const onPinchProgress = (p: number) => {
-    const increment = 0.01;
-    const p2 = p - _prevPinch;
-
-    if (p2 > 0 && p2 > increment) {
-      _prevPinch = p;
-      const newZoom = Math.min(zoomValue + increment, 1);
-      setZoomValue(newZoom);
-    } else if (p2 < 0 && p2 < -increment) {
-      _prevPinch = p;
-      const newZoom = Math.max(zoomValue - increment * 1.5, 0);
-      setZoomValue(newZoom);
     }
   };
 
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
 
-  // Camera Format Settings
-  const [dev, setDev] = useState<any>(null);
-  const getCameraDevices = useCallback(async () => {
-    const devices = await Camera.getAvailableCameraDevices();
-    console.log('Devices', devices);
-    setDev(devices);
-  }, []);
-
-  useEffect(() => {
-    getCameraDevices();
-  }, []);
-
   const devices: CameraDevices = useCameraDevices();
   const device: CameraDevice | undefined =
     devices[frontCamera ? 'front' : 'back'];
+
+  const format = useMemo(() => {
+    return device?.formats.reduce(
+      (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
+        if (prev == null) return curr;
+        if (curr.maxFps > prev.maxFps) {
+          console.log('Current format: ', curr);
+          return curr;
+        } else {
+          console.log('Previous format: ', prev);
+          return prev;
+        }
+      },
+    );
+  }, [device?.formats]);
 
   useEffect(() => {
     getDeviceInfo ? getDeviceInfo(device) : null;
@@ -109,7 +93,6 @@ export default function RenderCamera(props: Props) {
 
   const onError = (error: CameraRuntimeError) => console.error(error);
   const onInitialized = useCallback(() => {
-    console.log('Camera initialized!');
     setIsCameraInitialized(true);
   }, []);
 
@@ -124,23 +107,36 @@ export default function RenderCamera(props: Props) {
       ? cameraState.videoStabilizationMode
       : 'auto' || 'off';
 
-  // const zoom = zoomValue * 10; // multiplied by 10 because 1 is minimum
+  // Additional Photo Values:
+  //    autoFocusSystem, fieldOfView, photoHeight, photoWidth,
+  //    pixelFormats, supportsPhotoHDR
 
-  console.log({isCameraInitialized, isFocused});
+  // Additional Video Values:
+  //    minFps, maxFps, minIOS, maxISO, videoHeight,
+  //    videoWidth, videoStabilizationModes
+
+  const supportsPhotoHDR = format?.supportsPhotoHDR;
+  const supportsVideoHDR = format?.supportsVideoHDR;
+  const maxFps = format?.maxFps;
+
+  const videoHDRIsOn = cameraState.isVideo
+    ? supportsVideoHDR
+    : supportsPhotoHDR;
+
+  const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
+
   return (
     <View
       style={
         showTakePicIndicator
           ? [styles.container, styles.take_picture_indicator]
           : [styles.container]
-      }>
+      }
+      pointerEvents="box-none">
       {device != null && (
         <GestureHandler
           onSingleTap={tapToFocus}
           onDoubleTap={onDoubleTap}
-          onPinchStart={onPinchStart}
-          onPinchEnd={onPinchEnd}
-          onPinchProgress={onPinchProgress}
           swipeDistance={swipeDistance}
           onSwipeUp={onSwipeUp}
           onSwipeDown={onSwipeDown}
@@ -153,12 +149,14 @@ export default function RenderCamera(props: Props) {
             isActive={isFocused}
             onInitialized={onInitialized}
             onError={onError}
-            // zoom={zoom}
             enableZoomGesture={true}
             photo={config.photo}
             video={config.video}
             audio={hasMicrophonePermission}
             videoStabilizationMode={videoStabilizationMode}
+            format={format}
+            fps={formatFPS}
+            frameProcessor={frameProcessor}
           />
         </GestureHandler>
       )}
@@ -173,9 +171,6 @@ export default function RenderCamera(props: Props) {
         <GestureHandler
           onSingleTap={tapToFocus}
           onDoubleTap={onDoubleTap}
-          onPinchStart={onPinchStart}
-          onPinchEnd={onPinchEnd}
-          onPinchProgress={onPinchProgress}
           swipeDistance={swipeDistance}
           onSwipeUp={onSwipeUp}
           onSwipeDown={onSwipeDown}

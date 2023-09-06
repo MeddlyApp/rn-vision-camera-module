@@ -7,11 +7,7 @@ import {
 } from 'react-native';
 import {
   GestureHandlerRootView,
-  PinchGestureHandler,
   TapGestureHandler,
-  State,
-  PinchGestureHandlerGestureEvent,
-  PinchGestureHandlerStateChangeEvent,
   GestureEvent,
   GestureEventPayload,
   HandlerStateChangeEvent,
@@ -20,9 +16,6 @@ import {
 interface Props {
   onSingleTap?: (val: HandlerStateChangeEvent<Record<string, unknown>>) => void;
   onDoubleTap?: (val: GestureEventPayload) => void;
-  onPinchStart: () => void;
-  onPinchEnd: () => void;
-  onPinchProgress: (val: number) => void;
   onSwipeUp?: (val: NativeTouchEvent) => void;
   onSwipeDown?: (val: NativeTouchEvent) => void;
   onSwipeLeft?: (val: NativeTouchEvent) => void;
@@ -35,9 +28,6 @@ export default function GestureHandler(props: Props) {
   const {
     onSingleTap,
     onDoubleTap,
-    onPinchStart,
-    onPinchEnd,
-    onPinchProgress,
     onSwipeUp,
     onSwipeDown,
     onSwipeLeft,
@@ -48,20 +38,6 @@ export default function GestureHandler(props: Props) {
 
   const pinchRef = useRef();
   const doubleTapRef = useRef();
-
-  const onGesturePinch = ({nativeEvent}: PinchGestureHandlerGestureEvent) => {
-    onPinchProgress(nativeEvent.scale);
-  };
-
-  const onPinchHandlerStateChange = ({
-    nativeEvent,
-  }: PinchGestureHandlerStateChangeEvent) => {
-    const pinch_end = nativeEvent.state === State.END;
-    const pinch_begin = nativeEvent.oldState === State.BEGAN;
-    const pinch_active = nativeEvent.state === State.ACTIVE;
-    if (pinch_end) onPinchEnd();
-    if (pinch_begin && pinch_active) onPinchStart();
-  };
 
   let touchY = 0;
   let touchX = 0;
@@ -90,29 +66,25 @@ export default function GestureHandler(props: Props) {
   const msDelay = 175;
 
   return (
-    <GestureHandlerRootView>
-      <PinchGestureHandler
-        ref={pinchRef}
-        onGestureEvent={onGesturePinch}
-        onHandlerStateChange={onPinchHandlerStateChange}>
-        <TapGestureHandler waitFor={doubleTapRef} onActivated={onSingleTap}>
-          <TapGestureHandler
-            ref={doubleTapRef}
-            onActivated={({nativeEvent}: GestureEvent) => {
-              if (onDoubleTap) onDoubleTap(nativeEvent);
-            }}
-            waitFor={pinchRef}
-            numberOfTaps={2}
-            maxDelayMs={msDelay}>
-            <View
-              onTouchStart={onTouchStart}
-              onTouchEnd={onTouchEnd}
-              style={styles.main_view}>
-              {children}
-            </View>
-          </TapGestureHandler>
+    <GestureHandlerRootView pointerEvents="box-none">
+      <TapGestureHandler waitFor={doubleTapRef} onActivated={onSingleTap}>
+        <TapGestureHandler
+          ref={doubleTapRef}
+          onActivated={({nativeEvent}: GestureEvent) => {
+            if (onDoubleTap) onDoubleTap(nativeEvent);
+          }}
+          waitFor={pinchRef}
+          numberOfTaps={2}
+          maxDelayMs={msDelay}>
+          <View
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            style={styles.main_view}
+            pointerEvents="box-none">
+            {children}
+          </View>
         </TapGestureHandler>
-      </PinchGestureHandler>
+      </TapGestureHandler>
     </GestureHandlerRootView>
   );
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Alert, NativeTouchEvent, Text} from 'react-native';
 import {
   CameraConfig,
@@ -25,7 +25,11 @@ export default function App() {
     useState<VideoStabilizationMode>('auto');
   const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [zoomValue, setZoomValue] = useState<number>(0);
+
+  useEffect(() => {
+    if (isRecording && !hideStatusBar) setHideStatusBar(true);
+    if (!isRecording && hideStatusBar) setHideStatusBar(false);
+  }, [isRecording]);
 
   const stateActions: StateActions = {
     startRecording: async () => {
@@ -57,7 +61,6 @@ export default function App() {
     getDeviceInfo: (x: CameraDevice | undefined) => {
       return;
     },
-    setZoomValue: (x: number) => setZoomValue(x),
   };
 
   const cameraState: CameraState = {
@@ -65,7 +68,6 @@ export default function App() {
     frontCamera,
     flash,
     videoStabilizationMode,
-    zoomValue,
     hideStatusBar,
   };
 
