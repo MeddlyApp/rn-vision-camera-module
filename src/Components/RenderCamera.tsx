@@ -22,7 +22,7 @@ interface Props {
   isFocused: boolean;
   config: CameraConfig;
   cameraState: CameraState;
-  getDeviceInfo?: (val?: CameraDevice | undefined) => void;
+  getDeviceInfo?: (val?: CameraDeviceFormat | undefined) => void;
   showTakePicIndicator: boolean;
   onSingleTap?: (val: GestureEventPayload) => void;
   onDoubleTap?: (val: GestureEventPayload) => void;
@@ -73,23 +73,77 @@ export default function RenderCamera(props: Props) {
     devices[frontCamera ? 'front' : 'back'];
 
   const format = useMemo(() => {
+    // We only want 1080p video and photo
+    const filtered1080pFormats = device?.formats.filter(
+      (format: CameraDeviceFormat) => {
+        const height = 1080;
+        const width = 1920;
+
+        const videoIsHeight = format.videoHeight === height;
+        const videoIsWidth = format.videoWidth === width;
+        const videoIs1080 = videoIsHeight && videoIsWidth;
+
+        const photoIsHeight = format.photoHeight === height;
+        const photoIsWidth = format.photoWidth === width;
+        const photoIs1080 = photoIsHeight && photoIsWidth;
+
+        return videoIs1080 && photoIs1080;
+      },
+    );
+
+    if (filtered1080pFormats && filtered1080pFormats?.length > 0) {
+      return filtered1080pFormats.reduce(
+        (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
+          if (prev == null) return curr;
+          if (curr.maxFps > prev.maxFps) return curr;
+          else return prev;
+        },
+      );
+    }
+
+    // If no 1080p, we only want 720p video and photo
+
+    const filtered720pFormats = device?.formats.filter(
+      (format: CameraDeviceFormat) => {
+        const height = 720;
+        const width = 1280;
+
+        const videoIsHeight = format.videoHeight === height;
+        const videoIsWidth = format.videoWidth === width;
+        const videoIs1080 = videoIsHeight && videoIsWidth;
+
+        const photoIsHeight = format.photoHeight === height;
+        const photoIsWidth = format.photoWidth === width;
+        const photoIs1080 = photoIsHeight && photoIsWidth;
+
+        return videoIs1080 && photoIs1080;
+      },
+    );
+
+    if (filtered720pFormats && filtered720pFormats?.length > 0) {
+      return filtered720pFormats.reduce(
+        (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
+          if (prev == null) return curr;
+          if (curr.maxFps > prev.maxFps) return curr;
+          else return prev;
+        },
+      );
+    }
+
+    // If no 1080 or 720, just return the highest FPS
+
     return device?.formats.reduce(
       (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
         if (prev == null) return curr;
-        if (curr.maxFps > prev.maxFps) {
-          console.log('Current format: ', curr);
-          return curr;
-        } else {
-          console.log('Previous format: ', prev);
-          return prev;
-        }
+        if (curr.maxFps > prev.maxFps) return curr;
+        else return prev;
       },
     );
   }, [device?.formats]);
 
   useEffect(() => {
-    getDeviceInfo ? getDeviceInfo(device) : null;
-  }, [device, getDeviceInfo]);
+    getDeviceInfo ? getDeviceInfo(format) : null;
+  }, [format, device, getDeviceInfo]);
 
   const onError = (error: CameraRuntimeError) => console.error(error);
   const onInitialized = useCallback(() => {
@@ -112,8 +166,9 @@ export default function RenderCamera(props: Props) {
   //    pixelFormats, supportsPhotoHDR
 
   // Additional Video Values:
-  //    minFps, maxFps, minIOS, maxISO, videoHeight,
-  //    videoWidth, videoStabilizationModes
+  //    minFps, maxFps, minIOS, maxISO, videoHeight, videoWidth
+
+  const videoStabilizationModes = format?.videoStabilizationModes;
 
   const supportsPhotoHDR = format?.supportsPhotoHDR;
   const supportsVideoHDR = format?.supportsVideoHDR;

@@ -12,6 +12,7 @@ import {
 import PlethoraCamera from './PlethoraCamera';
 import {
   CameraDevice,
+  CameraDeviceFormat,
   CaptureError,
   VideoStabilizationMode,
 } from 'react-native-vision-camera';
@@ -58,7 +59,8 @@ export default function App() {
         );
       });
     },
-    getDeviceInfo: (x: CameraDevice | undefined) => {
+    getDeviceInfo: (x: CameraDeviceFormat | undefined) => {
+      // console.log('getDeviceInfo', x);
       return;
     },
   };
@@ -142,7 +144,7 @@ export default function App() {
       onRecordingStart={(res: number) => console.log('onRecordingStart', res)}
       onRecordingFinished={(res: VideoPayload) => console.log('finished', res)}
       onRecordingError={(e: CaptureError) => console.log('onRecordingError', e)}
-      onOrientationChange={(val: string) => console.log('orientation', val)}
+      // onOrientationChange={(val: string) => console.log('orientation', val)}
       // Custom Gesture Controls
       onSingleTap={(res: GestureEventPayload) => console.log('singleTap', res)}
       onDoubleTap={(res: GestureEventPayload) => console.log('doubleTap', res)}

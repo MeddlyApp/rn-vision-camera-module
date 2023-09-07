@@ -1,5 +1,5 @@
 import {
-  CameraDevice,
+  CameraDeviceFormat,
   PhotoFile,
   VideoStabilizationMode,
 } from 'react-native-vision-camera';
@@ -52,7 +52,7 @@ export interface CustomComponents {
 export interface StateActions {
   startRecording: () => Promise<boolean>;
   stopRecording: () => Promise<boolean>;
-  getDeviceInfo?: (val: CameraDevice | undefined) => void | undefined;
+  getDeviceInfo?: (val: CameraDeviceFormat | undefined) => void | undefined;
 }
 
 // ********** Media Response Payloads ********** //

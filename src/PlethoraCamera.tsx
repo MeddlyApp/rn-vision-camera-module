@@ -26,6 +26,8 @@ import {
   VideoFile,
   useFrameProcessor,
 } from 'react-native-vision-camera';
+import {Orientation as RNVCOrientation} from 'react-native-vision-camera/lib/typescript/Orientation';
+
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import Orientation, {OrientationType} from 'react-native-orientation-locker';
 import {
