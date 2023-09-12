@@ -46,13 +46,12 @@ const [videoStabilizationMode, setVideoStabilizationMode] =
 const [preset, setPreset] = useState<CameraPreset>('high');
 const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
 const [isRecording, setIsRecording] = useState<boolean>(false);
-const [zoomValue, setZoomValue] = useState<number>(0);
 
 /*/
- * startRecording: 
+ * startRecording:
  *  - can be async
  *  - must return true to start recording
- * stopRecording: 
+ * stopRecording:
  *  - can be async
  *  - must return true to stop recording
 /*/
@@ -60,8 +59,7 @@ const [zoomValue, setZoomValue] = useState<number>(0);
 const stateActions = {
   startRecording: () => true,
   stopRecording: () => true,
-  getDeviceInfo: (x: CameraDevice) => console.log('Device Info: ', x),
-  setZoomValue: (x: number) => setZoomValue(x),
+  getDeviceInfo: (x: CameraDevice) => console.log('Device Info: ', x)
 };
 
 const cameraState = {
@@ -71,7 +69,6 @@ const cameraState = {
   isRecording,
   videoStabilizationMode,
   preset,
-  zoomValue,
   hideStatusBar,
 };
 
@@ -156,13 +153,6 @@ const sectionHeights = {
 </PlethoraCamera>;
 ```
 
-# Bugs
-
-- For whatever reason, `format` in `RenderCamera.js` isn't working properly
-  - function returns the proper camera
-  - photos are only 1088 x 1088 px instead of 1728 x 3648 px like selected
-
 # Roadmap
 
 - Add: Write Geolocation data to file metadata
-- Add: Ability to get device camera info
