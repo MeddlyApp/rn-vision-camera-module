@@ -12,10 +12,6 @@ import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
 
-// Reanimated
-import com.facebook.react.bridge.JSIModulePackage; // <- add
-import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
-
 // Orientation Locker
 import org.wonday.orientation.OrientationActivityLifecycle;
 
@@ -52,12 +48,6 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected Boolean isHermesEnabled() {
       return BuildConfig.IS_HERMES_ENABLED;
-    }
-
-    // Reanimated
-    @Override
-    protected JSIModulePackage getJSIModulePackage() {
-      return new ReanimatedJSIModulePackage(); // <- add
     }
   };
 

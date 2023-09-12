@@ -1,9 +1,9 @@
 import {
-  CameraDevice,
-  CameraPreset,
+  CameraDeviceFormat,
   PhotoFile,
   VideoStabilizationMode,
 } from 'react-native-vision-camera';
+import {Orientation} from 'react-native-vision-camera/lib/typescript/Orientation';
 
 // ********** Config & Controls ********** //
 
@@ -12,8 +12,6 @@ export interface CameraState {
   frontCamera: boolean;
   flash?: string;
   videoStabilizationMode: VideoStabilizationMode;
-  preset: CameraPreset;
-  zoomValue: number;
   hideStatusBar?: boolean;
 }
 
@@ -54,14 +52,13 @@ export interface CustomComponents {
 export interface StateActions {
   startRecording: () => Promise<boolean>;
   stopRecording: () => Promise<boolean>;
-  getDeviceInfo?: (val: CameraDevice | undefined) => void | undefined;
-  setZoomValue: (val: number) => void;
+  getDeviceInfo?: (val: CameraDeviceFormat | undefined) => void | undefined;
 }
 
 // ********** Media Response Payloads ********** //
 
 export interface PhotoPlayload extends PhotoFile {
-  orientation: string;
+  orientation: Orientation;
   height: number;
   width: number;
 }

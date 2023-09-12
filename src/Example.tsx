@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Alert, NativeTouchEvent, Text} from 'react-native';
 import {
   CameraConfig,
@@ -12,7 +12,7 @@ import {
 import PlethoraCamera from './PlethoraCamera';
 import {
   CameraDevice,
-  CameraPreset,
+  CameraDeviceFormat,
   CaptureError,
   VideoStabilizationMode,
 } from 'react-native-vision-camera';
@@ -24,10 +24,13 @@ export default function App() {
   const [flash, setFlash] = useState<string>('auto');
   const [videoStabilizationMode, setVideoStabilizationMode] =
     useState<VideoStabilizationMode>('auto');
-  const [preset, setPreset] = useState<CameraPreset>('high');
   const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [zoomValue, setZoomValue] = useState<number>(0);
+
+  useEffect(() => {
+    if (isRecording && !hideStatusBar) setHideStatusBar(true);
+    if (!isRecording && hideStatusBar) setHideStatusBar(false);
+  }, [isRecording]);
 
   const stateActions: StateActions = {
     startRecording: async () => {
@@ -56,11 +59,10 @@ export default function App() {
         );
       });
     },
-    getDeviceInfo: (x: CameraDevice | undefined) => {
-      // console.log('Device Info: ', x);
+    getDeviceInfo: (x: CameraDeviceFormat | undefined) => {
+      // console.log('getDeviceInfo', x);
       return;
     },
-    setZoomValue: (x: number) => setZoomValue(x),
   };
 
   const cameraState: CameraState = {
@@ -68,8 +70,6 @@ export default function App() {
     frontCamera,
     flash,
     videoStabilizationMode,
-    preset,
-    zoomValue,
     hideStatusBar,
   };
 
@@ -131,7 +131,7 @@ export default function App() {
     <PlethoraCamera
       // Camera Config
       config={config}
-      isFocused={true}
+      isFocused={true} // for react-navigation, use const isFocused = useIsFocused()
       cameraState={cameraState}
       stateActions={stateActions}
       sectionHeights={sectionHeights}
@@ -144,7 +144,7 @@ export default function App() {
       onRecordingStart={(res: number) => console.log('onRecordingStart', res)}
       onRecordingFinished={(res: VideoPayload) => console.log('finished', res)}
       onRecordingError={(e: CaptureError) => console.log('onRecordingError', e)}
-      onOrientationChange={(val: string) => console.log('orientation', val)}
+      // onOrientationChange={(val: string) => console.log('orientation', val)}
       // Custom Gesture Controls
       onSingleTap={(res: GestureEventPayload) => console.log('singleTap', res)}
       onDoubleTap={(res: GestureEventPayload) => console.log('doubleTap', res)}

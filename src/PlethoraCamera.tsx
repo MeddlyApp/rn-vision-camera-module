@@ -19,7 +19,15 @@ import {
   Alert,
   NativeTouchEvent,
 } from 'react-native';
-import {Camera, CaptureError, VideoFile} from 'react-native-vision-camera';
+import {
+  Camera,
+  CaptureError,
+  Frame,
+  VideoFile,
+  useFrameProcessor,
+} from 'react-native-vision-camera';
+import {Orientation as RNVCOrientation} from 'react-native-vision-camera/lib/typescript/Orientation';
+
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import Orientation, {OrientationType} from 'react-native-orientation-locker';
 import {
@@ -95,8 +103,8 @@ export default function PlethoraCamera(props: Props) {
     children,
   } = props;
 
-  const {isVideo, frontCamera, flash, hideStatusBar, zoomValue} = cameraState;
-  const {startRecording, stopRecording, setZoomValue} = stateActions;
+  const {isVideo, frontCamera, flash, hideStatusBar} = cameraState;
+  const {startRecording, stopRecording} = stateActions;
   const {height, width} = useWindowDimensions();
 
   // ******************** PERMISSIONS ******************** //
@@ -108,14 +116,14 @@ export default function PlethoraCamera(props: Props) {
 
   const getCameraPermissions = useCallback(async () => {
     const cameraPermission: string = await Camera.getCameraPermissionStatus();
-    const isAuthorized: boolean = cameraPermission === 'authorized';
+    const isGranted: boolean = cameraPermission === 'granted';
     const isNotDetermined: boolean = cameraPermission === 'not-determined';
     const isDenied: boolean = cameraPermission === 'denied';
-    if (isAuthorized) return true;
+    if (isGranted) return true;
     if (isNotDetermined || isDenied) {
       const newCameraPermission: string =
         await Camera.requestCameraPermission();
-      if (newCameraPermission === 'authorized') return true;
+      if (newCameraPermission === 'granted') return true;
       return false;
     } else return false;
   }, []);
@@ -123,14 +131,14 @@ export default function PlethoraCamera(props: Props) {
   const getMicrophonePermissions = useCallback(async () => {
     const microphonePermission: string =
       await Camera.getMicrophonePermissionStatus();
-    const isAuthorized: boolean = microphonePermission === 'authorized';
+    const isGranted: boolean = microphonePermission === 'granted';
     const isNotDetermined: boolean = microphonePermission === 'not-determined';
     const isDenied: boolean = microphonePermission === 'denied';
-    if (isAuthorized) return true;
+    if (isGranted) return true;
     if (isNotDetermined || isDenied) {
       const newMicrophonePermission =
         await Camera.requestMicrophonePermission();
-      if (newMicrophonePermission === 'authorized') return true;
+      if (newMicrophonePermission === 'granted') return true;
       return false;
     } else return false;
   }, []);
@@ -184,6 +192,11 @@ export default function PlethoraCamera(props: Props) {
   }, [checkPermissions, onOrientationDidChange]);
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
+
+  //const frameProcessor = useFrameProcessor((frame: Frame) => {
+  //  'worklet';
+  //  console.log('Frame:::', {frame});
+  //}, []);
 
   const [isRecording, setIsRecording] = useState<boolean>(false);
 
@@ -277,7 +290,8 @@ export default function PlethoraCamera(props: Props) {
     const finalFile = await renameFile(photo, newName);
     photo.path = finalFile;
 
-    const orientationWatchValue = height > width ? 'portrait' : 'landscape';
+    const orientationWatchValue: any =
+      height > width ? 'portrait' : 'landscape';
     photo.orientation = orientationWatchValue;
     photo.height = height > width ? 1920 : 1080;
     photo.width = height > width ? 1080 : 1920;
@@ -305,7 +319,7 @@ export default function PlethoraCamera(props: Props) {
   }
 
   return (
-    <View style={styles.base_container}>
+    <View style={styles.base_container} pointerEvents="box-none">
       <StatusBar
         hidden={hideStatusBar}
         barStyle="light-content"
@@ -317,8 +331,6 @@ export default function PlethoraCamera(props: Props) {
         cameraRef={cameraRef}
         isFocused={isFocused}
         frontCamera={frontCamera}
-        zoomValue={zoomValue}
-        setZoomValue={setZoomValue}
         config={config}
         cameraState={cameraState}
         getDeviceInfo={
@@ -332,6 +344,7 @@ export default function PlethoraCamera(props: Props) {
         onSwipeDown={onSwipeDown}
         onSwipeLeft={onSwipeLeft}
         onSwipeRight={onSwipeRight}
+        // frameProcessor={frameProcessor}
       />
 
       {showCameraControls ? (

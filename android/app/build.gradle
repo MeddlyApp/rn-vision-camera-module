@@ -152,10 +152,13 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+
     // React Native FS
     implementation project(':react-native-fs')
 
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+    // React Native Vision Camera
+    // implementation project(':react-native-vision-camera')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
