@@ -36,7 +36,7 @@
   - Video / Photo Mode
 
 ```typescript
-import Camera from '@plethora_co/rn-vision-camera';
+import Camera from '@meddly/rn-vision-camera';
 
 const [isVideo, setIsVideo] = useState<boolean>(true);
 const [frontCamera, setFrontCamera] = useState<boolean>(false);

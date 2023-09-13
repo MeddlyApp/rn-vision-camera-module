@@ -1,1 +1,1 @@
-declare module '@plethora_co/rn-vision-camera';
+declare module '@meddly/rn-vision-camera';
