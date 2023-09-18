@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback, useMemo} from 'react';
-import {StyleSheet, View, Text, NativeTouchEvent} from 'react-native';
+import {StyleSheet, View, Text, NativeTouchEvent, Platform} from 'react-native';
 import {
   CameraDevice,
   CameraDeviceFormat,
@@ -179,7 +179,7 @@ export default function RenderCamera(props: Props) {
     : supportsPhotoHDR;
 
   const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
-
+  const isIos = Platform.OS === 'ios';
   return (
     <View
       style={
@@ -209,8 +209,8 @@ export default function RenderCamera(props: Props) {
             video={config.video}
             audio={hasMicrophonePermission}
             videoStabilizationMode={videoStabilizationMode}
-            format={format}
-            fps={formatFPS}
+            format={isIos ? undefined : format}
+            fps={isIos ? undefined : formatFPS}
             frameProcessor={frameProcessor}
           />
         </GestureHandler>
