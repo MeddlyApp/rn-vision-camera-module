@@ -9,7 +9,7 @@ import {
   VideoPayload,
   StateActions,
 } from './Interfaces';
-import PlethoraCamera from './PlethoraCamera';
+import MeddlyCamera from './MeddlyCamera';
 import {
   CameraDevice,
   CameraDeviceFormat,
@@ -128,7 +128,7 @@ export default function App() {
   const sectionHeights: SectionHeights = {top: 100, bottom: 100};
 
   return (
-    <PlethoraCamera
+    <MeddlyCamera
       // Camera Config
       config={config}
       isFocused={true} // for react-navigation, use const isFocused = useIsFocused()
@@ -154,6 +154,6 @@ export default function App() {
       onSwipeUp={(res: NativeTouchEvent) => console.log('onSwipeUp', res)}
       onSwipeDown={(res: NativeTouchEvent) => console.log('onSwipeDown', res)}>
       {customComponents}
-    </PlethoraCamera>
+    </MeddlyCamera>
   );
 }

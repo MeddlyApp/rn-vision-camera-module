@@ -333,6 +333,7 @@ export default function PlethoraCamera(props: Props) {
         frontCamera={frontCamera}
         config={config}
         cameraState={cameraState}
+        orientation={orientation}
         getDeviceInfo={
           stateActions?.getDeviceInfo ? stateActions.getDeviceInfo : undefined
         }

@@ -125,7 +125,7 @@ const sectionHeights = {
 };
 
 // Render
-<PlethoraCamera
+<MeddlyCamera
   // Camera Config
   config={config}
   isFocused={true}
@@ -150,7 +150,7 @@ const sectionHeights = {
   onSwipeUp={res => console.log('onSwipeUp', res)}
   onSwipeDown={res => console.log('onSwipeDown', res)}>
   {customComponents}
-</PlethoraCamera>;
+</MeddlyCamera>;
 ```
 
 # Roadmap

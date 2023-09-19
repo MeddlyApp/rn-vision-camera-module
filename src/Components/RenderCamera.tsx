@@ -22,6 +22,7 @@ interface Props {
   isFocused: boolean;
   config: CameraConfig;
   cameraState: CameraState;
+  orientation?: string;
   getDeviceInfo?: (val?: CameraDeviceFormat | undefined) => void;
   showTakePicIndicator: boolean;
   onSingleTap?: (val: GestureEventPayload) => void;
@@ -41,6 +42,7 @@ export default function RenderCamera(props: Props) {
     isFocused,
     config,
     cameraState,
+    orientation,
     getDeviceInfo,
     showTakePicIndicator,
     onSingleTap,
@@ -52,6 +54,8 @@ export default function RenderCamera(props: Props) {
     onSwipeRight,
     frameProcessor,
   } = props;
+
+  const isIos = Platform.OS === 'ios';
 
   const tapToFocus = async ({
     nativeEvent,
@@ -73,11 +77,17 @@ export default function RenderCamera(props: Props) {
     devices[frontCamera ? 'front' : 'back'];
 
   const format = useMemo(() => {
+    const isPortrait = orientation === 'PORTRAIT';
+    //console.log('Orientation Updated:', isPortrait);
+
+    // NOTE: with iOS, we must set the height and width
+    //       specifically, depending on the orientation
+
     // We only want 1080p video and photo
     const filtered1080pFormats = device?.formats.filter(
       (format: CameraDeviceFormat) => {
-        const height = 1080;
-        const width = 1920;
+        const height = isIos && isPortrait ? 1920 : 1080;
+        const width = isIos && isPortrait ? 1080 : 1920;
 
         const videoIsHeight = format.videoHeight === height;
         const videoIsWidth = format.videoWidth === width;
@@ -105,8 +115,8 @@ export default function RenderCamera(props: Props) {
 
     const filtered720pFormats = device?.formats.filter(
       (format: CameraDeviceFormat) => {
-        const height = 720;
-        const width = 1280;
+        const height = isIos && isPortrait ? 1280 : 720;
+        const width = isIos && isPortrait ? 720 : 1280;
 
         const videoIsHeight = format.videoHeight === height;
         const videoIsWidth = format.videoWidth === width;
@@ -130,7 +140,7 @@ export default function RenderCamera(props: Props) {
       );
     }
 
-    // If no 1080 or 720, just return the highest FPS
+    // If no 1080 or 720, return the highest FPS
 
     return device?.formats.reduce(
       (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
@@ -139,7 +149,7 @@ export default function RenderCamera(props: Props) {
         else return prev;
       },
     );
-  }, [device?.formats]);
+  }, [device?.formats, orientation]);
 
   useEffect(() => {
     getDeviceInfo ? getDeviceInfo(format) : null;
@@ -179,7 +189,6 @@ export default function RenderCamera(props: Props) {
     : supportsPhotoHDR;
 
   const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
-  const isIos = Platform.OS === 'ios';
   return (
     <View
       style={
@@ -209,8 +218,8 @@ export default function RenderCamera(props: Props) {
             video={config.video}
             audio={hasMicrophonePermission}
             videoStabilizationMode={videoStabilizationMode}
-            format={isIos ? undefined : format}
-            fps={isIos ? undefined : formatFPS}
+            format={format}
+            fps={formatFPS}
             frameProcessor={frameProcessor}
           />
         </GestureHandler>
@@ -231,7 +240,9 @@ export default function RenderCamera(props: Props) {
           onSwipeDown={onSwipeDown}
           onSwipeLeft={onSwipeLeft}
           onSwipeRight={onSwipeRight}>
-          <View style={styles.flex_centered} />
+          <View style={styles.flex_centered}>
+            <Text style={styles.txt_white}>No Device Found</Text>
+          </View>
         </GestureHandler>
       ) : null}
     </View>
