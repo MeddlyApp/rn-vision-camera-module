@@ -18,7 +18,8 @@
     "react-native-gesture-handler": "*",
     "react-native-orientation-locker": "*",
     "react-native-reanimated": "*",
-    "react-native-vision-camera": "*"
+    "react-native-vision-camera": "*",
+    "react-native-worklets-core": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.22.20",
