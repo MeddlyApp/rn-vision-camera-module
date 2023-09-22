@@ -1,7 +1,7 @@
 // Production
 import 'react-native-gesture-handler';
-import PlethoraCamera from './src/PlethoraCamera';
-export default PlethoraCamera;
+import MeddlyCamera from './src/MeddlyCamera';
+export default MeddlyCamera;
 //
 
 /*/ Testing
