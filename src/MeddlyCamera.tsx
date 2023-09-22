@@ -116,14 +116,14 @@ export default function PlethoraCamera(props: Props) {
 
   const getCameraPermissions = useCallback(async () => {
     const cameraPermission: string = await Camera.getCameraPermissionStatus();
-    const isGranted: boolean = cameraPermission === 'granted';
+    const isGranted: boolean = cameraPermission === 'authorized';
     const isNotDetermined: boolean = cameraPermission === 'not-determined';
     const isDenied: boolean = cameraPermission === 'denied';
     if (isGranted) return true;
     if (isNotDetermined || isDenied) {
       const newCameraPermission: string =
         await Camera.requestCameraPermission();
-      if (newCameraPermission === 'granted') return true;
+      if (newCameraPermission === 'authorized') return true;
       return false;
     } else return false;
   }, []);
@@ -131,14 +131,14 @@ export default function PlethoraCamera(props: Props) {
   const getMicrophonePermissions = useCallback(async () => {
     const microphonePermission: string =
       await Camera.getMicrophonePermissionStatus();
-    const isGranted: boolean = microphonePermission === 'granted';
+    const isGranted: boolean = microphonePermission === 'authorized';
     const isNotDetermined: boolean = microphonePermission === 'not-determined';
     const isDenied: boolean = microphonePermission === 'denied';
     if (isGranted) return true;
     if (isNotDetermined || isDenied) {
       const newMicrophonePermission =
         await Camera.requestMicrophonePermission();
-      if (newMicrophonePermission === 'granted') return true;
+      if (newMicrophonePermission === 'authorized') return true;
       return false;
     } else return false;
   }, []);
@@ -148,7 +148,7 @@ export default function PlethoraCamera(props: Props) {
     setHasCameraPermission(hasCamera);
 
     const hasMic: boolean = await getMicrophonePermissions();
-    setHasMicrophonePermission(hasMic);
+    setHasMicrophonePermission(true);
   }, [getCameraPermissions, getMicrophonePermissions]);
   const openSettings = async () => await Linking.openSettings();
 

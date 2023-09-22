@@ -527,11 +527,10 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - SocketRocket (0.6.1)
-  - VisionCamera (3.0.0):
+  - VisionCamera (2.16.1):
     - React
     - React-callinvoker
     - React-Core
-    - react-native-worklets-core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -778,7 +777,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 6e4dc6b7ab3a385386d4e36228bd065e5a611394
   RNReanimated: 2491645f0883526f4470d8b5c761308709ba31f8
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  VisionCamera: 9be9a96959550faba434896a60fc1be843fca5af
+  VisionCamera: b5aaa1d533a1063289eb71ad70bcbb50a57f2e0d
   Yoga: 3efc43e0d48686ce2e8c60f99d4e6bd349aff981
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

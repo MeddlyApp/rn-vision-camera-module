@@ -150,8 +150,20 @@ const sectionHeights = {
   onSwipeUp={res => console.log('onSwipeUp', res)}
   onSwipeDown={res => console.log('onSwipeDown', res)}>
   {customComponents}
-</MeddlyCamera>;
+</MeddlyCamera>
+;
 ```
+
+# Notes
+
+- Currently running react-native-vison-camera version `2.16.1`
+  - To get started..
+    1. Go go: ./node_modules/react-native-vison-camera/android/build.gradle"
+    2. Line 138 - Change: `minSdkVersion 21` to: `minSdkVersion getExtOrIntegerDefault('minSdkVersion')`
+  - To upgrade to version `3.0.0`, permissions values `authorized` must be changed to `granted` in the following files
+    - `./src/components/RenderCamera.tsx`
+    - `./src/MeddlyCamera.tsx`
+  - FPS stuff has been commented out in `2.16.1`. Uncomment FPS in `./src/components/RenderCamera.tsx` if running react-native-vison-camera version `3.0.0`
 
 # Roadmap
 

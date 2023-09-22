@@ -105,7 +105,7 @@ export default function RenderCamera(props: Props) {
       return filtered1080pFormats.reduce(
         (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
           if (prev == null) return curr;
-          if (curr.maxFps > prev.maxFps) return curr;
+          // if (curr.maxFps > prev.maxFps) return curr;
           else return prev;
         },
       );
@@ -134,7 +134,7 @@ export default function RenderCamera(props: Props) {
       return filtered720pFormats.reduce(
         (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
           if (prev == null) return curr;
-          if (curr.maxFps > prev.maxFps) return curr;
+          // if (curr.maxFps > prev.maxFps) return curr;
           else return prev;
         },
       );
@@ -145,7 +145,7 @@ export default function RenderCamera(props: Props) {
     return device?.formats.reduce(
       (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
         if (prev == null) return curr;
-        if (curr.maxFps > prev.maxFps) return curr;
+        // if (curr.maxFps > prev.maxFps) return curr;
         else return prev;
       },
     );
@@ -162,7 +162,7 @@ export default function RenderCamera(props: Props) {
 
   useEffect(() => {
     Camera.getMicrophonePermissionStatus().then(status =>
-      setHasMicrophonePermission(status === 'granted'),
+      setHasMicrophonePermission(status === 'authorized'),
     );
   }, []);
 
@@ -182,13 +182,13 @@ export default function RenderCamera(props: Props) {
 
   const supportsPhotoHDR = format?.supportsPhotoHDR;
   const supportsVideoHDR = format?.supportsVideoHDR;
-  const maxFps = format?.maxFps;
+  // const maxFps = format?.maxFps;
 
   const videoHDRIsOn = cameraState.isVideo
     ? supportsVideoHDR
     : supportsPhotoHDR;
 
-  const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
+  // const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
   return (
     <View
       style={
@@ -219,7 +219,7 @@ export default function RenderCamera(props: Props) {
             audio={hasMicrophonePermission}
             videoStabilizationMode={videoStabilizationMode}
             format={format}
-            fps={formatFPS}
+            // fps={formatFPS}
             frameProcessor={frameProcessor}
           />
         </GestureHandler>

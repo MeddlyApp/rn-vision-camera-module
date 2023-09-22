@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Alert, NativeTouchEvent, Text} from 'react-native';
+import {Alert, NativeTouchEvent, Text, TouchableOpacity} from 'react-native';
 import {
   CameraConfig,
   CameraState,
@@ -110,7 +110,11 @@ export default function App() {
       ),
     },
     cameraControlsRight: {
-      component: <Text style={whiteText}>Right</Text>,
+      component: (
+        <TouchableOpacity onPress={() => setFrontCamera(!frontCamera)}>
+          <Text style={whiteText}>{frontCamera ? 'Front' : 'Back'}</Text>
+        </TouchableOpacity>
+      ),
     },
 
     // Alternatively, you don't want to add custom logic to ,
