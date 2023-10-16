@@ -157,9 +157,6 @@ dependencies {
     // React Native FS
     implementation project(':react-native-fs')
 
-    // React Native Vision Camera
-    // implementation project(':react-native-vision-camera')
-
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.squareup.okhttp3', module:'okhttp'

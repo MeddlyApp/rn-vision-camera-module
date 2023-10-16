@@ -16,16 +16,28 @@ import {
   CaptureError,
   VideoStabilizationMode,
 } from 'react-native-vision-camera';
+import {useIsForeground} from './hooks/useIsForeground';
 import {GestureEventPayload} from 'react-native-gesture-handler';
 
 export default function App() {
   const [isVideo, setIsVideo] = useState<boolean>(true);
   const [frontCamera, setFrontCamera] = useState<boolean>(false);
-  const [flash, setFlash] = useState<string>('auto');
+
+  const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>(
+    'back',
+  );
+  const [flash, setFlash] = useState<'Off' | 'On'>('Off');
+  const [enableHdr, setEnableHdr] = useState(false);
+  const [enableNightMode, setEnableNightMode] = useState(false);
+
   const [videoStabilizationMode, setVideoStabilizationMode] =
     useState<VideoStabilizationMode>('auto');
   const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
+
+  const isFocussed = true; // useIsFocused() // for react-navigation, use const isFocused = useIsFocused()
+  const isForeground = useIsForeground();
+  const isActive = isFocussed && isForeground;
 
   useEffect(() => {
     if (isRecording && !hideStatusBar) setHideStatusBar(true);
@@ -70,6 +82,8 @@ export default function App() {
     frontCamera,
     flash,
     videoStabilizationMode,
+    enableHdr,
+    enableNightMode,
     hideStatusBar,
   };
 
@@ -100,7 +114,12 @@ export default function App() {
 
     // Camera Controls Section
     cameraControlsLeft: {
-      component: <Text style={whiteText}>Left</Text>,
+      component: (
+        <TouchableOpacity
+          onPress={() => setFlash(flash === 'On' ? 'Off' : 'On')}>
+          <Text style={whiteText}>Flash: {flash}</Text>
+        </TouchableOpacity>
+      ),
     },
     cameraControlsPrimary: {
       component: (
@@ -135,7 +154,7 @@ export default function App() {
     <MeddlyCamera
       // Camera Config
       config={config}
-      isFocused={true} // for react-navigation, use const isFocused = useIsFocused()
+      isActive={isActive}
       cameraState={cameraState}
       stateActions={stateActions}
       sectionHeights={sectionHeights}

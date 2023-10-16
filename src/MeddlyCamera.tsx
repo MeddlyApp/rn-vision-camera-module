@@ -55,9 +55,9 @@ LogBox.ignoreLogs([
 interface Props {
   cameraState: CameraState;
   config: CameraConfig;
-  isFocused: boolean;
+  isActive: boolean;
   stateActions: StateActions;
-  onOrientationChange?: (val: string) => void;
+  onOrientationChange?: (val: Orientation) => void;
   onIsRecording?: (val: boolean) => void;
   onTakePicture?: (val: PhotoPlayload) => void;
   onRecordingStart?: (val: number) => void;
@@ -82,7 +82,7 @@ export default function PlethoraCamera(props: Props) {
   const {
     cameraState,
     config,
-    isFocused,
+    isActive,
     stateActions,
     onOrientationChange,
     onIsRecording,
@@ -103,7 +103,14 @@ export default function PlethoraCamera(props: Props) {
     children,
   } = props;
 
-  const {isVideo, frontCamera, flash, hideStatusBar} = cameraState;
+  const {
+    isVideo,
+    frontCamera,
+    flash,
+    hideStatusBar,
+    enableHdr,
+    enableNightMode,
+  } = cameraState;
   const {startRecording, stopRecording} = stateActions;
   const {height, width} = useWindowDimensions();
 
@@ -148,13 +155,13 @@ export default function PlethoraCamera(props: Props) {
     setHasCameraPermission(hasCamera);
 
     const hasMic: boolean = await getMicrophonePermissions();
-    setHasMicrophonePermission(true);
+    setHasMicrophonePermission(hasMic);
   }, [getCameraPermissions, getMicrophonePermissions]);
   const openSettings = async () => await Linking.openSettings();
 
   // ******************** ORIENTATION CONTROLS ******************** //
 
-  const [orientation, setOrientation] = useState<string>('');
+  const [orientation, setOrientation] = useState<Orientation>('PORTRAIT');
 
   const onOrientationDidChange = useCallback(
     (o: OrientationType) => {
@@ -192,6 +199,13 @@ export default function PlethoraCamera(props: Props) {
   }, [checkPermissions, onOrientationDidChange]);
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
+
+  const frameProcessor = useFrameProcessor(frame => {
+    'worklet';
+    console.log(
+      `${frame.timestamp}: ${frame.width}x${frame.height} ${frame.pixelFormat} Frame (${frame.orientation})`,
+    );
+  }, []);
 
   //const frameProcessor = useFrameProcessor((frame: Frame) => {
   //  'worklet';
@@ -329,11 +343,11 @@ export default function PlethoraCamera(props: Props) {
 
       <RenderCamera
         cameraRef={cameraRef}
-        isFocused={isFocused}
+        isActive={isActive}
         frontCamera={frontCamera}
         config={config}
         cameraState={cameraState}
-        orientation={orientation}
+        orientation={`${orientation}`.toLowerCase()}
         getDeviceInfo={
           stateActions?.getDeviceInfo ? stateActions.getDeviceInfo : undefined
         }
@@ -345,7 +359,7 @@ export default function PlethoraCamera(props: Props) {
         onSwipeDown={onSwipeDown}
         onSwipeLeft={onSwipeLeft}
         onSwipeRight={onSwipeRight}
-        // frameProcessor={frameProcessor}
+        frameProcessor={frameProcessor}
       />
 
       {showCameraControls ? (
@@ -374,7 +388,7 @@ export default function PlethoraCamera(props: Props) {
 
 const styles = StyleSheet.create({
   base_container: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: '#000',
   },
   missing_permissions: {

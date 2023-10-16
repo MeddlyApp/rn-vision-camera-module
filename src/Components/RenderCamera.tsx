@@ -1,13 +1,20 @@
-import React, {useState, useEffect, useCallback, useMemo} from 'react';
-import {StyleSheet, View, Text, NativeTouchEvent, Platform} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  NativeTouchEvent,
+  useWindowDimensions,
+} from 'react-native';
 import {
   CameraDevice,
   CameraDeviceFormat,
-  CameraDevices,
+  useCameraDevice,
   CameraRuntimeError,
   FrameProcessor,
-  useCameraDevices,
+  useCameraFormat,
 } from 'react-native-vision-camera';
+import {Orientation as RNVCOrientation} from 'react-native-vision-camera';
 import {Camera} from 'react-native-vision-camera';
 import {
   GestureEventPayload,
@@ -15,14 +22,15 @@ import {
 } from 'react-native-gesture-handler';
 import GestureHandler from './GestureHandler';
 import {CameraConfig, CameraState} from '../Interfaces';
+import Orientation from 'react-native-orientation-locker';
 
 interface Props {
-  cameraRef: any;
+  cameraRef: any; // React.RefObject<Camera>;
   frontCamera: boolean;
-  isFocused: boolean;
+  isActive: boolean;
   config: CameraConfig;
   cameraState: CameraState;
-  orientation?: string;
+  orientation: Orientation;
   getDeviceInfo?: (val?: CameraDeviceFormat | undefined) => void;
   showTakePicIndicator: boolean;
   onSingleTap?: (val: GestureEventPayload) => void;
@@ -39,7 +47,7 @@ export default function RenderCamera(props: Props) {
   const {
     cameraRef,
     frontCamera,
-    isFocused,
+    isActive,
     config,
     cameraState,
     orientation,
@@ -55,7 +63,10 @@ export default function RenderCamera(props: Props) {
     frameProcessor,
   } = props;
 
-  const isIos = Platform.OS === 'ios';
+  const dimensions = useWindowDimensions();
+
+  const {enableHdr, enableNightMode} = cameraState;
+  const isPortrait = dimensions.height > dimensions.width;
 
   const tapToFocus = async ({
     nativeEvent,
@@ -72,127 +83,88 @@ export default function RenderCamera(props: Props) {
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
 
-  const devices: CameraDevices = useCameraDevices();
-  const device: CameraDevice | undefined = devices.find((x: any) =>
-    x.position === frontCamera ? 'front' : 'back',
+  const device: CameraDevice | undefined = useCameraDevice(
+    frontCamera ? 'front' : 'back',
   );
 
-  const format = useMemo(() => {
-    const isPortrait = orientation === 'PORTRAIT';
+  const [targetFps, setTargetFps] = useState(30);
 
-    console.log('Orientation Updated:', isPortrait);
+  // Bridge between react-native-orientation-locker and react-native-vision-camera
+  let orient: RNVCOrientation = 'landscape-left';
+  if (`${orientation}`.toLowerCase() === 'landscape-left') {
+    orient = 'landscape-left';
+  } else if (`${orientation}`.toLowerCase() === 'landscape-right') {
+    orient = 'landscape-right';
+  } else if (`${orientation}`.toLowerCase() === 'portrait') {
+    orient = 'portrait';
+  } else if (`${orientation}`.toLowerCase() === 'portrait-upside-down') {
+    orient = 'portrait';
+  }
 
-    // NOTE: with iOS, we must set the height and width
-    //       specifically, depending on the orientation
+  const landscapeMode = {height: 1920, width: 1080};
+  const portraitMode = {height: 1080, width: 1920};
+  const screenAspectRatio = dimensions.height / dimensions.width;
 
-    // We only want 1080p video and photo
-    const filtered1080pFormats = device?.formats.filter(
-      (format: CameraDeviceFormat) => {
-        const height = isIos && isPortrait ? 1920 : 1080;
-        const width = isIos && isPortrait ? 1080 : 1920;
+  // Can be {height, width} or "max"
+  const resolution = isPortrait ? portraitMode : landscapeMode;
+  const format = useCameraFormat(device, [
+    {fps: targetFps},
+    {videoResolution: resolution},
+    // {videoAspectRatio: screenAspectRatio},
+    {photoResolution: resolution},
+    // {photoAspectRatio: screenAspectRatio},
+  ]);
 
-        const videoIsHeight = format.videoHeight === height;
-        const videoIsWidth = format.videoWidth === width;
-        const videoIs1080 = videoIsHeight && videoIsWidth;
+  //useEffect(() => {
+  //  console.log('Fomat Updated:', {
+  //    resolution,
+  //    dimensions,
+  //  });
+  //}, [format, dimensions]);
 
-        const photoIsHeight = format.photoHeight === height;
-        const photoIsWidth = format.photoWidth === width;
-        const photoIs1080 = photoIsHeight && photoIsWidth;
+  const videoStabilizationMode = 'cinematic-extended';
+  const supportsVideoStabilization = format?.videoStabilizationModes.includes(
+    videoStabilizationMode,
+  );
+  // console.log({maxFPS: format?.maxFps, device});
+  const fps = Math.min(format?.maxFps ?? 1, targetFps);
 
-        return videoIs1080 && photoIs1080;
-      },
-    );
+  const supportsFlash = device?.hasFlash ?? false;
+  const supportsHdr = format?.supportsPhotoHDR;
+  const canToggleNightMode = device?.supportsLowLightBoost ?? false;
 
-    if (filtered1080pFormats && filtered1080pFormats?.length > 0) {
-      return filtered1080pFormats.reduce(
-        (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
-          if (prev == null) return curr;
-          // if (curr.maxFps > prev.maxFps) return curr;
-          else return prev;
-        },
-      );
-    }
-
-    // If no 1080p, we only want 720p video and photo
-
-    const filtered720pFormats = device?.formats.filter(
-      (format: CameraDeviceFormat) => {
-        const height = isIos && isPortrait ? 1280 : 720;
-        const width = isIos && isPortrait ? 720 : 1280;
-
-        const videoIsHeight = format.videoHeight === height;
-        const videoIsWidth = format.videoWidth === width;
-        const videoIs1080 = videoIsHeight && videoIsWidth;
-
-        const photoIsHeight = format.photoHeight === height;
-        const photoIsWidth = format.photoWidth === width;
-        const photoIs1080 = photoIsHeight && photoIsWidth;
-
-        return videoIs1080 && photoIs1080;
-      },
-    );
-
-    if (filtered720pFormats && filtered720pFormats?.length > 0) {
-      return filtered720pFormats.reduce(
-        (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
-          if (prev == null) return curr;
-          // if (curr.maxFps > prev.maxFps) return curr;
-          else return prev;
-        },
-      );
-    }
-
-    // If no 1080 or 720, return the highest FPS
-
-    return device?.formats.reduce(
-      (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
-        if (prev == null) return curr;
-        // if (curr.maxFps > prev.maxFps) return curr;
-        else return prev;
-      },
-    );
-  }, [device?.formats, orientation]);
+  const minZoom = device?.minZoom ?? 1;
+  const maxZoom = Math.min(device?.maxZoom ?? 1, 10);
 
   useEffect(() => {
     getDeviceInfo ? getDeviceInfo(format) : null;
   }, [format, device, getDeviceInfo]);
 
-  const onError = (error: CameraRuntimeError) => console.error(error);
+  const onError = useCallback((error: CameraRuntimeError) => {
+    console.error(error);
+  }, []);
+
   const onInitialized = useCallback(() => {
+    console.log('Camera initialized!');
     setIsCameraInitialized(true);
   }, []);
 
   useEffect(() => {
-    Camera.getMicrophonePermissionStatus().then(status => {
-      console.log({status});
-      setHasMicrophonePermission(status === 'granted');
-    });
+    Camera.getMicrophonePermissionStatus().then(status =>
+      setHasMicrophonePermission(status === 'granted'),
+    );
   }, []);
 
-  const videoStabilizationMode =
-    cameraState && cameraState.videoStabilizationMode
-      ? cameraState.videoStabilizationMode
-      : 'auto' || 'off';
+  useEffect(() => {
+    const f =
+      format != null
+        ? `(${format.photoWidth}x${format.photoHeight} photo / ${format.videoWidth}x${format.videoHeight}@${format.maxFps} video @ ${fps}fps)`
+        : undefined;
+    console.log(`Camera: ${device?.name} | Format: ${f}`);
+  }, [device?.name, format, fps]);
 
-  // Additional Photo Values:
-  //    autoFocusSystem, fieldOfView, photoHeight, photoWidth,
-  //    pixelFormats, supportsPhotoHDR
+  const styles = stylesWithArgs(orient, dimensions);
 
-  // Additional Video Values:
-  //    minFps, maxFps, minIOS, maxISO, videoHeight, videoWidth
-
-  const videoStabilizationModes = format?.videoStabilizationModes;
-
-  const supportsPhotoHDR = format?.supportsPhotoHDR;
-  const supportsVideoHDR = format?.supportsVideoHDR;
-  // const maxFps = format?.maxFps;
-
-  const videoHDRIsOn = cameraState.isVideo
-    ? supportsVideoHDR
-    : supportsPhotoHDR;
-
-  console.log({device, isCameraInitialized});
-  // const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
   return (
     <View
       style={
@@ -212,19 +184,24 @@ export default function RenderCamera(props: Props) {
           onSwipeRight={onSwipeRight}>
           <Camera
             ref={cameraRef}
-            style={StyleSheet.absoluteFill}
+            style={styles.camera}
             device={device}
-            isActive={isFocused}
+            isActive={isActive}
             onInitialized={onInitialized}
+            // orientation={orient}
             onError={onError}
             enableZoomGesture={true}
             photo={config.photo}
             video={config.video}
             audio={hasMicrophonePermission}
-            videoStabilizationMode={videoStabilizationMode}
             format={format}
-            // fps={formatFPS}
-            frameProcessor={frameProcessor}
+            fps={fps}
+            hdr={enableHdr}
+            lowLightBoost={canToggleNightMode && enableNightMode}
+            videoStabilizationMode={
+              supportsVideoStabilization ? videoStabilizationMode : undefined
+            }
+            // frameProcessor={frameProcessor}
           />
         </GestureHandler>
       )}
@@ -253,27 +230,45 @@ export default function RenderCamera(props: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    borderColor: 'rgba(0,0,0,0)',
-    borderWidth: 2,
-  },
+const stylesWithArgs = (orientation: string, dimensions: any) => {
+  const isLandscapeLeft = orientation.toLowerCase() === 'landscape-left';
+  const isLandscapeRight = orientation.toLowerCase() === 'landscape-right';
+  const isLandscape = isLandscapeLeft || isLandscapeRight;
 
-  take_picture_indicator: {
-    borderColor: '#FFFFFF',
-    backgroundColor: 'rgba(255, 255, 255, 0.72)',
-  },
+  return StyleSheet.create({
+    container: {
+      position: 'absolute',
+      top: 2,
+      bottom: 2,
+      left: 2,
+      right: 2,
+      height: dimensions.height - 4,
+      width: dimensions.width - 4,
+      borderColor: 'rgba(0,0,0,0)',
+      borderWidth: 2,
+      // This is a hack to get the camera to rotate properly
+      // rnvc orientation is broken...
+      //transform: isLandscape
+      //  ? [isLandscapeRight ? {rotate: '90deg'} : {rotate: '-90deg'}]
+      //  : [{rotate: '0deg'}],
+    },
 
-  flex_centered: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    camera: {
+      height: dimensions.height - 8,
+      width: dimensions.width - 8,
+    },
 
-  txt_white: {color: '#FFF'},
-});
+    take_picture_indicator: {
+      borderColor: '#FFFFFF',
+      backgroundColor: 'rgba(255, 255, 255, 0.72)',
+    },
+
+    flex_centered: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    txt_white: {color: '#FFF'},
+  });
+};

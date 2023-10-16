@@ -11,6 +11,7 @@ import {
   SectionHeights,
 } from '../Interfaces';
 import RecordingTimer from './RecordingTimer';
+import Orientation from 'react-native-orientation-locker';
 
 interface Props {
   children: {
@@ -19,7 +20,7 @@ interface Props {
   };
   isRecording: boolean;
   sectionHeights: SectionHeights;
-  orientation: string;
+  orientation: Orientation;
 }
 
 export default function CameraControls(props: Props) {
@@ -98,7 +99,7 @@ export default function CameraControls(props: Props) {
 const stylesWithProps = (
   height: number,
   width: number,
-  orientation: string,
+  orientation: Orientation,
   sectionHeights: SectionHeights,
 ) => {
   const is_vertical: boolean = height > width;

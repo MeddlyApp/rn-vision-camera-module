@@ -13,6 +13,8 @@ export interface CameraState {
   flash?: string;
   videoStabilizationMode: VideoStabilizationMode;
   hideStatusBar?: boolean;
+  enableHdr?: boolean;
+  enableNightMode?: boolean;
 }
 
 export interface CameraConfig {
