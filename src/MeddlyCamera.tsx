@@ -116,14 +116,14 @@ export default function PlethoraCamera(props: Props) {
 
   const getCameraPermissions = useCallback(async () => {
     const cameraPermission: string = await Camera.getCameraPermissionStatus();
-    const isGranted: boolean = cameraPermission === 'authorized';
+    const isGranted: boolean = cameraPermission === 'granted';
     const isNotDetermined: boolean = cameraPermission === 'not-determined';
     const isDenied: boolean = cameraPermission === 'denied';
     if (isGranted) return true;
     if (isNotDetermined || isDenied) {
       const newCameraPermission: string =
         await Camera.requestCameraPermission();
-      if (newCameraPermission === 'authorized') return true;
+      if (newCameraPermission === 'granted') return true;
       return false;
     } else return false;
   }, []);
@@ -131,14 +131,14 @@ export default function PlethoraCamera(props: Props) {
   const getMicrophonePermissions = useCallback(async () => {
     const microphonePermission: string =
       await Camera.getMicrophonePermissionStatus();
-    const isGranted: boolean = microphonePermission === 'authorized';
+    const isGranted: boolean = microphonePermission === 'granted';
     const isNotDetermined: boolean = microphonePermission === 'not-determined';
     const isDenied: boolean = microphonePermission === 'denied';
     if (isGranted) return true;
     if (isNotDetermined || isDenied) {
       const newMicrophonePermission =
         await Camera.requestMicrophonePermission();
-      if (newMicrophonePermission === 'authorized') return true;
+      if (newMicrophonePermission === 'granted') return true;
       return false;
     } else return false;
   }, []);

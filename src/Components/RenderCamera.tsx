@@ -73,12 +73,14 @@ export default function RenderCamera(props: Props) {
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
 
   const devices: CameraDevices = useCameraDevices();
-  const device: CameraDevice | undefined =
-    devices[frontCamera ? 'front' : 'back'];
+  const device: CameraDevice | undefined = devices.find((x: any) =>
+    x.position === frontCamera ? 'front' : 'back',
+  );
 
   const format = useMemo(() => {
     const isPortrait = orientation === 'PORTRAIT';
-    //console.log('Orientation Updated:', isPortrait);
+
+    console.log('Orientation Updated:', isPortrait);
 
     // NOTE: with iOS, we must set the height and width
     //       specifically, depending on the orientation
@@ -161,9 +163,10 @@ export default function RenderCamera(props: Props) {
   }, []);
 
   useEffect(() => {
-    Camera.getMicrophonePermissionStatus().then(status =>
-      setHasMicrophonePermission(status === 'authorized'),
-    );
+    Camera.getMicrophonePermissionStatus().then(status => {
+      console.log({status});
+      setHasMicrophonePermission(status === 'granted');
+    });
   }, []);
 
   const videoStabilizationMode =
@@ -188,6 +191,7 @@ export default function RenderCamera(props: Props) {
     ? supportsVideoHDR
     : supportsPhotoHDR;
 
+  console.log({device, isCameraInitialized});
   // const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
   return (
     <View
