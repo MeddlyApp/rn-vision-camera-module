@@ -188,7 +188,7 @@ export default function RenderCamera(props: Props) {
             device={device}
             isActive={isActive}
             onInitialized={onInitialized}
-            // orientation={orient}
+            orientation={orient}
             onError={onError}
             enableZoomGesture={true}
             photo={config.photo}
