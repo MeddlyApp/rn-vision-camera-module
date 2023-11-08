@@ -184,11 +184,12 @@ export default function RenderCamera(props: Props) {
           onSwipeRight={onSwipeRight}>
           <Camera
             ref={cameraRef}
-            style={styles.camera}
+            // style={styles.camera}
+            style={StyleSheet.absoluteFill}
             device={device}
             isActive={isActive}
             onInitialized={onInitialized}
-            orientation={orient}
+            // orientation={orient}
             onError={onError}
             enableZoomGesture={true}
             photo={config.photo}
