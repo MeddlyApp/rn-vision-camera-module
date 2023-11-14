@@ -1,6 +1,6 @@
 {
   "name": "@meddly/rn-vision-camera",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": false,
   "scripts": {
     "android": "react-native run-android",
@@ -46,7 +46,7 @@
     "react-native-gesture-handler": "^2.13.0",
     "react-native-orientation-locker": "^1.5.0",
     "react-native-reanimated": "^3.5.4",
-    "react-native-vision-camera": "2.16.1",
+    "react-native-vision-camera": "2.16.5",
     "react-native-worklets-core": "^0.2.0",
     "react-test-renderer": "18.2.0",
     "string-hash-64": "^1.0.3",

@@ -5,7 +5,7 @@ import {
   CameraDeviceFormat,
   CameraDevices,
   CameraRuntimeError,
-  FrameProcessor,
+  // FrameProcessor,
   useCameraDevices,
 } from 'react-native-vision-camera';
 import {Camera} from 'react-native-vision-camera';
@@ -32,7 +32,7 @@ interface Props {
   onSwipeDown?: (val: NativeTouchEvent) => void;
   onSwipeLeft?: (val: NativeTouchEvent) => void;
   onSwipeRight?: (val: NativeTouchEvent) => void;
-  frameProcessor?: FrameProcessor;
+  frameProcessor?: any; // FrameProcessor;
 }
 
 export default function RenderCamera(props: Props) {
@@ -77,7 +77,7 @@ export default function RenderCamera(props: Props) {
     devices[frontCamera ? 'front' : 'back'];
 
   const format = useMemo(() => {
-    const isPortrait = orientation === 'PORTRAIT';
+    const isPortrait = orientation === 'PORTRAIT' || orientation === '';
     //console.log('Orientation Updated:', isPortrait);
 
     // NOTE: with iOS, we must set the height and width
@@ -86,18 +86,21 @@ export default function RenderCamera(props: Props) {
     // We only want 1080p video and photo
     const filtered1080pFormats = device?.formats.filter(
       (format: CameraDeviceFormat) => {
-        const height = isIos && isPortrait ? 1920 : 1080;
-        const width = isIos && isPortrait ? 1080 : 1920;
+        const height = !isIos && isPortrait ? 1920 : 1080;
+        const width = !isIos && isPortrait ? 1080 : 1920;
 
-        const videoIsHeight = format.videoHeight === height;
-        const videoIsWidth = format.videoWidth === width;
+        const formatVideoHeight = format.videoHeight;
+        const formatVideoWidth = format.videoWidth;
+
+        const videoIsHeight = formatVideoHeight === height;
+        const videoIsWidth = formatVideoWidth === width;
         const videoIs1080 = videoIsHeight && videoIsWidth;
 
         const photoIsHeight = format.photoHeight === height;
         const photoIsWidth = format.photoWidth === width;
         const photoIs1080 = photoIsHeight && photoIsWidth;
 
-        return videoIs1080 && photoIs1080;
+        return isIos ? videoIs1080 : videoIs1080 && photoIs1080;
       },
     );
 
@@ -115,18 +118,18 @@ export default function RenderCamera(props: Props) {
 
     const filtered720pFormats = device?.formats.filter(
       (format: CameraDeviceFormat) => {
-        const height = isIos && isPortrait ? 1280 : 720;
-        const width = isIos && isPortrait ? 720 : 1280;
+        const height = !isIos && isPortrait ? 1280 : 720;
+        const width = !isIos && isPortrait ? 720 : 1280;
 
         const videoIsHeight = format.videoHeight === height;
         const videoIsWidth = format.videoWidth === width;
-        const videoIs1080 = videoIsHeight && videoIsWidth;
+        const videoIs720 = videoIsHeight && videoIsWidth;
 
         const photoIsHeight = format.photoHeight === height;
         const photoIsWidth = format.photoWidth === width;
-        const photoIs1080 = photoIsHeight && photoIsWidth;
+        const photoIs720 = photoIsHeight && photoIsWidth;
 
-        return videoIs1080 && photoIs1080;
+        return isIos ? videoIs720 : videoIs720 && photoIs720;
       },
     );
 

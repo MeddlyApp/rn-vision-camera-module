@@ -156,7 +156,7 @@ const sectionHeights = {
 
 # Notes
 
-- Currently running react-native-vison-camera version `2.16.1`
+- Currently running react-native-vison-camera version `2.16.5`
   - To get started..
     1. Go go: ./node_modules/react-native-vison-camera/android/build.gradle"
     2. Line 138 - Change: `minSdkVersion 21` to: `minSdkVersion getExtOrIntegerDefault('minSdkVersion')`
