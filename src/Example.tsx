@@ -139,6 +139,7 @@ export default function App() {
       cameraState={cameraState}
       stateActions={stateActions}
       sectionHeights={sectionHeights}
+      hideNoDeviceFound={false}
       // Pre-Built Actions
       showCameraControls={true}
       saveToCameraRoll={true}

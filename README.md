@@ -132,6 +132,7 @@ const sectionHeights = {
   cameraState={cameraState}
   stateActions={stateActions}
   sectionHeights={sectionHeights}
+  hideNoDeviceFound={true}
   // Pre-Built Actions
   showCameraControls={true}
   saveToCameraRoll={true}

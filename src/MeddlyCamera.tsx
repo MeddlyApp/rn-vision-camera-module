@@ -70,6 +70,7 @@ interface Props {
   onSwipeDown?: (val: NativeTouchEvent) => void;
   onSwipeLeft?: (val: NativeTouchEvent) => void;
   onSwipeRight?: (val: NativeTouchEvent) => void;
+  hideNoDeviceFound?: boolean;
   swipeDistance?: number;
   showCameraControls?: boolean;
   sectionHeights: SectionHeights;
@@ -98,6 +99,7 @@ export default function PlethoraCamera(props: Props) {
     onSwipeLeft,
     onSwipeRight,
     swipeDistance,
+    hideNoDeviceFound,
     showCameraControls,
     sectionHeights,
     children,
@@ -327,26 +329,31 @@ export default function PlethoraCamera(props: Props) {
         translucent={true}
       />
 
-      <RenderCamera
-        cameraRef={cameraRef}
-        isFocused={isFocused}
-        frontCamera={frontCamera}
-        config={config}
-        cameraState={cameraState}
-        orientation={orientation}
-        getDeviceInfo={
-          stateActions?.getDeviceInfo ? stateActions.getDeviceInfo : undefined
-        }
-        showTakePicIndicator={showTakePicIndicator}
-        onSingleTap={onSingleTap ? onSingleTap : () => null}
-        onDoubleTap={onDoubleTap ? onDoubleTap : () => null}
-        swipeDistance={swipeDistance}
-        onSwipeUp={onSwipeUp}
-        onSwipeDown={onSwipeDown}
-        onSwipeLeft={onSwipeLeft}
-        onSwipeRight={onSwipeRight}
-        // frameProcessor={frameProcessor}
-      />
+      {isFocused ? (
+        <RenderCamera
+          cameraRef={cameraRef}
+          isFocused={isFocused}
+          frontCamera={frontCamera}
+          config={config}
+          cameraState={cameraState}
+          orientation={orientation}
+          hideNoDeviceFound={hideNoDeviceFound}
+          getDeviceInfo={
+            stateActions?.getDeviceInfo ? stateActions.getDeviceInfo : undefined
+          }
+          showTakePicIndicator={showTakePicIndicator}
+          onSingleTap={onSingleTap ? onSingleTap : () => null}
+          onDoubleTap={onDoubleTap ? onDoubleTap : () => null}
+          swipeDistance={swipeDistance}
+          onSwipeUp={onSwipeUp}
+          onSwipeDown={onSwipeDown}
+          onSwipeLeft={onSwipeLeft}
+          onSwipeRight={onSwipeRight}
+          // frameProcessor={frameProcessor}
+        />
+      ) : (
+        <></>
+      )}
 
       {showCameraControls ? (
         <CameraControls

@@ -23,6 +23,7 @@ interface Props {
   config: CameraConfig;
   cameraState: CameraState;
   orientation?: string;
+  hideNoDeviceFound?: boolean;
   getDeviceInfo?: (val?: CameraDeviceFormat | undefined) => void;
   showTakePicIndicator: boolean;
   onSingleTap?: (val: GestureEventPayload) => void;
@@ -43,6 +44,7 @@ export default function RenderCamera(props: Props) {
     config,
     cameraState,
     orientation,
+    hideNoDeviceFound,
     getDeviceInfo,
     showTakePicIndicator,
     onSingleTap,
@@ -228,13 +230,13 @@ export default function RenderCamera(props: Props) {
         </GestureHandler>
       )}
 
-      {device == null && isCameraInitialized ? (
+      {device == null && isCameraInitialized && !hideNoDeviceFound ? (
         <View style={styles.flex_centered}>
-          <Text style={styles.txt_white}>No Device Found</Text>
+          <Text style={styles.txt_white}>No Device Found - Initalized</Text>
         </View>
       ) : null}
 
-      {!isCameraInitialized ? (
+      {!isCameraInitialized && !hideNoDeviceFound ? (
         <GestureHandler
           onSingleTap={tapToFocus}
           onDoubleTap={onDoubleTap}
