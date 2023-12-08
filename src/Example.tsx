@@ -71,6 +71,7 @@ export default function App() {
     flash,
     videoStabilizationMode,
     hideStatusBar,
+    killswitch: false,
   };
 
   const config: CameraConfig = {

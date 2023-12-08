@@ -26,7 +26,6 @@ import {
   VideoFile,
   useFrameProcessor,
 } from 'react-native-vision-camera';
-import {Orientation as RNVCOrientation} from 'react-native-vision-camera/lib/typescript/Orientation';
 
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import Orientation, {OrientationType} from 'react-native-orientation-locker';
@@ -105,7 +104,7 @@ export default function PlethoraCamera(props: Props) {
     children,
   } = props;
 
-  const {isVideo, frontCamera, flash, hideStatusBar} = cameraState;
+  const {isVideo, frontCamera, flash, hideStatusBar, killswitch} = cameraState;
   const {startRecording, stopRecording} = stateActions;
   const {height, width} = useWindowDimensions();
 
@@ -274,6 +273,11 @@ export default function PlethoraCamera(props: Props) {
       }
     } else Alert.alert('Please add endVideo() prop');
   };
+
+  // KILLWITCH
+  useEffect(() => {
+    if (killswitch && isRecording) endVideo();
+  }, [killswitch, isRecording]);
 
   /******************** PICTURE LIFECYCLE ********************/
 

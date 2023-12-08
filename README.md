@@ -70,6 +70,7 @@ const cameraState = {
   videoStabilizationMode,
   preset,
   hideStatusBar,
+  killswitch: false, // Only needed for overrides
 };
 
 const cameraConfig = {
