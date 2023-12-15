@@ -263,20 +263,24 @@ export default function PlethoraCamera(props: Props) {
     }
   };
 
-  const endVideo = async () => {
+  const killVideo = async () => {
     if (isRecording) {
-      const ready = await stopRecording();
+      await cameraRef.current.stopRecording();
+      return setIsRecording(false);
+    }
+  };
+  const endVideo = async (bypass?: boolean) => {
+    if (isRecording) {
+      if (bypass) return await killVideo();
 
-      if (ready) {
-        await cameraRef.current.stopRecording();
-        return setIsRecording(false);
-      }
+      const ready = await stopRecording();
+      if (ready) killVideo();
     } else Alert.alert('Please add endVideo() prop');
   };
 
   // KILLWITCH
   useEffect(() => {
-    if (killswitch && isRecording) endVideo();
+    if (killswitch && isRecording) endVideo(true);
   }, [killswitch, isRecording]);
 
   /******************** PICTURE LIFECYCLE ********************/
