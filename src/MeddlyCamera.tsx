@@ -269,10 +269,8 @@ export default function PlethoraCamera(props: Props) {
       return setIsRecording(false);
     }
   };
-  const endVideo = async (bypass?: boolean) => {
+  const endVideo = async () => {
     if (isRecording) {
-      if (bypass) return await killVideo();
-
       const ready = await stopRecording();
       if (ready) killVideo();
     } else Alert.alert('Please add endVideo() prop');
@@ -280,7 +278,7 @@ export default function PlethoraCamera(props: Props) {
 
   // KILLWITCH
   useEffect(() => {
-    if (killswitch && isRecording) endVideo(true);
+    if (killswitch && isRecording) endVideo();
   }, [killswitch, isRecording]);
 
   /******************** PICTURE LIFECYCLE ********************/
