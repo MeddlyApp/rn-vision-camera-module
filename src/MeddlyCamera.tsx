@@ -196,7 +196,7 @@ export default function PlethoraCamera(props: Props) {
 
   //const frameProcessor = useFrameProcessor((frame: Frame) => {
   //  'worklet';
-  //  console.log('Frame:::', {frame});
+  //  console.log('Frame:::', frame.toString());
   //}, []);
 
   const [isRecording, setIsRecording] = useState<boolean>(false);
