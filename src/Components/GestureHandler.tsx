@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {JSX, useRef} from 'react';
 import {
   GestureResponderEvent,
   NativeTouchEvent,
