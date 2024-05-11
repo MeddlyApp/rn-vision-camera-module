@@ -19,14 +19,9 @@ class MainActivity : ReactActivity() {
    */
   override fun getMainComponentName(): String = "Plethora Camera"
 
-  // Required by react-native-orientation-locker - FROM RN 0.72.7
-  //public void onConfigurationChanged(Configuration newConfig) {
-  //  super.onConfigurationChanged(newConfig)
-  //  Intent intent = new Intent("onConfigurationChanged")
-  //  intent.putExtra("newConfig", newConfig)
-  //  this.sendBroadcast(intent)
-  //}
-
+  /**
+   * Required by react-native-orientation-locker
+   */
   override fun onConfigurationChanged(newConfig: Configuration) {
     super.onConfigurationChanged(newConfig)
     val intent = Intent("onConfigurationChanged")
@@ -40,5 +35,5 @@ class MainActivity : ReactActivity() {
    */
 
   override fun createReactActivityDelegate(): ReactActivityDelegate =
-      DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+      DefaultReactActivityDelegate(this, mainComponentName) // fabricEnabled
 }
