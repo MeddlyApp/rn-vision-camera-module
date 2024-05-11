@@ -1,16 +1,16 @@
 import {
   CameraDeviceFormat,
+  Orientation,
   PhotoFile,
   VideoStabilizationMode,
 } from 'react-native-vision-camera';
-// import {Orientation} from 'react-native-vision-camera/lib/typescript/Orientation';
 
 // ********** Config & Controls ********** //
 
 export interface CameraState {
   isVideo: boolean;
   frontCamera: boolean;
-  flash?: string;
+  flash?: any; // 'off' | 'on' | undefined;
   videoStabilizationMode: VideoStabilizationMode;
   hideStatusBar?: boolean;
   killswitch?: boolean;
@@ -59,7 +59,7 @@ export interface StateActions {
 // ********** Media Response Payloads ********** //
 
 export interface PhotoPlayload extends PhotoFile {
-  orientation: string; // Orientation;
+  orientation: Orientation;
   height: number;
   width: number;
 }
@@ -69,7 +69,7 @@ export interface VideoPayload {
   duration: number;
   timestamp_start: number;
   timestamp_end: number;
-  orientation: string;
+  orientation: Orientation;
   height: number;
   width: number;
 }

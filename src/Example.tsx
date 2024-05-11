@@ -11,9 +11,8 @@ import {
 } from './Interfaces';
 import MeddlyCamera from './MeddlyCamera';
 import {
-  CameraDevice,
+  CameraCaptureError,
   CameraDeviceFormat,
-  CaptureError,
   VideoStabilizationMode,
 } from 'react-native-vision-camera';
 import {GestureEventPayload} from 'react-native-gesture-handler';
@@ -21,7 +20,7 @@ import {GestureEventPayload} from 'react-native-gesture-handler';
 export default function App() {
   const [isVideo, setIsVideo] = useState<boolean>(true);
   const [frontCamera, setFrontCamera] = useState<boolean>(false);
-  const [flash, setFlash] = useState<string>('auto');
+  const [flash, setFlash] = useState<'on' | 'off'>('off');
   const [videoStabilizationMode, setVideoStabilizationMode] =
     useState<VideoStabilizationMode>('auto');
   const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
@@ -149,7 +148,9 @@ export default function App() {
       onTakePicture={(res: PhotoPlayload) => console.log('onTakePicture', res)}
       onRecordingStart={(res: number) => console.log('onRecordingStart', res)}
       onRecordingFinished={(res: VideoPayload) => console.log('finished', res)}
-      onRecordingError={(e: CaptureError) => console.log('onRecordingError', e)}
+      onRecordingError={(e: CameraCaptureError) =>
+        console.log('onRecordingError', e)
+      }
       // onOrientationChange={(val: string) => console.log('orientation', val)}
       // Custom Gesture Controls
       onSingleTap={(res: GestureEventPayload) => console.log('singleTap', res)}

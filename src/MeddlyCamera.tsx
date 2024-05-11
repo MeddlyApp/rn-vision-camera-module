@@ -21,11 +21,13 @@ import {
 } from 'react-native';
 import {
   Camera,
-  CaptureError,
+  CameraCaptureError,
+  CameraPermissionStatus,
   Frame,
   VideoFile,
   useFrameProcessor,
 } from 'react-native-vision-camera';
+import {Orientation as OrientationValue} from 'react-native-vision-camera';
 
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import Orientation, {OrientationType} from 'react-native-orientation-locker';
@@ -61,7 +63,7 @@ interface Props {
   onTakePicture?: (val: PhotoPlayload) => void;
   onRecordingStart?: (val: number) => void;
   onRecordingFinished?: (val: VideoPayload) => void;
-  onRecordingError: (val: CaptureError) => void;
+  onRecordingError: (val: CameraCaptureError) => void;
   saveToCameraRoll?: boolean;
   onSingleTap?: (val: GestureEventPayload) => void;
   onDoubleTap?: (val: GestureEventPayload) => void;
@@ -110,73 +112,66 @@ export default function PlethoraCamera(props: Props) {
 
   // ******************** PERMISSIONS ******************** //
 
-  const [hasCameraPermission, setHasCameraPermission] =
-    useState<boolean>(false);
-  const [hasMicrophonePermission, setHasMicrophonePermission] =
-    useState<boolean>(false);
+  const [cameraPermissionStatus, setCameraPermissionStatus] =
+    useState<CameraPermissionStatus>('not-determined');
+  const [microphonePermissionStatus, setMicrophonePermissionStatus] =
+    useState<CameraPermissionStatus>('not-determined');
 
   const getCameraPermissions = useCallback(async () => {
-    const cameraPermission: string = await Camera.getCameraPermissionStatus();
-    const isGranted: boolean = cameraPermission === 'authorized';
-    const isNotDetermined: boolean = cameraPermission === 'not-determined';
-    const isDenied: boolean = cameraPermission === 'denied';
-    if (isGranted) return true;
-    if (isNotDetermined || isDenied) {
-      const newCameraPermission: string =
-        await Camera.requestCameraPermission();
-      if (newCameraPermission === 'authorized') return true;
-      return false;
-    } else return false;
+    console.log('Requesting camera permission...');
+    const permission = await Camera.requestCameraPermission();
+    console.log(`Camera permission status: ${permission}`);
+    if (permission === 'denied') await Linking.openSettings();
+    setCameraPermissionStatus(permission);
   }, []);
 
-  const getMicrophonePermissions = useCallback(async () => {
-    const microphonePermission: string =
-      await Camera.getMicrophonePermissionStatus();
-    const isGranted: boolean = microphonePermission === 'authorized';
-    const isNotDetermined: boolean = microphonePermission === 'not-determined';
-    const isDenied: boolean = microphonePermission === 'denied';
-    if (isGranted) return true;
-    if (isNotDetermined || isDenied) {
-      const newMicrophonePermission =
-        await Camera.requestMicrophonePermission();
-      if (newMicrophonePermission === 'authorized') return true;
-      return false;
-    } else return false;
+  const requestMicrophonePermission = useCallback(async () => {
+    console.log('Requesting microphone permission...');
+    const permission = await Camera.requestMicrophonePermission();
+    console.log(`Microphone permission status: ${permission}`);
+    if (permission === 'denied') await Linking.openSettings();
+    setMicrophonePermissionStatus(permission);
   }, []);
 
   const checkPermissions = useCallback(async () => {
-    const hasCamera: boolean = await getCameraPermissions();
-    setHasCameraPermission(hasCamera);
+    await getCameraPermissions();
+    await requestMicrophonePermission();
+  }, [getCameraPermissions, requestMicrophonePermission]);
 
-    const hasMic: boolean = await getMicrophonePermissions();
-    setHasMicrophonePermission(true);
-  }, [getCameraPermissions, getMicrophonePermissions]);
   const openSettings = async () => await Linking.openSettings();
 
   // ******************** ORIENTATION CONTROLS ******************** //
 
-  const [orientation, setOrientation] = useState<string>('');
+  const [orientation, setOrientation] = useState<OrientationValue>('portrait');
 
   const onOrientationDidChange = useCallback(
     (o: OrientationType) => {
-      setOrientation(o);
+      let orientation: OrientationValue = 'portrait';
+      if (o === 'LANDSCAPE-LEFT') orientation = 'landscape-left';
+      else if (o === 'LANDSCAPE-RIGHT') orientation = 'landscape-right';
+      else orientation = 'portrait';
+      setOrientation(orientation);
       if (onOrientationChange) onOrientationChange(o);
     },
     [onOrientationChange],
   );
 
-  const lockOrientation = async () => {
+  const lockOrientation = async (): Promise<OrientationValue> => {
     console.log('Locking orientation', orientation);
     return await new Promise(resolve => {
       switch (orientation) {
-        case 'PORTRAIT':
-          return resolve(Orientation.lockToPortrait());
-        case 'LANDSCAPE-LEFT':
-          return resolve(Orientation.lockToLandscapeLeft());
-        case 'LANDSCAPE-RIGHT':
-          return resolve(Orientation.lockToLandscapeRight());
+        case 'portrait':
+          Orientation.lockToPortrait();
+          return resolve('portrait');
+        case 'landscape-left':
+          Orientation.lockToLandscapeLeft();
+          return resolve('landscape-left');
+        case 'landscape-right':
+          Orientation.lockToLandscapeRight();
+          return resolve('landscape-right');
         default:
-          return resolve(Orientation.lockToPortrait());
+          Orientation.lockToPortrait();
+          return resolve('portrait');
       }
     });
   };
@@ -190,7 +185,7 @@ export default function PlethoraCamera(props: Props) {
     return () => {
       Orientation.removeOrientationListener(onOrientationDidChange);
     };
-  }, [checkPermissions, onOrientationDidChange]);
+  }, []);
 
   /******************** VIDEO CAMERA LIFECYCLE ********************/
 
@@ -210,7 +205,7 @@ export default function PlethoraCamera(props: Props) {
       const ready = await startRecording();
 
       if (ready) {
-        await lockOrientation();
+        const orient: OrientationValue = await lockOrientation();
         setIsRecording(true);
 
         const orientationWatchValue: string =
@@ -218,7 +213,7 @@ export default function PlethoraCamera(props: Props) {
 
         // In React Native Vision Camera V2, this doesn't
         // actually await. V3 should fix this...
-        await cameraRef.current.startRecording({
+        await cameraRef?.current?.startRecording({
           flash: frontCamera ? 'off' : flash,
           fileType: 'mp4',
           onRecordingFinished: async (video: VideoFile) => {
@@ -241,7 +236,7 @@ export default function PlethoraCamera(props: Props) {
               duration: video.duration,
               timestamp_start: timestamp,
               timestamp_end: timestampEnd,
-              orientation: orientationWatchValue,
+              orientation: orient,
               height: height > width ? 1920 : 1080,
               width: height > width ? 1080 : 1920,
             };
@@ -249,7 +244,7 @@ export default function PlethoraCamera(props: Props) {
             Orientation.unlockAllOrientations();
             if (onRecordingFinished) onRecordingFinished(payload);
           },
-          onRecordingError: (error: CaptureError) => {
+          onRecordingError: (error: CameraCaptureError) => {
             setIsRecording(false);
             if (onRecordingError) onRecordingError(error);
             else console.error('Recording Error', error);
@@ -265,7 +260,7 @@ export default function PlethoraCamera(props: Props) {
 
   const killVideo = async () => {
     if (isRecording) {
-      await cameraRef.current.stopRecording();
+      await cameraRef?.current?.stopRecording();
       return setIsRecording(false);
     }
   };
@@ -286,9 +281,13 @@ export default function PlethoraCamera(props: Props) {
   const [showTakePicIndicator, setShowTakePicIndicator] = useState(false);
   const takePicture = async () => {
     setShowTakePicIndicator(true);
-    const photo: PhotoPlayload = await cameraRef.current.takePhoto({
-      flash: frontCamera ? 'off' : flash,
-    });
+    const photo: PhotoPlayload | undefined =
+      await cameraRef?.current?.takePhoto({
+        flash: frontCamera ? 'off' : flash,
+      });
+
+    if (!photo) return;
+
     setShowTakePicIndicator(false);
 
     const nameConvention = config.nameConvention ? config.nameConvention : null;
@@ -298,27 +297,31 @@ export default function PlethoraCamera(props: Props) {
     const finalFile = await renameFile(photo, newName);
     photo.path = finalFile;
 
-    const orientationWatchValue: any =
-      height > width ? 'portrait' : 'landscape';
-    photo.orientation = orientationWatchValue;
+    //const orientationWatchValue: string =
+    //  height > width ? 'portrait' : 'landscape';
+    //photo.orientation = orientationWatchValue;
+    photo.orientation = photo.orientation;
     photo.height = height > width ? 1920 : 1080;
     photo.width = height > width ? 1080 : 1920;
 
-    if (saveToCameraRoll) CameraRoll.save(finalFile);
+    if (saveToCameraRoll) CameraRoll.saveAsset(finalFile);
     if (onTakePicture) onTakePicture(photo);
   };
 
   /******************** RENDERS ********************/
 
-  const hasAllPermissions = hasCameraPermission && hasMicrophonePermission;
+  const hasAllPermissions =
+    cameraPermissionStatus && microphonePermissionStatus;
 
   if (!hasAllPermissions) {
     return (
       <View style={styles.base_container}>
         <SafeAreaView style={styles.missing_permissions}>
           <MissingPermissions
-            hasCameraPermission={hasCameraPermission}
-            hasMicrophonePermission={hasMicrophonePermission}
+            // hasCameraPermission={cameraPermissionStatus === 'granted'}
+            hasCameraPermission={true}
+            // hasMicrophonePermission={microphonePermissionStatus === 'granted'}
+            hasMicrophonePermission={true}
             openSettings={openSettings}
           />
         </SafeAreaView>

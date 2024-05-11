@@ -3,9 +3,7 @@ import {StyleSheet, View, Text, NativeTouchEvent, Platform} from 'react-native';
 import {
   CameraDevice,
   CameraDeviceFormat,
-  CameraDevices,
   CameraRuntimeError,
-  // FrameProcessor,
   useCameraDevices,
 } from 'react-native-vision-camera';
 import {Camera} from 'react-native-vision-camera';
@@ -74,11 +72,17 @@ export default function RenderCamera(props: Props) {
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
 
-  const devices: CameraDevices = useCameraDevices();
-  const device: CameraDevice | undefined =
-    devices[frontCamera ? 'front' : 'back'];
+  const devices: CameraDevice[] = useCameraDevices();
 
-  const format = useMemo(() => {
+  const frontDevices: CameraDevice[] = devices.filter(
+    (d: CameraDevice) => d.position === 'front',
+  );
+  const backDevices: CameraDevice[] = devices.filter(
+    (d: CameraDevice) => d.position === 'back',
+  );
+  const device: CameraDevice = frontCamera ? frontDevices[0] : backDevices[0];
+
+  const format: CameraDeviceFormat = useMemo(() => {
     const isPortrait = orientation === 'PORTRAIT' || orientation === '';
     //console.log('Orientation Updated:', isPortrait);
 
@@ -165,12 +169,6 @@ export default function RenderCamera(props: Props) {
     setIsCameraInitialized(true);
   }, []);
 
-  useEffect(() => {
-    Camera.getMicrophonePermissionStatus().then(status =>
-      setHasMicrophonePermission(status === 'authorized'),
-    );
-  }, []);
-
   const videoStabilizationMode =
     cameraState && cameraState.videoStabilizationMode
       ? cameraState.videoStabilizationMode
@@ -185,8 +183,8 @@ export default function RenderCamera(props: Props) {
 
   const videoStabilizationModes = format?.videoStabilizationModes;
 
-  const supportsPhotoHDR = format?.supportsPhotoHDR;
-  const supportsVideoHDR = format?.supportsVideoHDR;
+  const supportsPhotoHDR = format?.supportsPhotoHdr;
+  const supportsVideoHDR = format?.supportsVideoHdr;
   // const maxFps = format?.maxFps;
 
   const videoHDRIsOn = cameraState.isVideo
@@ -221,7 +219,7 @@ export default function RenderCamera(props: Props) {
             enableZoomGesture={true}
             photo={config.photo}
             video={config.video}
-            audio={hasMicrophonePermission}
+            audio={config.video}
             videoStabilizationMode={videoStabilizationMode}
             format={format}
             // fps={formatFPS}
