@@ -49,8 +49,8 @@ export default function CameraControls(props: Props) {
         {isRecording
           ? null
           : cameraTop && cameraTop?.component
-          ? cameraTop.component
-          : null}
+            ? cameraTop.component
+            : null}
       </View>
 
       {/* Gesture Controls */}
@@ -58,8 +58,8 @@ export default function CameraControls(props: Props) {
         {isRecording
           ? null
           : cameraMiddle && cameraMiddle?.component
-          ? cameraMiddle.component
-          : null}
+            ? cameraMiddle.component
+            : null}
       </View>
 
       {/* Above Camera Controls */}
@@ -88,8 +88,8 @@ export default function CameraControls(props: Props) {
         {isRecording
           ? null
           : cameraBottom && cameraBottom?.component
-          ? cameraBottom.component
-          : null}
+            ? cameraBottom.component
+            : null}
       </View>
     </SafeAreaView>
   );
@@ -102,7 +102,7 @@ const stylesWithProps = (
   sectionHeights: SectionHeights,
 ) => {
   const is_vertical: boolean = height > width;
-  const is_left: boolean = orientation === 'LANDSCAPE-LEFT';
+  const is_left: boolean = orientation === 'LANDSCAPE-LEFT'.toLowerCase();
 
   const customTopHeight: number =
     sectionHeights && sectionHeights.top ? sectionHeights.top : 100;
@@ -142,8 +142,8 @@ const stylesWithProps = (
       flexDirection: is_vertical
         ? 'row'
         : is_left
-        ? 'column-reverse'
-        : 'column',
+          ? 'column-reverse'
+          : 'column',
     },
 
     section_bottom: {

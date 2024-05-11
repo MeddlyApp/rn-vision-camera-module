@@ -9,14 +9,7 @@ import com.facebook.react.ReactPackage
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
-import com.facebook.react.flipper.ReactNativeFlipper
 import com.facebook.soloader.SoLoader
- 
-// Orientation Locker
-import org.wonday.orientation.OrientationActivityLifecycle
-
-// Camera Roll
-import com.reactnativecommunity.cameraroll.CameraRollPackage
 
 class MainApplication : Application(), ReactApplication {
 
@@ -46,9 +39,5 @@ class MainApplication : Application(), ReactApplication {
       // If you opted-in for the New Architecture, we load the native entry point for this app.
       load()
     }
-    ReactNativeFlipper.initializeFlipper(this, reactNativeHost.reactInstanceManager)
-
-    // Orientation Locker
-    registerActivityLifecycleCallbacks(OrientationActivityLifecycle.getInstance())
   }
 }

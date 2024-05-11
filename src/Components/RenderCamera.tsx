@@ -41,7 +41,7 @@ export default function RenderCamera(props: Props) {
     isFocused,
     config,
     cameraState,
-    orientation,
+    //orientation,
     hideNoDeviceFound,
     getDeviceInfo,
     showTakePicIndicator,
@@ -54,6 +54,8 @@ export default function RenderCamera(props: Props) {
     onSwipeRight,
     frameProcessor,
   } = props;
+
+  const orientation = 'PORTRAIT';
 
   const isIos = Platform.OS === 'ios';
 
