@@ -26,14 +26,11 @@
 		<true />
 		<key>NSAppTransportSecurity</key>
 		<dict>
-			<key>NSExceptionDomains</key>
-			<dict>
-				<key>localhost</key>
-				<dict>
-					<key>NSExceptionAllowsInsecureHTTPLoads</key>
-					<true />
-				</dict>
-			</dict>
+			<!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
+			<key>NSAllowsArbitraryLoads</key>
+			<false />
+			<key>NSAllowsLocalNetworking</key>
+			<true />
 		</dict>
 		<key>NSCameraUsageDescription</key>
 		<string>Meddly needs access to your Camera.</string>
@@ -45,6 +42,8 @@
 		<string>Meddly will save video to your camera roll.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Meddly will save video to your camera roll.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Meddly needs access to your location for saving location metadata.</string>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIRequiredDeviceCapabilities</key>
