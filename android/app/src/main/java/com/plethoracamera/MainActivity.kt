@@ -17,7 +17,7 @@ class MainActivity : ReactActivity() {
    * used to schedule
    * rendering of the component.
    */
-  override fun getMainComponentName(): String = "Plethora Camera"
+  override fun getMainComponentName(): String = "plethoracamera"
 
   /**
    * Required by react-native-orientation-locker
