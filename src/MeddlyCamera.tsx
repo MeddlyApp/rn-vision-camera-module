@@ -19,12 +19,12 @@ import {
   Alert,
   NativeTouchEvent,
 } from 'react-native';
+import type {VideoFile} from 'react-native-vision-camera';
 import {
   Camera,
   CameraCaptureError,
   CameraPermissionStatus,
   Frame,
-  VideoFile,
   useFrameProcessor,
 } from 'react-native-vision-camera';
 import {Orientation as OrientationValue} from 'react-native-vision-camera';
@@ -117,7 +117,10 @@ export default function PlethoraCamera(props: Props) {
   const [microphonePermissionStatus, setMicrophonePermissionStatus] =
     useState<CameraPermissionStatus>('not-determined');
 
-  const getCameraPermissions = useCallback(async () => {
+  const [locationPermissionStatus, setLocationPermissionStatus] =
+    useState<CameraPermissionStatus>('not-determined');
+
+  const requestCameraPermissions = useCallback(async () => {
     console.log('Requesting camera permission...');
     const permission = await Camera.requestCameraPermission();
     console.log(`Camera permission status: ${permission}`);
@@ -133,10 +136,23 @@ export default function PlethoraCamera(props: Props) {
     setMicrophonePermissionStatus(permission);
   }, []);
 
+  const requestLocationPermission = useCallback(async () => {
+    console.log('Requesting location permission...');
+    const permission = await Camera.requestLocationPermission();
+    console.log(`Location permission status: ${permission}`);
+    if (permission === 'denied') await Linking.openSettings();
+    setLocationPermissionStatus(permission);
+  }, []);
+
   const checkPermissions = useCallback(async () => {
-    await getCameraPermissions();
+    await requestCameraPermissions();
     await requestMicrophonePermission();
-  }, [getCameraPermissions, requestMicrophonePermission]);
+    await requestLocationPermission();
+  }, [
+    requestCameraPermissions,
+    requestMicrophonePermission,
+    requestLocationPermission,
+  ]);
 
   const openSettings = async () => await Linking.openSettings();
 
@@ -318,10 +334,8 @@ export default function PlethoraCamera(props: Props) {
       <View style={styles.base_container}>
         <SafeAreaView style={styles.missing_permissions}>
           <MissingPermissions
-            // hasCameraPermission={cameraPermissionStatus === 'granted'}
-            hasCameraPermission={true}
-            // hasMicrophonePermission={microphonePermissionStatus === 'granted'}
-            hasMicrophonePermission={true}
+            hasCameraPermission={cameraPermissionStatus === 'granted'}
+            hasMicrophonePermission={microphonePermissionStatus === 'granted'}
             openSettings={openSettings}
           />
         </SafeAreaView>
@@ -358,6 +372,7 @@ export default function PlethoraCamera(props: Props) {
           onSwipeDown={onSwipeDown}
           onSwipeLeft={onSwipeLeft}
           onSwipeRight={onSwipeRight}
+          locationPermission={locationPermissionStatus === 'granted'}
           // frameProcessor={frameProcessor}
         />
       ) : (

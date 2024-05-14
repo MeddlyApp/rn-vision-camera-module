@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import {StyleSheet, View, Text, NativeTouchEvent, Platform} from 'react-native';
 import {
+  Camera,
   CameraDevice,
   CameraDeviceFormat,
   CameraRuntimeError,
   useCameraDevices,
 } from 'react-native-vision-camera';
-import {Camera} from 'react-native-vision-camera';
 import {
   GestureEventPayload,
   HandlerStateChangeEvent,
@@ -32,6 +32,7 @@ interface Props {
   onSwipeLeft?: (val: NativeTouchEvent) => void;
   onSwipeRight?: (val: NativeTouchEvent) => void;
   frameProcessor?: any; // FrameProcessor;
+  locationPermission: boolean;
 }
 
 export default function RenderCamera(props: Props) {
@@ -53,6 +54,7 @@ export default function RenderCamera(props: Props) {
     onSwipeLeft,
     onSwipeRight,
     frameProcessor,
+    locationPermission,
   } = props;
 
   const orientation = 'PORTRAIT';
@@ -72,7 +74,6 @@ export default function RenderCamera(props: Props) {
   };
 
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
-  const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
 
   const devices: CameraDevice[] = useCameraDevices();
 
@@ -222,6 +223,7 @@ export default function RenderCamera(props: Props) {
             photo={config.photo}
             video={config.video}
             audio={config.video}
+            enableLocation={locationPermission}
             videoStabilizationMode={videoStabilizationMode}
             format={format}
             // fps={formatFPS}
