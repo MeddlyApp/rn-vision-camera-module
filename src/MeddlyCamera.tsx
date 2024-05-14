@@ -124,7 +124,7 @@ export default function PlethoraCamera(props: Props) {
     console.log('Requesting camera permission...');
     const permission = await Camera.requestCameraPermission();
     console.log(`Camera permission status: ${permission}`);
-    if (permission === 'denied') await Linking.openSettings();
+    // if (permission === 'denied') await Linking.openSettings();
     setCameraPermissionStatus(permission);
   }, []);
 
@@ -132,7 +132,7 @@ export default function PlethoraCamera(props: Props) {
     console.log('Requesting microphone permission...');
     const permission = await Camera.requestMicrophonePermission();
     console.log(`Microphone permission status: ${permission}`);
-    if (permission === 'denied') await Linking.openSettings();
+    // if (permission === 'denied') await Linking.openSettings();
     setMicrophonePermissionStatus(permission);
   }, []);
 
@@ -140,7 +140,7 @@ export default function PlethoraCamera(props: Props) {
     console.log('Requesting location permission...');
     const permission = await Camera.requestLocationPermission();
     console.log(`Location permission status: ${permission}`);
-    if (permission === 'denied') await Linking.openSettings();
+    // if (permission === 'denied') await Linking.openSettings();
     setLocationPermissionStatus(permission);
   }, []);
 
