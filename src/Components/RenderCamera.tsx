@@ -1,10 +1,18 @@
 import React, {useState, useEffect, useCallback, useMemo} from 'react';
-import {StyleSheet, View, Text, NativeTouchEvent, Platform} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  NativeTouchEvent,
+  Platform,
+  useWindowDimensions,
+} from 'react-native';
 import {
   Camera,
   CameraDevice,
   CameraDeviceFormat,
   CameraRuntimeError,
+  Orientation,
   useCameraDevices,
 } from 'react-native-vision-camera';
 import {
@@ -20,7 +28,7 @@ interface Props {
   isFocused: boolean;
   config: CameraConfig;
   cameraState: CameraState;
-  orientation?: string;
+  orientation: Orientation;
   hideNoDeviceFound?: boolean;
   getDeviceInfo?: (val?: CameraDeviceFormat | undefined) => void;
   showTakePicIndicator: boolean;
@@ -42,7 +50,7 @@ export default function RenderCamera(props: Props) {
     isFocused,
     config,
     cameraState,
-    //orientation,
+    orientation,
     hideNoDeviceFound,
     getDeviceInfo,
     showTakePicIndicator,
@@ -57,9 +65,14 @@ export default function RenderCamera(props: Props) {
     locationPermission,
   } = props;
 
-  const orientation = 'PORTRAIT';
+  //const orientation = 'PORTRAIT';
 
+  const isPortrait = orientation.toLowerCase() === 'portrait';
   const isIos = Platform.OS === 'ios';
+
+  const {height, width} = useWindowDimensions();
+  console.log({orientation});
+  const styles = styleWithProps(height, width, orientation);
 
   const tapToFocus = async ({
     nativeEvent,
@@ -86,7 +99,6 @@ export default function RenderCamera(props: Props) {
   const device: CameraDevice = frontCamera ? frontDevices[0] : backDevices[0];
 
   const format: CameraDeviceFormat = useMemo(() => {
-    const isPortrait = orientation === 'PORTRAIT' || orientation === '';
     //console.log('Orientation Updated:', isPortrait);
 
     // NOTE: with iOS, we must set the height and width
@@ -195,6 +207,15 @@ export default function RenderCamera(props: Props) {
     : supportsPhotoHDR;
 
   // const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
+
+  const showIosLandscape = !isPortrait && isIos;
+  const cameraStyle = showIosLandscape
+    ? styles.landscapeIos
+    : StyleSheet.absoluteFill;
+
+  //const isLeft = orientation.toLowerCase() === 'landscape-left';
+  //const isRight = orientation.toLowerCase() === 'landscape-right';
+
   return (
     <View
       style={
@@ -214,7 +235,7 @@ export default function RenderCamera(props: Props) {
           onSwipeRight={onSwipeRight}>
           <Camera
             ref={cameraRef}
-            style={StyleSheet.absoluteFill}
+            style={cameraStyle}
             device={device}
             isActive={isFocused}
             onInitialized={onInitialized}
@@ -225,7 +246,10 @@ export default function RenderCamera(props: Props) {
             audio={config.video}
             enableLocation={locationPermission}
             videoStabilizationMode={videoStabilizationMode}
+            resizeMode={showIosLandscape ? 'contain' : 'cover'}
+            //resizeMode="cover"
             format={format}
+            orientation={'portrait'}
             // fps={formatFPS}
             frameProcessor={frameProcessor}
           />
@@ -256,27 +280,45 @@ export default function RenderCamera(props: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    borderColor: 'rgba(0,0,0,0)',
-    borderWidth: 2,
-  },
+const styleWithProps = (height: number, width: number, orientation: string) => {
+  const isLeft = orientation.toLowerCase() === 'landscape-left';
+  const isRight = orientation.toLowerCase() === 'landscape-right';
 
-  take_picture_indicator: {
-    borderColor: '#FFFFFF',
-    backgroundColor: 'rgba(255, 255, 255, 0.72)',
-  },
+  const returnIosLandscapeTransform = () => {
+    if (isLeft) return [{rotate: '-90deg'}];
+    else if (isRight) return [{rotate: '90deg'}];
+    return undefined;
+  };
 
-  flex_centered: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  return StyleSheet.create({
+    container: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      borderColor: 'rgba(0,0,0,0)',
+      borderWidth: 2,
+    },
 
-  txt_white: {color: '#FFF'},
-});
+    take_picture_indicator: {
+      borderColor: '#FFFFFF',
+      backgroundColor: 'rgba(255, 255, 255, 0.72)',
+    },
+
+    flex_centered: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    txt_white: {color: '#FFF'},
+
+    landscapeIos: {
+      position: 'absolute',
+      height: height,
+      width: width,
+      transform: returnIosLandscapeTransform(),
+    },
+  });
+};
