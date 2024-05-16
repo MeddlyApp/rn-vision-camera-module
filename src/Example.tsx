@@ -59,7 +59,7 @@ export default function App() {
       });
     },
     getDeviceInfo: (x: CameraDeviceFormat | undefined) => {
-      // console.log('getDeviceInfo', x);
+      console.log('getDeviceInfo', x);
       return;
     },
   };

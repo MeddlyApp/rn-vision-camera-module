@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, useMemo} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   StyleSheet,
   View,
@@ -13,7 +13,9 @@ import {
   CameraDeviceFormat,
   CameraRuntimeError,
   Orientation,
+  VideoStabilizationMode,
   useCameraDevices,
+  useCameraFormat,
 } from 'react-native-vision-camera';
 import {
   GestureEventPayload,
@@ -65,13 +67,10 @@ export default function RenderCamera(props: Props) {
     locationPermission,
   } = props;
 
-  //const orientation = 'PORTRAIT';
-
   const isPortrait = orientation.toLowerCase() === 'portrait';
   const isIos = Platform.OS === 'ios';
 
   const {height, width} = useWindowDimensions();
-  console.log({orientation});
   const styles = styleWithProps(height, width, orientation);
 
   const tapToFocus = async ({
@@ -89,105 +88,41 @@ export default function RenderCamera(props: Props) {
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
 
   const devices: CameraDevice[] = useCameraDevices();
-
   const frontDevices: CameraDevice[] = devices.filter(
     (d: CameraDevice) => d.position === 'front',
   );
   const backDevices: CameraDevice[] = devices.filter(
     (d: CameraDevice) => d.position === 'back',
   );
-  const device: CameraDevice = frontCamera ? frontDevices[0] : backDevices[0];
+  const device: CameraDevice = frontCamera ? frontDevices[1] : backDevices[0];
+  // if (__DEV__) {
+  //   console.log(JSON.stringify(device, (k, v) => (k === 'formats' ? [] : v), 2));
+  // }
 
-  const format: CameraDeviceFormat = useMemo(() => {
-    //console.log('Orientation Updated:', isPortrait);
+  const videoStabilizationMode: VideoStabilizationMode =
+    cameraState && cameraState.videoStabilizationMode
+      ? cameraState.videoStabilizationMode
+      : 'auto' || 'off';
 
-    // NOTE: with iOS, we must set the height and width
-    //       specifically, depending on the orientation
+  const height1080 = !isIos && isPortrait ? 1920 : 1080;
+  const width1080 = !isIos && isPortrait ? 1080 : 1920;
 
-    // We only want 1080p video and photo
-    const filtered1080pFormats = device?.formats.filter(
-      (format: CameraDeviceFormat) => {
-        const height = !isIos && isPortrait ? 1920 : 1080;
-        const width = !isIos && isPortrait ? 1080 : 1920;
-
-        const formatVideoHeight = format.videoHeight;
-        const formatVideoWidth = format.videoWidth;
-
-        const videoIsHeight = formatVideoHeight === height;
-        const videoIsWidth = formatVideoWidth === width;
-        const videoIs1080 = videoIsHeight && videoIsWidth;
-
-        const photoIsHeight = format.photoHeight === height;
-        const photoIsWidth = format.photoWidth === width;
-        const photoIs1080 = photoIsHeight && photoIsWidth;
-
-        return isIos ? videoIs1080 : videoIs1080 && photoIs1080;
-      },
-    );
-
-    if (filtered1080pFormats && filtered1080pFormats?.length > 0) {
-      return filtered1080pFormats.reduce(
-        (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
-          if (prev == null) return curr;
-          // if (curr.maxFps > prev.maxFps) return curr;
-          else return prev;
-        },
-      );
-    }
-
-    // If no 1080p, we only want 720p video and photo
-
-    const filtered720pFormats = device?.formats.filter(
-      (format: CameraDeviceFormat) => {
-        const height = !isIos && isPortrait ? 1280 : 720;
-        const width = !isIos && isPortrait ? 720 : 1280;
-
-        const videoIsHeight = format.videoHeight === height;
-        const videoIsWidth = format.videoWidth === width;
-        const videoIs720 = videoIsHeight && videoIsWidth;
-
-        const photoIsHeight = format.photoHeight === height;
-        const photoIsWidth = format.photoWidth === width;
-        const photoIs720 = photoIsHeight && photoIsWidth;
-
-        return isIos ? videoIs720 : videoIs720 && photoIs720;
-      },
-    );
-
-    if (filtered720pFormats && filtered720pFormats?.length > 0) {
-      return filtered720pFormats.reduce(
-        (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
-          if (prev == null) return curr;
-          // if (curr.maxFps > prev.maxFps) return curr;
-          else return prev;
-        },
-      );
-    }
-
-    // If no 1080 or 720, return the highest FPS
-
-    return device?.formats.reduce(
-      (prev: CameraDeviceFormat, curr: CameraDeviceFormat) => {
-        if (prev == null) return curr;
-        // if (curr.maxFps > prev.maxFps) return curr;
-        else return prev;
-      },
-    );
-  }, [device?.formats, orientation]);
+  const format = useCameraFormat(device, [
+    {photoResolution: {width: width1080, height: height1080}},
+    {videoResolution: {width: width1080, height: height1080}},
+    {videoStabilizationMode: videoStabilizationMode},
+    {fps: 30},
+  ]);
 
   useEffect(() => {
     getDeviceInfo ? getDeviceInfo(format) : null;
   }, [format, device, getDeviceInfo]);
 
-  const onError = (error: CameraRuntimeError) => console.error(error);
+  const onError = (error: CameraRuntimeError) =>
+    __DEV__ ? console.error(error) : null;
   const onInitialized = useCallback(() => {
     setIsCameraInitialized(true);
   }, []);
-
-  const videoStabilizationMode =
-    cameraState && cameraState.videoStabilizationMode
-      ? cameraState.videoStabilizationMode
-      : 'auto' || 'off';
 
   // Additional Photo Values:
   //    autoFocusSystem, fieldOfView, photoHeight, photoWidth,
@@ -196,25 +131,19 @@ export default function RenderCamera(props: Props) {
   // Additional Video Values:
   //    minFps, maxFps, minIOS, maxISO, videoHeight, videoWidth
 
-  const videoStabilizationModes = format?.videoStabilizationModes;
+  // const supportsPhotoHDR = format?.supportsPhotoHdr;
+  // const supportsVideoHDR = format?.supportsVideoHdr;
+  // const videoHDRIsOn = cameraState.isVideo
+  //   ? supportsVideoHDR
+  //   : supportsPhotoHDR;
 
-  const supportsPhotoHDR = format?.supportsPhotoHdr;
-  const supportsVideoHDR = format?.supportsVideoHdr;
-  // const maxFps = format?.maxFps;
-
-  const videoHDRIsOn = cameraState.isVideo
-    ? supportsVideoHDR
-    : supportsPhotoHDR;
-
-  // const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
+  const maxFps = format?.maxFps;
+  const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
 
   const showIosLandscape = !isPortrait && isIos;
   const cameraStyle = showIosLandscape
     ? styles.landscapeIos
     : StyleSheet.absoluteFill;
-
-  //const isLeft = orientation.toLowerCase() === 'landscape-left';
-  //const isRight = orientation.toLowerCase() === 'landscape-right';
 
   return (
     <View
@@ -246,11 +175,10 @@ export default function RenderCamera(props: Props) {
             audio={config.video}
             enableLocation={locationPermission}
             videoStabilizationMode={videoStabilizationMode}
-            resizeMode={showIosLandscape ? 'contain' : 'cover'}
-            //resizeMode="cover"
+            resizeMode={showIosLandscape ? 'contain' : 'cover'} // "cover"
             format={format}
-            orientation={'portrait'}
-            // fps={formatFPS}
+            orientation={'portrait'} // orientation
+            fps={formatFPS}
             frameProcessor={frameProcessor}
           />
         </GestureHandler>
@@ -316,8 +244,10 @@ const styleWithProps = (height: number, width: number, orientation: string) => {
 
     landscapeIos: {
       position: 'absolute',
-      height: height,
-      width: width,
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
       transform: returnIosLandscapeTransform(),
     },
   });
