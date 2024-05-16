@@ -76,7 +76,7 @@ const cameraState = {
 const cameraConfig = {
   photo: true, // Required
   video: true, // Required
-  nameConvention: 'Plethora',
+  nameConvention: 'Meddly',
 };
 
 const customComponents = {

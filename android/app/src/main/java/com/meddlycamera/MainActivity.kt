@@ -1,4 +1,4 @@
-package com.plethoracamera
+package com.meddlycamera
 
 // Required by react-native-orientation-locker
 import android.content.Intent
@@ -17,7 +17,7 @@ class MainActivity : ReactActivity() {
    * used to schedule
    * rendering of the component.
    */
-  override fun getMainComponentName(): String = "plethoracamera"
+  override fun getMainComponentName(): String = "meddlycamera"
 
   /**
    * Required by react-native-orientation-locker

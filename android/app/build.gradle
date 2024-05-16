@@ -94,9 +94,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.plethoracamera"
+    namespace "com.meddlycamera"
     defaultConfig { 
-        applicationId "com.plethoracamera"
+        applicationId "com.meddlycamera"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -157,9 +157,6 @@ dependencies {
 
     // React Native FS
     implementation project(':react-native-fs')
-
-    // React Native Vision Camera
-    // implementation project(':react-native-vision-camera')
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

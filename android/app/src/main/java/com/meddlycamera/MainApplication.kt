@@ -1,4 +1,4 @@
-package com.plethoracamera
+package com.meddlycamera
 
 import android.app.Application
 import com.facebook.react.PackageList

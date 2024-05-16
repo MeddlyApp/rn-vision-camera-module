@@ -76,7 +76,7 @@ export default function App() {
   const config: CameraConfig = {
     photo: true, // Required
     video: true, // Required
-    nameConvention: `Plethora`,
+    nameConvention: `Meddly`,
   };
 
   const whiteText: any = {color: '#FFF'};

@@ -80,7 +80,7 @@ interface Props {
   children: CustomComponents;
 }
 
-export default function PlethoraCamera(props: Props) {
+export default function MeddlyCamera(props: Props) {
   const cameraRef = useRef<any>(null);
 
   const {
