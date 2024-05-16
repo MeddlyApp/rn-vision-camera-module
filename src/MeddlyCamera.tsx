@@ -57,6 +57,7 @@ interface Props {
   cameraState: CameraState;
   config: CameraConfig;
   isFocused: boolean;
+  useLocation?: boolean;
   stateActions: StateActions;
   onOrientationChange?: (val: string) => void;
   onIsRecording?: (val: boolean) => void;
@@ -85,6 +86,7 @@ export default function PlethoraCamera(props: Props) {
     cameraState,
     config,
     isFocused,
+    useLocation,
     stateActions,
     onOrientationChange,
     onIsRecording,
@@ -147,7 +149,7 @@ export default function PlethoraCamera(props: Props) {
   const checkPermissions = useCallback(async () => {
     await requestCameraPermissions();
     await requestMicrophonePermission();
-    await requestLocationPermission();
+    if (useLocation) await requestLocationPermission();
   }, [
     requestCameraPermissions,
     requestMicrophonePermission,
@@ -326,8 +328,9 @@ export default function PlethoraCamera(props: Props) {
 
   /******************** RENDERS ********************/
 
-  const hasAllPermissions =
-    cameraPermissionStatus && microphonePermissionStatus;
+  let hasAllPermissions =
+    cameraPermissionStatus === 'granted' && microphonePermissionStatus === 'granted';
+  if (useLocation) hasAllPermissions = hasAllPermissions && locationPermissionStatus === 'granted';
 
   if (!hasAllPermissions) {
     return (
@@ -372,7 +375,7 @@ export default function PlethoraCamera(props: Props) {
           onSwipeDown={onSwipeDown}
           onSwipeLeft={onSwipeLeft}
           onSwipeRight={onSwipeRight}
-          locationPermission={locationPermissionStatus === 'granted'}
+          locationPermission={useLocation ? locationPermissionStatus === 'granted' : false}
           // frameProcessor={frameProcessor}
         />
       ) : (
