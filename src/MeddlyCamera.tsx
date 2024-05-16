@@ -58,6 +58,7 @@ interface Props {
   config: CameraConfig;
   isFocused: boolean;
   useLocation?: boolean;
+  forceUseLocation?: boolean;
   stateActions: StateActions;
   onOrientationChange?: (val: string) => void;
   onIsRecording?: (val: boolean) => void;
@@ -87,6 +88,7 @@ export default function PlethoraCamera(props: Props) {
     config,
     isFocused,
     useLocation,
+    forceUseLocation,
     stateActions,
     onOrientationChange,
     onIsRecording,
@@ -329,8 +331,13 @@ export default function PlethoraCamera(props: Props) {
   /******************** RENDERS ********************/
 
   let hasAllPermissions =
-    cameraPermissionStatus === 'granted' && microphonePermissionStatus === 'granted';
-  if (useLocation) hasAllPermissions = hasAllPermissions && locationPermissionStatus === 'granted';
+    cameraPermissionStatus === 'granted' &&
+    microphonePermissionStatus === 'granted';
+  // Location is not required for camera to work - if you want to force location...
+  if (useLocation && forceUseLocation) {
+    hasAllPermissions =
+      hasAllPermissions && locationPermissionStatus === 'granted';
+  }
 
   if (!hasAllPermissions) {
     return (
@@ -339,6 +346,8 @@ export default function PlethoraCamera(props: Props) {
           <MissingPermissions
             hasCameraPermission={cameraPermissionStatus === 'granted'}
             hasMicrophonePermission={microphonePermissionStatus === 'granted'}
+            locationTurnedOn={useLocation}
+            hasLocationPermission={locationPermissionStatus === 'granted'}
             openSettings={openSettings}
           />
         </SafeAreaView>
@@ -375,7 +384,9 @@ export default function PlethoraCamera(props: Props) {
           onSwipeDown={onSwipeDown}
           onSwipeLeft={onSwipeLeft}
           onSwipeRight={onSwipeRight}
-          locationPermission={useLocation ? locationPermissionStatus === 'granted' : false}
+          locationPermission={
+            useLocation ? locationPermissionStatus === 'granted' : false
+          }
           // frameProcessor={frameProcessor}
         />
       ) : (

@@ -131,6 +131,7 @@ const sectionHeights = {
   config={config}
   isFocused={true}
   useLocation={true}
+  forceUseLocation={false}
   cameraState={cameraState}
   stateActions={stateActions}
   sectionHeights={sectionHeights}

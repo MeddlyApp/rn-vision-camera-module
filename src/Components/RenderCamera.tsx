@@ -95,9 +95,6 @@ export default function RenderCamera(props: Props) {
     (d: CameraDevice) => d.position === 'back',
   );
   const device: CameraDevice = frontCamera ? frontDevices[1] : backDevices[0];
-  // if (__DEV__) {
-  //   console.log(JSON.stringify(device, (k, v) => (k === 'formats' ? [] : v), 2));
-  // }
 
   const videoStabilizationMode: VideoStabilizationMode =
     cameraState && cameraState.videoStabilizationMode
@@ -107,12 +104,22 @@ export default function RenderCamera(props: Props) {
   const height1080 = !isIos && isPortrait ? 1920 : 1080;
   const width1080 = !isIos && isPortrait ? 1080 : 1920;
 
-  const format = useCameraFormat(device, [
+  const formatProps = [
     {photoResolution: {width: width1080, height: height1080}},
     {videoResolution: {width: width1080, height: height1080}},
     {videoStabilizationMode: videoStabilizationMode},
     {fps: 30},
-  ]);
+  ];
+
+  // if (__DEV__) {
+  //   console.log({deviceFormatProps: JSON.stringify(formatProps)});
+  // }
+
+  //const format = device.formats[0];
+  const format: CameraDeviceFormat | undefined = useCameraFormat(
+    device,
+    formatProps,
+  );
 
   useEffect(() => {
     getDeviceInfo ? getDeviceInfo(format) : null;
@@ -124,13 +131,7 @@ export default function RenderCamera(props: Props) {
     setIsCameraInitialized(true);
   }, []);
 
-  // Additional Photo Values:
-  //    autoFocusSystem, fieldOfView, photoHeight, photoWidth,
-  //    pixelFormats, supportsPhotoHDR
-
-  // Additional Video Values:
-  //    minFps, maxFps, minIOS, maxISO, videoHeight, videoWidth
-
+  // const enableNightMode = false;
   // const supportsPhotoHDR = format?.supportsPhotoHdr;
   // const supportsVideoHDR = format?.supportsVideoHdr;
   // const videoHDRIsOn = cameraState.isVideo
@@ -179,7 +180,8 @@ export default function RenderCamera(props: Props) {
             format={format}
             orientation={'portrait'} // orientation
             fps={formatFPS}
-            frameProcessor={frameProcessor}
+            // lowLightBoost={device.supportsLowLightBoost && enableNightMode}
+            // frameProcessor={frameProcessor}
           />
         </GestureHandler>
       )}

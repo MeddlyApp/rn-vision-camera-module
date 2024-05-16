@@ -144,6 +144,7 @@ export default function App() {
       showCameraControls={true}
       saveToCameraRoll={true}
       useLocation={true}
+      forceUseLocation={true}
       // Lifecycle Events
       onIsRecording={(val: boolean) => setIsRecording(val)}
       onTakePicture={(res: PhotoPlayload) => console.log('onTakePicture', res)}
