@@ -148,10 +148,19 @@ export default function MeddlyCamera(props: Props) {
     setLocationPermissionStatus(permission);
   }, []);
 
+  const [cameraIsReady, setCameraIsReady] = useState<boolean>(false);
+  const updateCameraIsReady = useCallback(async () => {
+    return await new Promise(resolve => {
+      setCameraIsReady(true);
+      resolve(true);
+    });
+  }, []);
+
   const checkPermissions = useCallback(async () => {
     await requestCameraPermissions();
     await requestMicrophonePermission();
     if (useLocation) await requestLocationPermission();
+    await updateCameraIsReady();
   }, [
     requestCameraPermissions,
     requestMicrophonePermission,
@@ -339,7 +348,11 @@ export default function MeddlyCamera(props: Props) {
       hasAllPermissions && locationPermissionStatus === 'granted';
   }
 
-  if (!hasAllPermissions) {
+  if (!cameraIsReady) {
+    return <View style={styles.base_container} />;
+  }
+
+  if (!hasAllPermissions && cameraIsReady) {
     return (
       <View style={styles.base_container}>
         <SafeAreaView style={styles.missing_permissions}>
