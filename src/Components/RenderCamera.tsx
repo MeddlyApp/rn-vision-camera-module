@@ -115,7 +115,6 @@ export default function RenderCamera(props: Props) {
   //   console.log({deviceFormatProps: JSON.stringify(formatProps)});
   // }
 
-  //const format = device.formats[0];
   const format: CameraDeviceFormat | undefined = useCameraFormat(
     device,
     formatProps,
@@ -141,11 +140,6 @@ export default function RenderCamera(props: Props) {
   const maxFps = format?.maxFps;
   const formatFPS = maxFps && maxFps > 30 ? 30 : maxFps;
 
-  const showIosLandscape = !isPortrait && isIos;
-  const cameraStyle = showIosLandscape
-    ? styles.landscapeIos
-    : StyleSheet.absoluteFill;
-
   return (
     <View
       style={
@@ -165,7 +159,7 @@ export default function RenderCamera(props: Props) {
           onSwipeRight={onSwipeRight}>
           <Camera
             ref={cameraRef}
-            style={cameraStyle}
+            style={StyleSheet.absoluteFill}
             device={device}
             isActive={isFocused}
             onInitialized={onInitialized}
@@ -176,9 +170,8 @@ export default function RenderCamera(props: Props) {
             audio={config.video}
             enableLocation={locationPermission}
             videoStabilizationMode={videoStabilizationMode}
-            resizeMode={showIosLandscape ? 'contain' : 'cover'} // "cover"
+            resizeMode="cover"
             format={format}
-            orientation={'portrait'} // orientation
             fps={formatFPS}
             // lowLightBoost={device.supportsLowLightBoost && enableNightMode}
             // frameProcessor={frameProcessor}

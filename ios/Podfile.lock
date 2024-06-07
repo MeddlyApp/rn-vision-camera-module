@@ -886,7 +886,7 @@ PODS:
   - React-Mapbuffer (0.73.8):
     - glog
     - React-debug
-  - react-native-cameraroll (7.7.0):
+  - react-native-cameraroll (7.8.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1069,22 +1069,22 @@ PODS:
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - RNReanimated (3.11.0):
+  - RNReanimated (3.12.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
     - ReactCommon/turbomodule/core
   - SocketRocket (0.6.1)
-  - VisionCamera (4.0.4):
-    - VisionCamera/Core (= 4.0.4)
-    - VisionCamera/FrameProcessors (= 4.0.4)
-    - VisionCamera/React (= 4.0.4)
-  - VisionCamera/Core (4.0.4)
-  - VisionCamera/FrameProcessors (4.0.4):
+  - VisionCamera (4.1.0):
+    - VisionCamera/Core (= 4.1.0)
+    - VisionCamera/FrameProcessors (= 4.1.0)
+    - VisionCamera/React (= 4.1.0)
+  - VisionCamera/Core (4.1.0)
+  - VisionCamera/FrameProcessors (4.1.0):
     - React
     - React-callinvoker
     - react-native-worklets-core
-  - VisionCamera/React (4.0.4):
+  - VisionCamera/React (4.1.0):
     - React-Core
     - VisionCamera/FrameProcessors
   - Yoga (1.14.0)
@@ -1298,7 +1298,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 1729acf5ffe2d4439d698da25fddf0c75d07d1a1
   React-logger: 60afd40b183e8e6642bfd0108f1a1ad360cc665e
   React-Mapbuffer: 672a9342eb75a4d0663306e94d4dfc88aee73b93
-  react-native-cameraroll: 30b9c7bb77e2ced096bd4032c6bbbb2948b5d050
+  react-native-cameraroll: 433f793bc2eb3bcb65c9e166f4225eae7876d056
   react-native-orientation-locker: 5819fd23ca89cbac0d736fb4314745f62716d517
   react-native-worklets-core: f51430dd07bf5343d4918d28a4bb00fe8f98b982
   React-nativeconfig: 2e44d0d2dd222b12a5183f4bcaa4a91881497acb
@@ -1323,9 +1323,9 @@ SPEC CHECKSUMS:
   ReactCommon: 1da3fc14d904883c46327b3322325eebf60a720a
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 96439cf6543defdde87459e48cd1a3f0e45a008e
-  RNReanimated: 6cfa556540186ce7ae7a0b048f369236b1d86ebb
+  RNReanimated: 6aeb85e1e17364c8069f9ee5661615b4a281bd5c
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  VisionCamera: b53fedb44eb4b153f90d29d295945901a188a1e7
+  VisionCamera: fae8e97a3e62aad93367abdcce0b1350618004c3
   Yoga: e5b887426cee15d2a326bdd34afc0282fc0486ad
 
 PODFILE CHECKSUM: 1e6531997fe390657f4348b59224a951865a6db8
