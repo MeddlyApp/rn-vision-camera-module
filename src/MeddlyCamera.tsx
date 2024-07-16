@@ -258,7 +258,7 @@ export default function MeddlyCamera(props: Props) {
             const finalFile: string = await renameFile(video, newName);
             video.path = finalFile;
 
-            if (saveToCameraRoll) CameraRoll.save(finalFile);
+            if (saveToCameraRoll) CameraRoll.saveAsset(finalFile);
 
             const payload: VideoPayload = {
               data: video.path,
