@@ -13,6 +13,7 @@ export interface CameraState {
   flash?: any; // 'off' | 'on' | undefined;
   videoStabilizationMode: VideoStabilizationMode;
   hideStatusBar?: boolean;
+  startswitch?: boolean;
   killswitch?: boolean;
 }
 

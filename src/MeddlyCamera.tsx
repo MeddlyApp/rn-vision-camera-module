@@ -110,7 +110,8 @@ export default function MeddlyCamera(props: Props) {
     children,
   } = props;
 
-  const {isVideo, frontCamera, flash, hideStatusBar, killswitch} = cameraState;
+  const {isVideo, frontCamera, flash, hideStatusBar, startswitch, killswitch} =
+    cameraState;
   const {startRecording, stopRecording} = stateActions;
   const {height, width} = useWindowDimensions();
 
@@ -299,6 +300,11 @@ export default function MeddlyCamera(props: Props) {
       if (ready) killVideo();
     } else Alert.alert('Please add endVideo() prop');
   };
+
+  // STARTSWITCH
+  useEffect(() => {
+    if (startswitch && !isRecording) startVideo();
+  }, [startswitch, isRecording]);
 
   // KILLWITCH
   useEffect(() => {

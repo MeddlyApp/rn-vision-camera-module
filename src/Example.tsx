@@ -70,6 +70,7 @@ export default function App() {
     flash,
     videoStabilizationMode,
     hideStatusBar,
+    startswitch: false,
     killswitch: false,
   };
 

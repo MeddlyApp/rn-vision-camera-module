@@ -43,7 +43,6 @@ const [frontCamera, setFrontCamera] = useState<boolean>(false);
 const [flash, setFlash] = useState<string>('auto');
 const [videoStabilizationMode, setVideoStabilizationMode] =
   useState<VideoStabilizationMode>('auto');
-const [preset, setPreset] = useState<CameraPreset>('high');
 const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
 const [isRecording, setIsRecording] = useState<boolean>(false);
 
@@ -66,10 +65,9 @@ const cameraState = {
   isVideo,
   frontCamera,
   flash,
-  isRecording,
   videoStabilizationMode,
-  preset,
   hideStatusBar,
+  startswitch: false, // Only needed for overrides
   killswitch: false, // Only needed for overrides
 };
 
