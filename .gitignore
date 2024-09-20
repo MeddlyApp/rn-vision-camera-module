@@ -26,7 +26,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-ios/.xcode.env.local
+**/.xcode.env.local
 Podfile.lock
 
 # Android/IntelliJ
@@ -64,8 +64,8 @@ yarn-error.log
 /android/app/build/
 
 # Ruby / CocoaPods
-/ios/Pods/
-/ios/Podfile.lock
+**/Pods/
+**/Podfile.lock
 /vendor/bundle/
 
 # Temporary files created by Metro to check the health of the file watcher
@@ -73,3 +73,11 @@ yarn-error.log
 
 # testing
 /coverage
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
