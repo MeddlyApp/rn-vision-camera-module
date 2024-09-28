@@ -11,7 +11,7 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.soloader.SoLoader
 
-import org.wonday.orientation.OrientationActivityLifecycle;
+import org.wonday.orientation.OrientationActivityLifecycle; 
 
 class MainApplication : Application(), ReactApplication {
 

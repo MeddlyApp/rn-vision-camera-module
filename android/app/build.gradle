@@ -2,6 +2,8 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
+import com.android.build.OutputFile
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -77,7 +79,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.meddlycamera"
+    namespace "com.meddlycamera" 
     defaultConfig {
         applicationId "com.meddlycamera"
         minSdkVersion rootProject.ext.minSdkVersion
