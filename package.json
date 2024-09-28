@@ -1,6 +1,6 @@
 {
   "name": "@meddly/rn-vision-camera",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",

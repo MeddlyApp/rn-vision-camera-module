@@ -17,7 +17,7 @@ class MainActivity : ReactActivity() {
    */
   override fun getMainComponentName(): String = "MeddlyCamera"
 
-    /**
+  /**
    * Required by react-native-orientation-locker
    */
   override fun onConfigurationChanged(newConfig: Configuration) {
